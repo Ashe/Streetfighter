@@ -71,22 +71,6 @@
             }
         },
         {
-            "Key": "521ebb36-0671-4cf8-a8ac-9c09206613be",
-            "Value": {
-                "id": "e776c119-6c8e-4cca-a147-0abc6ea91611",
-                "resourcePath": "sprites\\spr_chunli_standing_neutral\\spr_chunli_standing_neutral.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
-            "Key": "541f0a8e-ae6b-471d-b7c2-f3e812958621",
-            "Value": {
-                "id": "ef44e3a4-7bbf-42d2-af0a-e13b64dae7e1",
-                "resourcePath": "sprites\\spr_chunli_standing_far_mk\\spr_chunli_standing_far_mk.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "573e4058-87d1-4680-914c-5fc34a9ce13b",
             "Value": {
                 "id": "81c9c4ef-8c12-4091-b648-d769d7a02066",
@@ -103,35 +87,11 @@
             }
         },
         {
-            "Key": "6032327e-c782-41c6-b75d-b6fea6634d81",
-            "Value": {
-                "id": "46467951-f736-4374-b970-0f83dfe9061d",
-                "resourcePath": "sprites\\spr_chunli_standing_backwards\\spr_chunli_standing_backwards.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "64138260-6bca-48c6-9727-9e1317c015c0",
             "Value": {
                 "id": "033d7282-ea1f-43d4-86a1-58b8a9242230",
                 "resourcePath": "views\\64138260-6bca-48c6-9727-9e1317c015c0.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "64a85e5c-c680-4469-9424-02708172858c",
-            "Value": {
-                "id": "93a6f6a2-d2b8-4d8d-9989-bddd62577c41",
-                "resourcePath": "sprites\\spr_chunli_standing_close_fmk\\spr_chunli_standing_close_fmk.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
-            "Key": "6cf8ac0a-f108-4422-aa5a-415fe00c0982",
-            "Value": {
-                "id": "85840625-6001-47ac-93aa-7264c32823f7",
-                "resourcePath": "sprites\\spr_chunli_standing_far_hk\\spr_chunli_standing_far_hk.yy",
-                "resourceType": "GMSprite"
             }
         },
         {
@@ -143,22 +103,6 @@
             }
         },
         {
-            "Key": "8b4850a8-faa3-4265-8dba-802f9c2f149f",
-            "Value": {
-                "id": "b75cc89a-a60c-4c02-9700-3dba5fe07923",
-                "resourcePath": "sprites\\spr_chunli_standing_far_lk\\spr_chunli_standing_far_lk.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
-            "Key": "a3d1ae4b-4b52-44f3-900c-fe2e9efdde79",
-            "Value": {
-                "id": "6673d5ca-b475-4480-928b-3dd6656f63f5",
-                "resourcePath": "sprites\\spr_chunli_standing_forwards\\spr_chunli_standing_forwards.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "a79f8a58-70e3-4cca-9cb1-7a7105aeffb2",
             "Value": {
                 "id": "74b51627-052f-4684-8f2f-35aa81a24bd5",
@@ -167,19 +111,19 @@
             }
         },
         {
+            "Key": "a9188620-a624-4a5a-83ae-a1b53faf038b",
+            "Value": {
+                "id": "82cbf6c0-6e2e-44e0-9a7f-58eb61397622",
+                "resourcePath": "options\\linux\\options_linux.yy",
+                "resourceType": "GMLinuxOptions"
+            }
+        },
+        {
             "Key": "aa50c7b3-053b-4c30-8139-48e36171ecd2",
             "Value": {
                 "id": "454e83e0-b908-4568-aa2e-0bc0d1bacd16",
                 "resourcePath": "views\\aa50c7b3-053b-4c30-8139-48e36171ecd2.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "bf7593f2-6160-47a0-bd85-17c129858ab9",
-            "Value": {
-                "id": "4735ab17-7d68-473b-aed6-5f978d79ba43",
-                "resourcePath": "sprites\\spr_chunli_standing_close_hk\\spr_chunli_standing_close_hk.yy",
-                "resourceType": "GMSprite"
             }
         },
         {
@@ -244,6 +188,14 @@
                 "id": "b2a97d21-a8c6-4f00-89b9-21c3445ec67c",
                 "resourcePath": "rooms\\room0\\room0.yy",
                 "resourceType": "GMRoom"
+            }
+        },
+        {
+            "Key": "f418569b-3bdd-4706-a0e4-364317f54032",
+            "Value": {
+                "id": "4e2ed2e8-78f3-4475-8eb4-1cee75000aa1",
+                "resourcePath": "options\\mac\\options_mac.yy",
+                "resourceType": "GMMacOptions"
             }
         }
     ],
