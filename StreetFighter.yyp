@@ -39,6 +39,14 @@
             }
         },
         {
+            "Key": "1775620e-5c2a-4144-9910-bf2b116e0ad3",
+            "Value": {
+                "id": "8f35c081-0cae-41ed-bebb-4b7092b00782",
+                "resourcePath": "sprites\\spr_background_japan\\spr_background_japan.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "18ed1ce1-6233-4cde-8793-6eee01a16ac7",
             "Value": {
                 "id": "777faf1d-a145-4ca7-885c-22deaf017108",
@@ -151,6 +159,14 @@
             }
         },
         {
+            "Key": "a9f9065e-18fa-4452-b2c9-371a445d1b0b",
+            "Value": {
+                "id": "e9d2075c-a9b7-466e-818c-08b58c64dca5",
+                "resourcePath": "views\\a9f9065e-18fa-4452-b2c9-371a445d1b0b.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "aa50c7b3-053b-4c30-8139-48e36171ecd2",
             "Value": {
                 "id": "454e83e0-b908-4568-aa2e-0bc0d1bacd16",
@@ -180,6 +196,14 @@
                 "id": "658709a3-8512-4f65-8825-057f41a07db4",
                 "resourcePath": "options\\windows\\options_windows.yy",
                 "resourceType": "GMWindowsOptions"
+            }
+        },
+        {
+            "Key": "cd98c66f-e515-4669-a78e-89438810792c",
+            "Value": {
+                "id": "632cb248-44ea-44b3-9b2a-0bb445d88384",
+                "resourcePath": "views\\cd98c66f-e515-4669-a78e-89438810792c.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
