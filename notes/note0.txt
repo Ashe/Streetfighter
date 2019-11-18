@@ -1,0 +1,2 @@
+I used this video: https://www.youtube.com/watch?v=qKZ7ML4_2lM 
+- To see how animations were supposed to look and what frame rate they should be at (6 appears to be perfect)
