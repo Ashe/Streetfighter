@@ -183,6 +183,14 @@
             }
         },
         {
+            "Key": "c9c1fb9a-9390-467a-bd05-4d9b1b63e18e",
+            "Value": {
+                "id": "5eef8a3c-34d3-4570-a076-35f0918433ec",
+                "resourcePath": "sprites\\spr_chunli_jump\\spr_chunli_jump.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "cc470dac-7a05-4cef-8446-6a565cc64a37",
             "Value": {
                 "id": "79b963bc-d454-4a74-a23c-c9ea140d1f45",
@@ -242,7 +250,7 @@
             "Key": "f23f2bcf-dc48-4fd9-af21-0336703d74eb",
             "Value": {
                 "id": "b2a97d21-a8c6-4f00-89b9-21c3445ec67c",
-                "resourcePath": "rooms\\room0\\room0.yy",
+                "resourcePath": "rooms\\room_battle\\room_battle.yy",
                 "resourceType": "GMRoom"
             }
         },

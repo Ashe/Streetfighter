@@ -1,6 +1,6 @@
 
 {
-    "name": "room0",
+    "name": "room_battle",
     "id": "f23f2bcf-dc48-4fd9-af21-0336703d74eb",
     "creationCodeFile": "",
     "inheritCode": false,
@@ -96,7 +96,7 @@
     },
     "mvc": "1.0",
     "views": [
-{"id": "9f75d461-5600-422f-bd96-165572c306f9","hborder": 232,"hport": 768,"hspeed": -1,"hview": 768,"inherit": false,"modelName": "GMRView","objId": "5b99d2f4-62ed-44ad-895b-88279d46bedf","mvc": "1.0","vborder": 266,"visible": true,"vspeed": -1,"wport": 1024,"wview": 1024,"xport": 0,"xview": 476,"yport": 0,"yview": 35},
+{"id": "9f75d461-5600-422f-bd96-165572c306f9","hborder": 232,"hport": 768,"hspeed": -1,"hview": 768,"inherit": false,"modelName": "GMRView","objId": "5b99d2f4-62ed-44ad-895b-88279d46bedf","mvc": "1.0","vborder": 30,"visible": true,"vspeed": -1,"wport": 1024,"wview": 1024,"xport": 0,"xview": 476,"yport": 0,"yview": 35},
 {"id": "dee47762-9384-4520-bdf0-9eb0104a8667","hborder": 32,"hport": 768,"hspeed": -1,"hview": 768,"inherit": false,"modelName": "GMRView","objId": "00000000-0000-0000-0000-000000000000","mvc": "1.0","vborder": 32,"visible": false,"vspeed": -1,"wport": 1024,"wview": 1024,"xport": 0,"xview": 0,"yport": 0,"yview": 0},
 {"id": "833a394d-cbdf-4ee7-a871-cef49920a10c","hborder": 32,"hport": 768,"hspeed": -1,"hview": 768,"inherit": false,"modelName": "GMRView","objId": "00000000-0000-0000-0000-000000000000","mvc": "1.0","vborder": 32,"visible": false,"vspeed": -1,"wport": 1024,"wview": 1024,"xport": 0,"xview": 0,"yport": 0,"yview": 0},
 {"id": "c7daffd6-824d-408a-841c-853f820fb923","hborder": 32,"hport": 768,"hspeed": -1,"hview": 768,"inherit": false,"modelName": "GMRView","objId": "00000000-0000-0000-0000-000000000000","mvc": "1.0","vborder": 32,"visible": false,"vspeed": -1,"wport": 1024,"wview": 1024,"xport": 0,"xview": 0,"yport": 0,"yview": 0},
