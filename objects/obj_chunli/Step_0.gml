@@ -336,7 +336,7 @@ if (state != previous_state or hurtbox == -1) {
 			
 		// Jumping state
 		case Character_State.InAir:
-			hurtbox = hurtbox_create(50, 130, -25, -230);
+			hurtbox = hurtbox_create(50, 150, -25, -250);
 			break;
 	}
 }
