@@ -1,0 +1,5 @@
+I used this video: https://www.youtube.com/watch?v=qKZ7ML4_2lM 
+- To see how animations were supposed to look and what frame rate they should be at (6 appears to be perfect)
+
+I used the blog 'Hitboxes and Hurtboxes' (https://www.developer.amazon.com/blogs/appstore/post/cc08d63b-2b7c-4dee-abb4-272b834d7c3a/gamemaker-basics-hitboxes-and-hurtboxes_
+- For inspiration about how to set up collision boxes

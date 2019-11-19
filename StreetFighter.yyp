@@ -39,6 +39,14 @@
             }
         },
         {
+            "Key": "097ae287-b19c-4d1f-86a2-ca4f3c659d32",
+            "Value": {
+                "id": "3a9b6aa0-2569-42e8-87b3-4e0e316ac76f",
+                "resourcePath": "scripts\\hitbox_create\\hitbox_create.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "1775620e-5c2a-4144-9910-bf2b116e0ad3",
             "Value": {
                 "id": "8f35c081-0cae-41ed-bebb-4b7092b00782",
@@ -135,11 +143,35 @@
             }
         },
         {
+            "Key": "73fc3bdb-f9d7-4df9-aeae-79f08d0210cf",
+            "Value": {
+                "id": "72490223-d100-4598-8fb1-f9071a8a17f3",
+                "resourcePath": "scripts\\hurtbox_create\\hurtbox_create.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "8b2fbceb-e86a-4dda-9178-44a14a25749a",
             "Value": {
                 "id": "90ef3804-826a-4535-8782-9450db0feb16",
                 "resourcePath": "views\\8b2fbceb-e86a-4dda-9178-44a14a25749a.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "8d4f3252-29d7-42b3-b2af-020097ea1998",
+            "Value": {
+                "id": "6bd83295-0a4f-40c7-9a2e-ca94120e1df7",
+                "resourcePath": "sprites\\spr_hurtbox\\spr_hurtbox.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "8f23d0aa-7e6b-49ec-b509-82e103e57a58",
+            "Value": {
+                "id": "e6b690ea-f81e-47b0-9514-fa95da83c159",
+                "resourcePath": "objects\\obj_hurtbox\\obj_hurtbox.yy",
+                "resourceType": "GMObject"
             }
         },
         {
@@ -215,6 +247,14 @@
             }
         },
         {
+            "Key": "d82fce48-0660-4da5-bc85-8f264920f92b",
+            "Value": {
+                "id": "b26261ba-9b6a-486c-8d3a-fa69242f237f",
+                "resourcePath": "sprites\\spr_hitbox\\spr_hitbox.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "dc263126-c146-47b7-8910-fed199919a35",
             "Value": {
                 "id": "cfae6ac1-8e0d-401e-b91c-df1b54c16966",
@@ -247,6 +287,14 @@
             }
         },
         {
+            "Key": "ec786a52-f5c0-42bc-b25b-59f7340bb947",
+            "Value": {
+                "id": "8686ff2d-8759-4927-962d-3a17c5dbf0b6",
+                "resourcePath": "objects\\obj_hitbox\\obj_hitbox.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "f23f2bcf-dc48-4fd9-af21-0336703d74eb",
             "Value": {
                 "id": "b2a97d21-a8c6-4f00-89b9-21c3445ec67c",
@@ -264,7 +312,8 @@
         }
     ],
     "script_order": [
-        
+        "73fc3bdb-f9d7-4df9-aeae-79f08d0210cf",
+        "097ae287-b19c-4d1f-86a2-ca4f3c659d32"
     ],
     "tutorial": ""
 }
