@@ -15,6 +15,7 @@ enum Character_State {
 	Idle,
 	Walking,
 	Crouching,
+	Jumping,
 	InAir,
 }
 
@@ -24,13 +25,18 @@ ground_level = y;
 // Which way the character is facing
 face_dir = Direction.Right;
 
+// Which way the character is moving
+move_dir = 0;
+
+// Record the direction set when the state changed
+// Eg: You can't turn mid jump
+state_move_dir = 0;
+
 // What is the initial state of the character
 state = Character_State.Idle;
-
-// What was the previous state of the character
 previous_state = -1;
 
-// Is the character ready to move onto a new state?
+// Prevent switching states when enabled
 is_state_locked = false
 
 // Initialise hurtbox and hitbox

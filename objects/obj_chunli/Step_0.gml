@@ -34,7 +34,7 @@ if (gamepad_device == -1) {
 }
 
 // Prepare to get the direction to move int
-var move_dir = 0;
+move_dir = 0;
 
 // Check the left stick for directional input
 var horz_input = 0;
@@ -67,25 +67,6 @@ if (keyboard_check(ord("S")) or vert_input > 0.5
 }
 
 //////////////////////////////////////////////////////
-// @TODO: Face opponent
-// - Ensures that the sprite is facing the opponent
-// - Only functional when 'is_facing_opponent' is true
-//////////////////////////////////////////////////////
-
-// Face the direction of the opponent
-if (is_facing_opponent) {
-	// @TODO: Implement this
-}
-
-// Face in the direction of travel
-else {
-	if (move_dir != 0) {
-		face_dir = clamp(move_dir, 
-				Direction.Left, Direction.Right);
-	}
-}
-
-//////////////////////////////////////////////////////
 // On-ground checks
 // - Checks to see if the character is on the ground
 // - Character can only perform movement if grounded
@@ -98,6 +79,30 @@ if (y >= ground_level) {
 	y = ground_level;
 	is_grounded = true;
 	gravity = 0;
+}
+
+//////////////////////////////////////////////////////
+// @TODO: Face opponent
+// - Ensures that the sprite is facing the opponent
+// - Only functional when is_facing_opponent is true
+// - Must be on the ground to change direction
+//////////////////////////////////////////////////////
+
+// Only change the direction when grounded
+if (is_grounded) {
+	
+	// Face the direction of the opponent
+	if (is_facing_opponent) {
+		// @TODO: Implement this
+	}
+
+	// Face in the direction of travel
+	else {
+		if (state_move_dir != 0) {
+			face_dir = clamp(state_move_dir, 
+					Direction.Left, Direction.Right);
+		}
+	}
 }
 
 //////////////////////////////////////////////////////
@@ -115,12 +120,15 @@ previous_state = state;
 // Only change state if we aren't locked
 if (not is_state_locked) {
 	
+	// Remember direction at state change
+	state_move_dir = move_dir;
+
 	// Should the state lock upon changing?
 	var trigger_lock = false;
 	
 	// Ground states
 	if (is_grounded) {
-	
+		
 		// Is the player trying to crouch
 		if (try_crouch) {
 			state = Character_State.Crouching;
@@ -129,7 +137,8 @@ if (not is_state_locked) {
 		
 		// Is the player trying to jump?
 		else if (try_jump) {
-			state = Character_State.InAir;	
+			state = Character_State.Jumping;
+			trigger_lock = true;
 		}
 		
 		// Is the player trying to move in a direction
@@ -146,6 +155,7 @@ if (not is_state_locked) {
 	// Arial states 
 	else {
 		state = Character_State.InAir;
+		is_face_dir_locked = true;
 	}
 	
 				
@@ -164,30 +174,25 @@ if (not is_state_locked) {
 // Only have control over movement if grounded
 if (is_grounded) {
 	
-	// Only move if walking / jumping (from ground)
-	if (state != Character_State.Walking 
-			and state != Character_State.InAir) {
-		move_dir = 0;	
-	}
-	
 	// Reposition back to the ground if below
 	y = ground_level;
+	
+	// Reset speed for non-walking states
 	vspeed = 0;
+	hspeed = 0;
 	
 	// Face and move in the right direction
-	move_dir = clamp(move_dir, -1, 1);
-	hspeed = move_dir * MOVE_SPEED;
+	move_dir = clamp(move_dir, Direction.Left, Direction.Right);
 	image_xscale = face_dir;
 	
-	// If jumping, create impulse upward and become ungrounded
-	if (state == Character_State.InAir) {
-		vspeed = JUMP_SPEED;
-		gravity = 1;
+	// Only move if walking
+	if (state == Character_State.Walking) {
+		hspeed = move_dir * MOVE_SPEED;
 	}
 }
 
 //////////////////////////////////////////////////////
-// Handle animations 
+// Handle animation-based logic 
 // - Ensures that animations are correct
 // - Ensures starting and stopping on correct frames
 //////////////////////////////////////////////////////
@@ -240,6 +245,31 @@ switch (state) {
 		}
 		break;
 	
+	// When the character is winding up a jump
+	case Character_State.Jumping:
+	
+		// Set jump animation
+		sprite_index = spr_chunli_jump
+		image_speed = 1;
+		
+		// Lock the way the character is facing
+		is_face_dir_locked = true;
+		
+		// When jumping from ground, restart animation
+		if (previous_state != Character_State.Jumping 
+				and is_grounded) {
+			image_index = 0;
+		}
+		
+		// When windup is over, perform jump and unlock state
+		if (image_index >= 1) {
+			vspeed = JUMP_SPEED;
+			hspeed = MOVE_SPEED * state_move_dir;
+			gravity = 1;
+			is_state_locked = false;
+		}
+		break;
+	
 	// Jumping / falling animation depending on vspeed
 	case Character_State.InAir:
 	
@@ -247,13 +277,16 @@ switch (state) {
 		sprite_index = spr_chunli_jump
 		image_speed = 1;
 	
-		// When jumping from ground, restart animation
-		if (is_grounded) {
-			image_index = 0;
-		}
-	
 		// If we're moving upwards, its the jump
-		if (vspeed <= 0) {
+		if (vspeed <= - 15) {
+			if (image_index >= 1) {
+				image_index = 1;
+				image_speed = 0;
+			}
+		}
+		
+		// If at the apex at the jump, different pose
+		else if (vspeed < 5) {
 			if (image_index >= 2) {
 				image_index = 2;
 				image_speed = 0;
@@ -261,7 +294,7 @@ switch (state) {
 		}
 	
 		// Otherwise, its the fall animation
-		if (vspeed > 0) {
+		else {
 			if (image_index >= 3) {
 				image_index = 3;
 				image_speed = 0;
@@ -297,6 +330,7 @@ if (state != previous_state or hurtbox == -1) {
 			
 		// 'Crouching' states have a smaller hitbox
 		case Character_State.Crouching:
+		case Character_State.Jumping:
 			hurtbox = hurtbox_create(50, 130, -25, -150);
 			break;
 			
