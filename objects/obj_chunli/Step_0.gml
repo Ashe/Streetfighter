@@ -23,22 +23,46 @@ var is_grounded = false;
 // - These flags will then be interpreted later
 //////////////////////////////////////////////////////
 
-// Set move_dir to the accumulation of left and right input
+// Find a controller if this object has not got one
+if (gamepad_device == -1) {
+	for (var i = 0; i < gamepad_get_device_count(); i++) {
+	    if (gamepad_button_check(i, gp_start)) {
+			gamepad_device = i;
+			show_debug_message("Device selected: Gamepad " + string(i));
+		}
+	}
+}
+
+// Prepare to get the direction to move int
 var move_dir = 0;
-if (keyboard_check(ord("D"))) {
+
+// Check the left stick for directional input
+var horz_input = 0;
+var vert_input = 0;
+if (gamepad_is_connected(gamepad_device)) {
+	horz_input = gamepad_axis_value(gamepad_device, gp_axislh);
+	vert_input = gamepad_axis_value(gamepad_device, gp_axislv);
+}
+
+// Set move_dir to the accumulation of left and right input
+if (keyboard_check(ord("D")) or horz_input > 0.3 
+		or gamepad_button_check(gamepad_device, gp_padr)) {
 	move_dir += Direction.Right;
 }
-if (keyboard_check(ord("A"))) {
+if (keyboard_check(ord("A")) or horz_input < - 0.3
+		or gamepad_button_check(gamepad_device, gp_padl)) {
 	move_dir += Direction.Left;
 }
 
-// Jump on up input
-if (keyboard_check(ord("W"))) {
+// Jump on 'Up' input
+if (keyboard_check(ord("W")) or vert_input < - 0.5
+		or gamepad_button_check(gamepad_device, gp_padu)) {
 	try_jump = true;
 }
 
-// Crouch on down input
-if (keyboard_check(ord("S"))) {
+// Crouch on 'Down' input
+if (keyboard_check(ord("S")) or vert_input > 0.5
+		or gamepad_button_check(gamepad_device, gp_padd)) {
 	try_crouch = true;
 }
 

@@ -36,3 +36,6 @@ is_state_locked = false
 // Initialise hurtbox and hitbox
 hurtbox = -1;
 hitbox = -1;
+
+// Which gamepad to use
+gamepad_device = -1;
