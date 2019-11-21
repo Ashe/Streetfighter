@@ -42,26 +42,30 @@ if (gamepad_is_connected(gamepad_device)) {
 }
 
 // Set move_dir to the accumulation of left and right input
-if ((is_using_keyboard and keyboard_check(ord("D")))
+if ((is_using_keyboard and (keyboard_check(ord("D"))
+			or keyboard_check(vk_right)))
 		or horz_input > 0.3 
 		or gamepad_button_check(gamepad_device, gp_padr)) {
 	move_dir += Direction.Right;
 }
-if ((is_using_keyboard and keyboard_check(ord("A")))
+if ((is_using_keyboard and (keyboard_check(ord("A"))
+			or keyboard_check(vk_left)))
 		or horz_input < - 0.3
 		or gamepad_button_check(gamepad_device, gp_padl)) {
 	move_dir += Direction.Left;
 }
 
 // Jump on 'Up' input
-if ((is_using_keyboard and keyboard_check(ord("W")))
+if ((is_using_keyboard and (keyboard_check(ord("W"))
+			or keyboard_check(vk_up)))
 		or vert_input < - 0.5
 		or gamepad_button_check(gamepad_device, gp_padu)) {
 	try_jump = true;
 }
 
 // Crouch on 'Down' input
-if ((is_using_keyboard and keyboard_check(ord("S")))
+if ((is_using_keyboard and (keyboard_check(ord("S"))
+			or keyboard_check(vk_down)))
 		or vert_input > 0.5
 		or gamepad_button_check(gamepad_device, gp_padd)) {
 	try_crouch = true;
@@ -143,7 +147,7 @@ if (not is_state_locked) {
 	if (is_grounded) {
 		
 		// Is the player trying to crouch
-		if (try_crouch) {
+		if (try_crouch ) {
 			state = Character_State.Crouching;
 			trigger_lock = true;
 		}
@@ -151,7 +155,6 @@ if (not is_state_locked) {
 		// Is the player trying to jump?
 		else if (try_jump) {
 			state = Character_State.Jumping;
-			trigger_lock = true;
 		}
 		
 		// Is the player trying to move in a direction
@@ -231,6 +234,7 @@ switch (state) {
 			image_speed = 1;
 
 		}
+		
 		// Reverse animation if moving away from opponent
 		else {
 			image_speed = -1;
@@ -258,59 +262,81 @@ switch (state) {
 		}
 		break;
 	
-	// When the character is winding up a jump
+	// When the character is jumping forwards or upwards
 	case Character_State.Jumping:
-	
-		// Set jump animation
-		sprite_index = spr_chunli_jump
-		image_speed = 1;
-		
+			
 		// Lock the way the character is facing
 		is_face_dir_locked = true;
+	
+		// Set jump animation depending on forwards or backwards jump
+		if (state_move_dir == 0) {
+			
+			// Do the standard animation normally
+			sprite_index = spr_chunli_jump
+			image_speed = 1;
+		}
+		else {
+			
+			// Do the flip animation
+			sprite_index = spr_chunli_forward_jump;
+			
+			// Flip forwards if moving towards the opponent
+			if ((move_dir >= Direction.Right 
+						and face_dir >= Direction.Right) 
+					or (move_dir <= Direction.Left 
+						and face_dir <= Direction.Left)) {
+				image_speed = 1;
+
+			}
+			
+			// Reverse animation if moving away from opponent
+			else {
+				image_speed = -1;
+			}
+		}
 		
 		// When jumping from ground, restart animation
 		if (previous_state != Character_State.Jumping 
 				and is_grounded) {
 			image_index = 0;
-		}
-		
-		// When windup is over, perform jump and unlock state
-		if (image_index >= 1) {
 			vspeed = JUMP_SPEED;
 			hspeed = MOVE_SPEED * state_move_dir;
 			gravity = 1;
+		}
+		
+		// Allows the character to change into an attack
+		if (image_index >= 1) {
 			is_state_locked = false;
 		}
+		
 		break;
 	
 	// Jumping / falling animation depending on vspeed
 	case Character_State.InAir:
 	
-		// Set jump animation
-		sprite_index = spr_chunli_jump
-		image_speed = 1;
+		// Only the 'upward jump' changes based on vspeed
+		if (sprite_index == spr_chunli_jump) {
+			
 	
-		// If we're moving upwards, its the jump
-		if (vspeed <= - 15) {
-			if (image_index >= 1) {
-				image_index = 1;
-				image_speed = 0;
+			// If we're moving upwards, its the jump
+			if (vspeed <= - 8) {
+				if (image_index >= 1) {
+					image_index = 1;
+				}
 			}
-		}
 		
-		// If at the apex at the jump, different pose
-		else if (vspeed < 5) {
-			if (image_index >= 2) {
-				image_index = 2;
-				image_speed = 0;
+			// If at the apex at the jump, different pose
+			else if (vspeed < 7) {
+				if (image_index >= 2) {
+					image_index = 2;
+				}
 			}
-		}
 	
-		// Otherwise, its the fall animation
-		else {
-			if (image_index >= 3) {
-				image_index = 3;
-				image_speed = 0;
+			// Otherwise, its the fall animation
+			else {
+				if (image_index >= 3) {
+					image_index = 3;
+				}
 			}
 		}
 		break;	

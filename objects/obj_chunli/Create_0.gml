@@ -2,7 +2,7 @@
 
 // Movement speeds
 #macro MOVE_SPEED 6
-#macro JUMP_SPEED -25
+#macro JUMP_SPEED -28
 
 // Which way to face
 enum Direction {

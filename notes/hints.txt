@@ -1,8 +1,13 @@
 I learned from this video: https://www.youtube.com/watch?v=qKZ7ML4_2lM 
 - To see how animations were supposed to look and what frame rate they should be at (6 appears to be perfect)
 - That crouching animations always played (1-frame delay before reset back to idle)
-- You had to do the 'crouching' part of the jump animation before you launched (1-frame delay before jump)
+- (CORRECTED LATER) You had to do the 'crouching' part of the jump animation before you launched (1-frame delay before jump)
 - That you cannot change the direction you're facing in mid air, even when you get behind your opponent
 
 I used the blog 'Hitboxes and Hurtboxes' (https://www.developer.amazon.com/blogs/appstore/post/cc08d63b-2b7c-4dee-abb4-272b834d7c3a/gamemaker-basics-hitboxes-and-hurtboxes_
 - For inspiration about how to set up collision boxes
+
+I actually emulated street fighter 2 to play the game myself:
+- I learned that you can jump straight away without an animation delay (in the gameplay the player crouched a lot)
+- Jumping forwards or backwards perform flips, not standard jumps
+- While you can collide with the other character you cannot land on top of them
