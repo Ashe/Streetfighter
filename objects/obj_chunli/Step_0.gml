@@ -11,9 +11,6 @@ var try_jump = false;
 // Whether the character is crouching this frame
 var try_crouch = false
 
-// Whether direction is dependent on the opponent or not
-var is_facing_opponent = false;
-
 // Whether the character is on the ground
 var is_grounded = false;
 
@@ -93,7 +90,19 @@ if (is_grounded) {
 	
 	// Face the direction of the opponent
 	if (is_facing_opponent) {
-		// @TODO: Implement this
+		
+		// If the opponent is set
+		if (opponent != -1) {
+			
+			// Find displacement between characters
+			var disp = opponent.x - x;
+			
+			// Face the opponent
+			if (disp != 0) {
+				face_dir = disp < 0 ? 
+						Direction.Left : Direction.Right;
+			}
+		}
 	}
 
 	// Face in the direction of travel

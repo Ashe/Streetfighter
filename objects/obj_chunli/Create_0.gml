@@ -22,8 +22,14 @@ enum Character_State {
 // What line is the 'ground' - use starting position
 ground_level = y;
 
-// Which way the character is facing
+// Which way the character is currently facing
 face_dir = Direction.Right;
+
+// Whether direction is dependent on the opponent or not
+is_facing_opponent = false;
+
+// The oppponent to face
+opponent = -1;
 
 // Which way the character is moving
 move_dir = 0;
