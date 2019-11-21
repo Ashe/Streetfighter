@@ -12,12 +12,11 @@ if (hurtbox != -1 and opponent != -1 and opponent.hurtbox != -1) {
 			and hurtbox.x + hspeed + hurtbox.image_xscale > opponent.hurtbox.x
 			and hurtbox.y + vspeed < opponent.hurtbox.y + opponent.hurtbox.image_yscale
 			and hurtbox.y + vspeed + hurtbox.image_yscale > opponent.hurtbox.y) {
-			
 		
 		// Move the character out of the opponent's hurtbox
 		x -= hspeed;
 		x = opponent.x + opponent.hurtbox.image_xscale
-				* (opponent.x > x ? -1 : 1);
+				* (opponent.x > x ? Direction.Left : Direction.Right);
 	}
 }
 

@@ -16,8 +16,10 @@ if (player_one) {
 	player_one.is_using_keyboard = true;
 }
 
-// Give player two the camera also
+// Give player two a different colour
+// Also give player two the camera 
 if (player_two) {
+	player_two.image_blend = make_color_rgb(100, 255, 100);
 	player_two.camera = camera;	
 }
 
