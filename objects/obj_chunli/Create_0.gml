@@ -1,7 +1,7 @@
 /// @description Initialise variables and macros
 
 // Movement speeds
-#macro MOVE_SPEED 5
+#macro MOVE_SPEED 6
 #macro JUMP_SPEED -25
 
 // Which way to face
@@ -51,3 +51,9 @@ hitbox = -1;
 
 // Which gamepad to use
 gamepad_device = -1;
+
+// Whether this character should receive keyboard inputs
+is_using_keyboard = false;
+
+// Reference to camera (for staying on screen)
+camera = -1;

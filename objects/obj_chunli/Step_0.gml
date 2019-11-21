@@ -42,23 +42,27 @@ if (gamepad_is_connected(gamepad_device)) {
 }
 
 // Set move_dir to the accumulation of left and right input
-if (keyboard_check(ord("D")) or horz_input > 0.3 
+if ((is_using_keyboard and keyboard_check(ord("D")))
+		or horz_input > 0.3 
 		or gamepad_button_check(gamepad_device, gp_padr)) {
 	move_dir += Direction.Right;
 }
-if (keyboard_check(ord("A")) or horz_input < - 0.3
+if ((is_using_keyboard and keyboard_check(ord("A")))
+		or horz_input < - 0.3
 		or gamepad_button_check(gamepad_device, gp_padl)) {
 	move_dir += Direction.Left;
 }
 
 // Jump on 'Up' input
-if (keyboard_check(ord("W")) or vert_input < - 0.5
+if ((is_using_keyboard and keyboard_check(ord("W")))
+		or vert_input < - 0.5
 		or gamepad_button_check(gamepad_device, gp_padu)) {
 	try_jump = true;
 }
 
 // Crouch on 'Down' input
-if (keyboard_check(ord("S")) or vert_input > 0.5
+if ((is_using_keyboard and keyboard_check(ord("S")))
+		or vert_input > 0.5
 		or gamepad_button_check(gamepad_device, gp_padd)) {
 	try_crouch = true;
 }
