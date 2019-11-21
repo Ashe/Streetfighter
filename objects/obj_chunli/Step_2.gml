@@ -1,6 +1,27 @@
 /// @description Post-movement logic
 
 //////////////////////////////////////////////////////
+// Collide with other player
+// - Stop characters walking through each other
+// - You cannot land on top of the opponent
+//////////////////////////////////////////////////////
+
+// Only do these checks if there is an opponent
+if (hurtbox != -1 and opponent != -1 and opponent.hurtbox != -1) {
+	if (hurtbox.x + hspeed < opponent.hurtbox.x + opponent.hurtbox.image_xscale 
+			and hurtbox.x + hspeed + hurtbox.image_xscale > opponent.hurtbox.x
+			and hurtbox.y + vspeed < opponent.hurtbox.y + opponent.hurtbox.image_yscale
+			and hurtbox.y + vspeed + hurtbox.image_yscale > opponent.hurtbox.y) {
+			
+		
+		// Move the character out of the opponent's hurtbox
+		x -= hspeed;
+		x = opponent.x + opponent.hurtbox.image_xscale
+				* (opponent.x > x ? -1 : 1);
+	}
+}
+
+//////////////////////////////////////////////////////
 // Clamp position
 // - Called after all movement is processed
 // - Ensures that character's position is valid

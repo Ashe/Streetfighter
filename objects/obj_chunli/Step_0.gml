@@ -20,16 +20,6 @@ var is_grounded = false;
 // - These flags will then be interpreted later
 //////////////////////////////////////////////////////
 
-// Find a controller if this object has not got one
-if (gamepad_device == -1) {
-	for (var i = 0; i < gamepad_get_device_count(); i++) {
-	    if (gamepad_button_check(i, gp_start)) {
-			gamepad_device = i;
-			show_debug_message("Device selected: Gamepad " + string(i));
-		}
-	}
-}
-
 // Prepare to get the direction to move int
 move_dir = 0;
 
@@ -87,7 +77,7 @@ if (y >= ground_level) {
 }
 
 //////////////////////////////////////////////////////
-// @TODO: Face opponent
+// Face opponent
 // - Ensures that the sprite is facing the opponent
 // - Only functional when is_facing_opponent is true
 // - Must be on the ground to change direction
