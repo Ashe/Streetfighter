@@ -287,13 +287,15 @@ switch (state) {
 		// Lock the way the character is facing
 		is_face_dir_locked = true;
 	
-		// Set jump animation depending on forwards or backwards jump
+		// Jump upwards if no direction input
 		if (state_move_dir == 0) {
 			
 			// Do the standard animation normally
 			sprite_index = spr_chunli_jump
 			image_speed = 1;
 		}
+		
+		// If a direction has been input, flip in the right direction
 		else {
 			
 			// Do the flip animation
