@@ -12,12 +12,12 @@ enum Direction {
 
 // State of the character
 enum Character_State {
-	Unset,
 	Idle,
 	Walking,
 	Crouching,
 	Jumping,
 	InAir,
+	PunchMiddle
 }
 
 // What line is the 'ground' - use starting position
@@ -45,6 +45,9 @@ previous_state = -1;
 
 // Prevent switching states when enabled
 is_state_locked = false
+
+// Cooldown frames until state auto-unlocks
+cooldown_frames = 0;
 
 // Initialise hurtbox and hitbox
 hurtbox = -1;

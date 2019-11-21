@@ -11,3 +11,4 @@ I actually emulated street fighter 2 to play the game myself:
 - I learned that you can jump straight away without an animation delay (in the gameplay the player crouched a lot)
 - Jumping forwards or backwards perform flips, not standard jumps
 - While you can collide with the other character you cannot land on top of them
+- I found that there's a forced delay in between attacks, but with good timing you can go faster than if you spammed

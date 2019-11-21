@@ -65,7 +65,7 @@ if ((is_using_keyboard and (keyboard_check(ord("S"))
 }
 
 // Middle punch on "Y" or "Triangle"
-if (gamepad_button_check(gamepad_device, gp_face4)) {
+if (gamepad_button_check_pressed(gamepad_device, gp_face4)) {
 	try_punch_middle = true;
 }
 
@@ -127,13 +127,19 @@ if (is_grounded) {
 // - Used to control attacks, animations and boxes
 // - Only changes if the current state isn't locked
 // - State locking occurs when attacking or stunned
+// - State will also not change while cooling down
 //////////////////////////////////////////////////////
+
+// Decrement cooldown
+if (cooldown_frames > 0) {
+	cooldown_frames -= 1;
+}
 
 // Record the previous state
 previous_state = state;
 
 // Only change state if we aren't locked
-if (not is_state_locked) {
+if (not is_state_locked and cooldown_frames <= 0) {
 	
 	// Remember direction at state change
 	state_move_dir = move_dir;
@@ -161,6 +167,12 @@ if (not is_state_locked) {
 		// Is the player trying to jump?
 		else if (try_jump) {
 			state = Character_State.Jumping;
+		}
+		
+		// Is the character trying to punch (middle)?
+		else if(try_punch_middle) {
+			state = Character_State.PunchMiddle;
+			trigger_lock = true;
 		}
 		
 		// Is the player trying to move in a direction
@@ -222,10 +234,11 @@ if (is_grounded) {
 // Change animation depending on state
 switch (state) {
 	
-	// Play idle animation normall
+	// Play idle animation normal
 	case Character_State.Idle:
 		sprite_index = spr_chunli_idle;
 		image_speed = 1;
+		is_state_locked = false;
 		break;
 		
 	// Play walking animation, reverse if going backwards
@@ -269,9 +282,10 @@ switch (state) {
 		
 		// Stand up when not trying to crouch
 		else if (image_speed <= -1) {
-			if (image_index <= 0.3) {
+			if (image_index <= 0.5) {
 				is_state_locked = false;
-				state = Character_State.Unset;
+				state = Character_State.Idle;
+				cooldown_frames = 5;
 				image_index = 0;
 				image_speed = 0;
 			}
@@ -358,7 +372,27 @@ switch (state) {
 				}
 			}
 		}
-		break;	
+		break;
+		
+	// Punching (m) spawns a hitbox and plays standard animation
+	case Character_State.PunchMiddle:
+	
+		// Do the punch animation
+		sprite_index = spr_chunli_middle_punch;
+		image_speed = 1;
+		
+		// When this is a new punch, start it from the beginning
+		if (previous_state != Character_State.PunchMiddle) {
+			image_index = 0;
+		}
+		
+		// When at the end of the punch, go on cooldown
+		if (image_index >= 2) {
+			state = Character_State.Idle;
+			cooldown_frames = 7;
+		}
+	
+		break;
 }
 
 //////////////////////////////////////////////////////
@@ -383,19 +417,24 @@ if (state != previous_state or hurtbox == -1) {
 		// 'Stood up' states have same hurtbox
 		case Character_State.Idle:		
 		case Character_State.Walking:
-			hurtbox = hurtbox_create(60, 180, -30, -220);
+			hurtbox = hurtbox_create(60, 180, 0, -220);
 			break;
 			
 		// 'Crouching' states have a smaller hitbox
 		case Character_State.Crouching:
 		case Character_State.Jumping:
-			hurtbox = hurtbox_create(50, 130, -25, -150);
+			hurtbox = hurtbox_create(50, 130, 0, -150);
 			break;
 			
 		// Jumping state
 		case Character_State.InAir:
-			hurtbox = hurtbox_create(50, 150, -25, -250);
+			hurtbox = hurtbox_create(50, 150, 0, -250);
 			break;
+			
+		// Punching moves hitbox forwards a bit
+		case Character_State.PunchMiddle:
+			hurtbox = hurtbox_create(30, 180, 15, -220);
+
 	}
 }
 
