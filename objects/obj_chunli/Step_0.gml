@@ -264,7 +264,6 @@ switch (state) {
 				is_state_locked = false;
 				image_index = 2;
 				image_speed = 0;
-				show_debug_message("CROUCHED DOWN")
 			}
 		}
 		
@@ -275,7 +274,6 @@ switch (state) {
 				state = Character_State.Unset;
 				image_index = 0;
 				image_speed = 0;
-				show_debug_message("STOOD UP")
 			}
 		}
 		
