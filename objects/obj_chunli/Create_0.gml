@@ -12,6 +12,7 @@ enum Direction {
 
 // State of the character
 enum Character_State {
+	Unset,
 	Idle,
 	Walking,
 	Crouching,

@@ -167,6 +167,14 @@
             }
         },
         {
+            "Key": "80d1e931-b723-4a8c-82ae-3a657df7fdc6",
+            "Value": {
+                "id": "987629b4-4733-497c-9675-9dd8b1a2ad93",
+                "resourcePath": "sprites\\spr_chunli_middle_punch\\spr_chunli_middle_punch.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "8b2fbceb-e86a-4dda-9178-44a14a25749a",
             "Value": {
                 "id": "90ef3804-826a-4535-8782-9450db0feb16",

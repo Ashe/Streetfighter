@@ -11,6 +11,9 @@ var try_jump = false;
 // Whether the character is crouching this frame
 var try_crouch = false
 
+// Whether the character is punching this frame
+var try_punch_middle = false;
+
 // Whether the character is on the ground
 var is_grounded = false;
 
@@ -59,6 +62,11 @@ if ((is_using_keyboard and (keyboard_check(ord("S"))
 		or vert_input > 0.5
 		or gamepad_button_check(gamepad_device, gp_padd)) {
 	try_crouch = true;
+}
+
+// Middle punch on "Y" or "Triangle"
+if (gamepad_button_check(gamepad_device, gp_face4)) {
+	try_punch_middle = true;
 }
 
 //////////////////////////////////////////////////////
@@ -137,8 +145,16 @@ if (not is_state_locked) {
 	if (is_grounded) {
 		
 		// Is the player trying to crouch
-		if (try_crouch ) {
+		if (try_crouch) {
 			state = Character_State.Crouching;
+			image_speed = 1;
+			trigger_lock = true;
+		}
+		
+		// Is the player trying stand back up
+		else if (previous_state == Character_State.Crouching) {
+			state = Character_State.Crouching;
+			image_speed = -1;
 			trigger_lock = true;
 		}
 		
@@ -236,20 +252,33 @@ switch (state) {
 	
 		// Set crouch animation
 		sprite_index = spr_chunli_crouch;
-		image_speed = 1;
-	
+		
 		// Restart from the beginning if this animation is new
 		if (previous_state != Character_State.Crouching) {
 			image_index = 0;
 		}
-	
+		
 		// Stop looping the animation when crouched
-		// Also 'unlock' the state
-		if (image_index >= 1) {
-			is_state_locked = false;
-			image_index = 1;
-			image_speed = 0;
+		if (image_speed >= 1) {
+			if (image_index >= 2) {
+				is_state_locked = false;
+				image_index = 2;
+				image_speed = 0;
+				show_debug_message("CROUCHED DOWN")
+			}
 		}
+		
+		// Stand up when not trying to crouch
+		else if (image_speed <= -1) {
+			if (image_index <= 0.3) {
+				is_state_locked = false;
+				state = Character_State.Unset;
+				image_index = 0;
+				image_speed = 0;
+				show_debug_message("STOOD UP")
+			}
+		}
+		
 		break;
 	
 	// When the character is jumping forwards or upwards
