@@ -17,6 +17,7 @@ var try_punch_middle = false;
 var try_punch_high = false;
 
 // Whether the character is kicking this frame
+var try_kick_low = false;
 var try_kick_middle = false;
 var try_kick_high = false;
 
@@ -70,7 +71,7 @@ if ((is_using_keyboard and (keyboard_check(ord("S"))
 	try_crouch = true;
 }
 
-// Middle punch on "X" or "Square"
+// Middle punch on "X (Xbox)" or "Square"
 if (gamepad_button_check_pressed(gamepad_device, gp_face3)) {
 	try_punch_low = true;
 }
@@ -83,6 +84,11 @@ if (gamepad_button_check_pressed(gamepad_device, gp_face4)) {
 // High punch on left-shoulder
 if (gamepad_button_check_pressed(gamepad_device, gp_shoulderl)) {
 	try_punch_high = true;
+}
+
+// Low kick on "A" or "X (PlayStation)"
+if (gamepad_button_check_pressed(gamepad_device, gp_face1)) {
+	try_kick_low = true;
 }
 
 // Middle kick on "B" or "Circle"
@@ -210,6 +216,12 @@ if (not is_state_locked and cooldown_frames <= 0) {
 		// Is the character trying to punch (high)?
 		else if (try_punch_high) {
 			state = Character_State.PunchHigh;
+			trigger_lock = true;
+		}
+		
+		// Is the character trying to kick (low)?
+		else if (try_kick_low) {
+			state = Character_State.KickLow;
 			trigger_lock = true;
 		}
 				
@@ -457,7 +469,7 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_low_punch, Character_State.PunchLow, 1, 
-				75, 30, 55, -185, 4, 10, -2, 5, Hit_Type.Face,
+				75, 30, 55, -185, 4, 5, -2, 5, Hit_Type.Face,
 				2, Character_State.Idle, 2);	
 		break;
 			
@@ -466,7 +478,7 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_middle_punch, Character_State.PunchMiddle, 1, 
-				120, 30, 80, -165, 4, 20, -2, 10, Hit_Type.Face,
+				120, 30, 80, -165, 4, 10, -2, 10, Hit_Type.Face,
 				2, Character_State.Idle, 7);
 		break;
 		
@@ -475,8 +487,17 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_high_punch, Character_State.PunchHigh, 1, 
-				120, 45, 80, -185, 4, 20, -5, 12, Hit_Type.Face,
+				120, 45, 80, -185, 4, 15, -2, 12, Hit_Type.Face,
 				2, Character_State.Idle, 15);
+		break;
+		
+	// Kicking (l) spawns a hitbox and plays standard animation
+	case Character_State.KickLow:
+	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_low_kick, Character_State.KickLow, 2, 
+				80, 40, 95, -170, 4, 15, -1, 12, Hit_Type.Body,
+				4, Character_State.Idle, 4);
 		break;
 		
 	// Kicking (m) spawns a hitbox and plays standard animation
@@ -484,8 +505,8 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_middle_kick, Character_State.KickMiddle, 2, 
-				100, 40, 70, -200, 4, 20, -5, 12, Hit_Type.Face,
-				4, Character_State.Idle, 7);
+				80, 40, 95, -200, 4, 18, -1, 12, Hit_Type.Body,
+				4, Character_State.Idle, 5);
 		break;
 		
 	// Kicking (h) spawns a hitbox and plays standard animation
@@ -493,7 +514,7 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_high_kick, Character_State.KickHigh, 1, 
-				100, 35, 120, -240, 4, 23, -5, 12, Hit_Type.Face,
+				100, 35, 100, -240, 4, 18, -2, 12, Hit_Type.Face,
 				3, Character_State.Idle, 15);
 		break;
 }
@@ -538,6 +559,7 @@ if (state != previous_state or hurtbox == -1) {
 			break;
 			
 		// Kicking brings it forward a lot
+		case Character_State.KickLow:
 		case Character_State.KickMiddle:
 		case Character_State.KickHigh:
 			hurtbox_create(65, 180, 20, -220);

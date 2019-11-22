@@ -389,6 +389,14 @@
                 "resourcePath": "sprites\\spr_chunli_low_punch\\spr_chunli_low_punch.yy",
                 "resourceType": "GMSprite"
             }
+        },
+        {
+            "Key": "f7a167a7-535f-4208-81e9-562660843b17",
+            "Value": {
+                "id": "6df8d839-0287-42a9-91e9-8a1826c49188",
+                "resourcePath": "sprites\\spr_chunli_low_kick\\spr_chunli_low_kick.yy",
+                "resourceType": "GMSprite"
+            }
         }
     ],
     "script_order": [
