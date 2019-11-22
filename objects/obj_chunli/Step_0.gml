@@ -225,9 +225,16 @@ if (not is_state_locked and cooldown_frames <= 0) {
 			trigger_lock = true;
 		}
 				
-		// Is the character trying to kick (middle)?
+		// Is the character trying to kick (middle) or flip kick?
 		else if (try_kick_middle) {
-			state = Character_State.KickMiddle;
+			if (is_same_direction(move_dir, face_dir)
+					and opponent != -1
+					and abs(opponent.x - x) < CLOSE_RANGE) {
+				state = Character_State.ForwardMiddleKick;
+			}
+			else {
+				state = Character_State.KickMiddle;
+			}
 			trigger_lock = true;
 		}
 		
@@ -306,20 +313,7 @@ switch (state) {
 	// Play walking animation, reverse if going backwards
 	case Character_State.Walking:
 		sprite_index = spr_chunli_walking;
-		
-		// Walk forwards if moving towards the opponent
-		if ((move_dir >= Direction.Right 
-					and face_dir >= Direction.Right) 
-				or (move_dir <= Direction.Left 
-					and face_dir <= Direction.Left)) {
-			image_speed = 1;
-
-		}
-		
-		// Reverse animation if moving away from opponent
-		else {
-			image_speed = -1;
-		}
+		image_speed = is_same_direction(move_dir, face_dir) ? 1 : -1;
 		break;
 	
 	// Play the crouching animation from beginning each time
@@ -376,18 +370,8 @@ switch (state) {
 			sprite_index = spr_chunli_forward_jump;
 			
 			// Flip forwards if moving towards the opponent
-			if ((move_dir >= Direction.Right 
-						and face_dir >= Direction.Right) 
-					or (move_dir <= Direction.Left 
-						and face_dir <= Direction.Left)) {
-				image_speed = 1;
-
-			}
-			
 			// Reverse animation if moving away from opponent
-			else {
-				image_speed = -1;
-			}
+			image_speed = is_same_direction(move_dir, face_dir) ? 1 : -1;
 		}
 		
 		// When jumping from ground, restart animation
@@ -517,6 +501,39 @@ switch (state) {
 				100, 35, 100, -240, 4, 18, -2, 12, Hit_Type.Face,
 				3, Character_State.Idle, 15);
 		break;
+		
+	// Kicking (FM) spawns two hitboxes and animates standardly
+	case Character_State.ForwardMiddleKick:
+	
+		// Set animation to the flip kick
+		sprite_index = spr_chunli_forward_middle_kick;
+		image_speed = 1;
+		
+		// When this is a new punch, start it from the beginning
+		if (previous_state != Character_State.ForwardMiddleKick) {
+			image_index = 0;
+			attack_counter = 0;
+		}
+		
+		// On second frame, create hitbox
+		if (image_index >= 1 and hitbox == -1 and attack_counter == 0) {
+			hitbox_create(80, 40, 95, -200, 4, 10, -1, 12, Hit_Type.Body);
+			attack_counter = 1;
+		}
+		
+		// On third frame, create another hitbox
+		else if (image_index == 2 and hitbox == -1 and attack_counter == 1) {
+			hitbox_create(100, 40, 95, -200, 4, 18, -2, 12, Hit_Type.Body);
+			attack_counter = 2;
+		}
+		
+		// When at the end of the punch, go on cooldown
+		else if (image_index >= 5) {
+			state = Character_State.Idle;
+			attack_counter = 0;
+			cooldown_frames = 15;
+		}
+		break;
 }
 
 //////////////////////////////////////////////////////
@@ -562,9 +579,9 @@ if (state != previous_state or hurtbox == -1) {
 		case Character_State.KickLow:
 		case Character_State.KickMiddle:
 		case Character_State.KickHigh:
+		case Character_State.ForwardMiddleKick:
 			hurtbox_create(65, 180, 20, -220);
 			break;
-
 	}
 }
 

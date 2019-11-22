@@ -1,8 +1,9 @@
 /// @description Initialise variables and macros
 
-// Movement speeds
+// Constants
 #macro MOVE_SPEED 6
 #macro JUMP_SPEED -28
+#macro CLOSE_RANGE 120
 
 // Which way to face
 enum Direction {
@@ -23,7 +24,8 @@ enum Character_State {
 	PunchHigh,
 	KickLow,	
 	KickMiddle,
-	KickHigh
+	KickHigh,
+	ForwardMiddleKick
 }
 
 // Which gamepad to use
@@ -74,3 +76,6 @@ knockback_y = 0;
 
 // What kind of attack was used to hit this character
 hit_by_type = -1;
+
+// Attack counter for multi-hit moves
+attack_counter = 0;
