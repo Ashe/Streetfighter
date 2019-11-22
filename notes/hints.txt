@@ -12,3 +12,7 @@ I actually emulated street fighter 2 to play the game myself:
 - Jumping forwards or backwards perform flips, not standard jumps
 - While you can collide with the other character you cannot land on top of them
 - I found that there's a forced delay in between attacks, but with good timing you can go faster than if you spammed
+- The game pauses for each connected attack for a few frames. This serves three things:
+	- 1. It gives the player amazing feedback that their attack connected, visually showing the enemy being hit
+	- 2. It feels rewarding to have cool attacks be showcased this way in front of your opponent, its fun
+	- 3. It helps you understand what attacks are being used by both players and the distances / timings involved

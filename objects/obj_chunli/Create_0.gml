@@ -17,6 +17,7 @@ enum Character_State {
 	Crouching,
 	Jumping,
 	InAir,
+	Hit,
 	PunchMiddle
 }
 
@@ -59,5 +60,5 @@ gamepad_device = -1;
 // Whether this character should receive keyboard inputs
 is_using_keyboard = false;
 
-// Reference to camera (for staying on screen)
-camera = -1;
+// Reference to controller
+controller = -1;

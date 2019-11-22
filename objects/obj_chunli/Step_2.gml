@@ -14,9 +14,17 @@ if (hurtbox != -1 and opponent != -1 and opponent.hurtbox != -1) {
 			and hurtbox.y + vspeed + hurtbox.image_yscale > opponent.hurtbox.y) {
 		
 		// Move the character out of the opponent's hurtbox
-		x -= hspeed;
-		x = opponent.x + opponent.hurtbox.image_xscale
-				* (opponent.x > x ? Direction.Left : Direction.Right);
+		if (hspeed != 0 or vspeed != 0) {
+			
+			// Stops one character from dominating another
+			if (opponent.hspeed != 0) {
+				hspeed = 0;	
+			}
+			
+			// Positions the character right next to opponent's box
+			x = opponent.x - opponent.hspeed + opponent.hurtbox.image_xscale
+					* (opponent.x > x ? Direction.Left : Direction.Right);
+		}
 	}
 }
 
@@ -32,9 +40,9 @@ var boundry_left = 0;
 var boundry_right = room_width;
 
 // Change boundries from room to camera
-if (camera != -1) {
-	boundry_left = camera_get_view_x(camera);
-	boundry_right = boundry_left + camera_get_view_width(camera);
+if (controller != -1 and controller.camera != -1) {
+	boundry_left = camera_get_view_x(controller.camera);
+	boundry_right = boundry_left + camera_get_view_width(controller.camera);
 }
 
 // After switching animations etc, ensure position is valid

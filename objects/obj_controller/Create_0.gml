@@ -9,18 +9,26 @@ camera = view_camera[0];
 camera_width_half = camera_get_view_width(camera) * 0.5;
 camera_height_half = camera_get_view_height(camera) * 0.5;
 
-// Allow player one to use keyboard for debugging
-// Also give the camera so they can stay on-screen
+// Whether a hit has been registered
+register_hit = false;
+
+// How long to wait until disabling the hit
+pause_duration = 0;
+
+// Surface for rendering frozen frames
+pause_surface = -1;
+
+// Give player_one reference to this controller
 if (player_one) {
-	player_one.camera = camera;
-	player_one.is_using_keyboard = true;
+	player_one.controller = self;
 }
 
-// Give player two a different colour
-// Also give player two the camera 
+// Give player_two reference to this controller
+// Also give player_two a different colour and the keyboard controls
 if (player_two) {
+	player_two.controller = self;
+	player_two.is_using_keyboard = true;
 	player_two.image_blend = make_color_rgb(100, 255, 100);
-	player_two.camera = camera;	
 }
 
 // If both have been found

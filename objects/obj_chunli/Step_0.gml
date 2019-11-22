@@ -349,7 +349,6 @@ switch (state) {
 	
 		// Only the 'upward jump' changes based on vspeed
 		if (sprite_index == spr_chunli_jump) {
-			
 	
 			// If we're moving upwards, its the jump
 			if (vspeed <= - 8) {
@@ -374,6 +373,30 @@ switch (state) {
 		}
 		break;
 		
+	// When the character has been hit by the opponent
+	case Character_State.Hit:
+	
+		// Play animation from the beginning if necessary
+		if (sprite_index != spr_chunli_hit 
+				or previous_state != Character_State.Hit) {
+			image_index = 0;
+		}
+	
+		// Play the hitstun animation normally
+		sprite_index = spr_chunli_hit;
+		image_speed = 1;
+	
+		// Ensure that the state can change after cooldown is lifted
+		is_state_locked = false;
+		
+		// Don't loop animation
+		if (image_index >= 1) {
+			image_index = 1;
+			image_speed = 0;
+		}
+	
+		break;
+		
 	// Punching (m) spawns a hitbox and plays standard animation
 	case Character_State.PunchMiddle:
 	
@@ -386,8 +409,13 @@ switch (state) {
 			image_index = 0;
 		}
 		
+		// On second frame, create hitbox
+		if (image_index == 1 and hitbox == -1) {
+			hitbox_create(140, 30, 100, -165, 4, 10, 0, 10);
+		}
+		
 		// When at the end of the punch, go on cooldown
-		if (image_index >= 2) {
+		else if (image_index >= 2) {
 			state = Character_State.Idle;
 			cooldown_frames = 7;
 		}
@@ -399,17 +427,13 @@ switch (state) {
 // Handle hitbox / hurtbox
 // - Create initial hurtbox based on initial state
 // - Recreate hurtbox if state changes
+// - Check if hitbox has made contact with opponent
+// - Deal damage / apply effects of hitbox
 // - Keeps boxes positioned correctly
 //////////////////////////////////////////////////////
 
-// Create hurtbox if necessary
+// (Re)Create hurtbox if necessary
 if (state != previous_state or hurtbox == -1) {
-	
-	// Delete old hurtbox
-	if (hurtbox != -1) {
-		instance_destroy(hurtbox);
-		hurtbox = -1;
-	}
 	
 	// Change hurtbox depending on state
 	switch (state) {
@@ -417,24 +441,24 @@ if (state != previous_state or hurtbox == -1) {
 		// 'Stood up' states have same hurtbox
 		case Character_State.Idle:		
 		case Character_State.Walking:
-			hurtbox = hurtbox_create(60, 180, 0, -220);
+			hurtbox_create(50, 180, 0, -220);
 			break;
 			
 		// 'Crouching' states have a smaller hitbox
 		case Character_State.Crouching:
 		case Character_State.Jumping:
-			hurtbox = hurtbox_create(50, 130, 0, -150);
+			hurtbox_create(50, 130, 0, -150);
 			break;
 			
 		// Jumping state
 		case Character_State.InAir:
-			hurtbox = hurtbox_create(50, 150, 0, -250);
+			hurtbox_create(50, 150, 0, -250);
 			break;
 			
 		// Punching moves hitbox forwards a bit
 		case Character_State.PunchMiddle:
-			hurtbox = hurtbox_create(30, 180, 15, -220);
-
+			hurtbox_create(30, 180, 15, -220);
+			break;
 	}
 }
 
@@ -444,8 +468,33 @@ if (hurtbox != -1) {
 	hurtbox.y = y + hurtbox.y_offset;
 }
 
-// Reposition hitbox
-if (hitbox != -1) {
+// If a hitbox is currently in play
+if (hitbox != -1 and not hitbox.is_disabled) {
+	
+	// Reposition hitbox
 	hitbox.x = x + hitbox.x_offset;
 	hitbox.y = y + hitbox.y_offset;
+	
+	// If the opponent has a hurtbox, check for collision
+	if (opponent.hurtbox != -1) {
+		if (hitbox.x < opponent.hurtbox.x + opponent.hurtbox.image_xscale 
+			and hitbox.x + hitbox.image_xscale > opponent.hurtbox.x
+			and hitbox.y < opponent.hurtbox.y + opponent.hurtbox.image_yscale
+			and hitbox.y + hitbox.image_yscale > opponent.hurtbox.y) {
+			
+			// Hit the character and force a cooldown
+			opponent.state = Character_State.Hit;
+			opponent.cooldown_frames = hitbox.hit_stun;
+			opponent.hspeed = hitbox.knockback_x_hit;
+			opponent.vspeed = hitbox.knockback_y_hit;
+			
+			// Disable the hitbox to stop it from hitting twice
+			hitbox.is_disabled = true;
+			
+			// Notify controller of a hit
+			if (controller != -1) {
+				controller.register_hit = true;
+			}
+		}
+	}
 }

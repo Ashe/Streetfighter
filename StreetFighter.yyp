@@ -327,6 +327,14 @@
             }
         },
         {
+            "Key": "f2a29377-b84c-4e97-b151-ff79bf2959ca",
+            "Value": {
+                "id": "9e5b4f8c-3a3b-4c8c-ba01-5ec330f442fd",
+                "resourcePath": "sprites\\spr_chunli_hit\\spr_chunli_hit.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "f418569b-3bdd-4706-a0e4-364317f54032",
             "Value": {
                 "id": "4e2ed2e8-78f3-4475-8eb4-1cee75000aa1",

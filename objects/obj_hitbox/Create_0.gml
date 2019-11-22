@@ -1,7 +1,7 @@
 /// @description Initialise variables
 
 // Make it transparent
-image_alpha = 0.5;
+image_alpha = debug_mode ? 0.7 : 0;
 
 // Which character this hitbox belongs to
 owner = -1;
@@ -21,5 +21,4 @@ knockback_y_hit = 0;
 hit_stun = 0;
 
 // Prevent a character getting multiple times
-ignore = false;
-ignore_list = ds_list_create();
+is_disabled = false;

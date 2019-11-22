@@ -1,7 +1,7 @@
 /// @description Initialise variables
 
 // Make it transparent
-image_alpha = 0.5;
+image_alpha = debug_mode ? 0.5 : 0;
 
 // Which character this hitbox belongs to
 owner = -1;
