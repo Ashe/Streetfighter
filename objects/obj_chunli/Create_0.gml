@@ -20,7 +20,8 @@ enum Character_State {
 	Hit,
 	PunchLow,
 	PunchMiddle,
-	PunchHigh
+	PunchHigh,
+	KickHigh
 }
 
 // Which gamepad to use

@@ -39,6 +39,14 @@
             }
         },
         {
+            "Key": "07c1255f-7f2e-4a01-aadd-e47aaf48d60a",
+            "Value": {
+                "id": "d6f084b3-3a22-4ef3-9352-000c6b82c9f7",
+                "resourcePath": "sprites\\spr_chunli_high_kick\\spr_chunli_high_kick.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "097ae287-b19c-4d1f-86a2-ca4f3c659d32",
             "Value": {
                 "id": "3a9b6aa0-2569-42e8-87b3-4e0e316ac76f",

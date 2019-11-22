@@ -16,6 +16,9 @@ var try_punch_low = false;
 var try_punch_middle = false;
 var try_punch_high = false;
 
+// Whether the character is kicking this frame
+var try_kick_high = false;
+
 // Whether the character is on the ground
 var is_grounded = false;
 
@@ -79,6 +82,11 @@ if (gamepad_button_check_pressed(gamepad_device, gp_face4)) {
 // High punch on left-shoulder
 if (gamepad_button_check_pressed(gamepad_device, gp_shoulderl)) {
 	try_punch_high = true;
+}
+
+// High kick on right-shoulder
+if (gamepad_button_check_pressed(gamepad_device, gp_shoulderr)) {
+	try_kick_high = true;
 }
 
 //////////////////////////////////////////////////////
@@ -196,6 +204,12 @@ if (not is_state_locked and cooldown_frames <= 0) {
 		// Is the character trying to punch (high)?
 		else if (try_punch_high) {
 			state = Character_State.PunchHigh;
+			trigger_lock = true;
+		}
+		
+		// Is the character trying to kick (high)?
+		else if (try_kick_high) {
+			state = Character_State.KickHigh;
 			trigger_lock = true;
 		}
 
@@ -452,6 +466,15 @@ switch (state) {
 				120, 45, 80, -185, 4, 20, -5, 12, Hit_Type.Face,
 				2, Character_State.Idle, 15);
 		break;
+		
+	// Kicking (h) spawns a hitbox and plays standard animation
+	case Character_State.KickHigh:
+	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_high_kick, Character_State.KickHigh, 1, 
+				100, 40, 120, -200, 4, 20, -5, 12, Hit_Type.Face,
+				3, Character_State.Idle, 15);
+		break;
 }
 
 //////////////////////////////////////////////////////
@@ -487,9 +510,17 @@ if (state != previous_state or hurtbox == -1) {
 			break;
 			
 		// Punching moves hitbox forwards a bit
+		case Character_State.PunchLow:
 		case Character_State.PunchMiddle:
+		case Character_State.PunchHigh:
 			hurtbox_create(30, 180, 15, -220);
 			break;
+			
+		// Kicking brings it forward a lot
+		case Character_State.KickHigh:
+			hurtbox_create(30, 180, 50, -220);
+			break;
+
 	}
 }
 
@@ -538,7 +569,16 @@ if (hitbox != -1 and not hitbox.is_disabled) {
 // - Removes knockback
 //////////////////////////////////////////////////////
 
-hspeed += knockback_x;
-vspeed += knockback_y;
+// Initial movement
+x += knockback_x;
+y += knockback_y;
+
+// Only apply to velocity if there's anything to apply
+if (knockback_x != 0 or knockback_y != 0) {
+	hspeed = knockback_x;
+	vspeed = knockback_y;
+}
+
+// Reset knockback
 knockback_x = 0;
 knockback_y = 0;
