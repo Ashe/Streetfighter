@@ -17,6 +17,7 @@ var try_punch_middle = false;
 var try_punch_high = false;
 
 // Whether the character is kicking this frame
+var try_kick_middle = false;
 var try_kick_high = false;
 
 // Whether the character is on the ground
@@ -82,6 +83,11 @@ if (gamepad_button_check_pressed(gamepad_device, gp_face4)) {
 // High punch on left-shoulder
 if (gamepad_button_check_pressed(gamepad_device, gp_shoulderl)) {
 	try_punch_high = true;
+}
+
+// Middle kick on "B" or "Circle"
+if (gamepad_button_check_pressed(gamepad_device, gp_face2)) {
+	try_kick_middle = true;
 }
 
 // High kick on right-shoulder
@@ -204,6 +210,12 @@ if (not is_state_locked and cooldown_frames <= 0) {
 		// Is the character trying to punch (high)?
 		else if (try_punch_high) {
 			state = Character_State.PunchHigh;
+			trigger_lock = true;
+		}
+				
+		// Is the character trying to kick (middle)?
+		else if (try_kick_middle) {
+			state = Character_State.KickMiddle;
 			trigger_lock = true;
 		}
 		
@@ -467,12 +479,21 @@ switch (state) {
 				2, Character_State.Idle, 15);
 		break;
 		
+	// Kicking (m) spawns a hitbox and plays standard animation
+	case Character_State.KickMiddle:
+	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_middle_kick, Character_State.KickMiddle, 2, 
+				100, 40, 70, -200, 4, 20, -5, 12, Hit_Type.Face,
+				4, Character_State.Idle, 7);
+		break;
+		
 	// Kicking (h) spawns a hitbox and plays standard animation
 	case Character_State.KickHigh:
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_high_kick, Character_State.KickHigh, 1, 
-				100, 40, 120, -200, 4, 20, -5, 12, Hit_Type.Face,
+				100, 35, 120, -240, 4, 23, -5, 12, Hit_Type.Face,
 				3, Character_State.Idle, 15);
 		break;
 }
@@ -517,8 +538,9 @@ if (state != previous_state or hurtbox == -1) {
 			break;
 			
 		// Kicking brings it forward a lot
+		case Character_State.KickMiddle:
 		case Character_State.KickHigh:
-			hurtbox_create(30, 180, 50, -220);
+			hurtbox_create(65, 180, 20, -220);
 			break;
 
 	}

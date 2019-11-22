@@ -21,6 +21,7 @@ enum Character_State {
 	PunchLow,
 	PunchMiddle,
 	PunchHigh,
+	KickMiddle,
 	KickHigh
 }
 

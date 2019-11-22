@@ -119,6 +119,14 @@
             }
         },
         {
+            "Key": "29253d44-e968-4c66-a7fb-c53c802e50bf",
+            "Value": {
+                "id": "cf1b086f-6d8d-4460-8534-b47e69f7fbd1",
+                "resourcePath": "sprites\\spr_chunli_middle_kick\\spr_chunli_middle_kick.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "2e9d3a54-40b9-4418-baf5-720775866e58",
             "Value": {
                 "id": "efac0091-9f04-415d-98a5-7140c07f114e",
