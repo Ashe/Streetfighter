@@ -1,3 +1,5 @@
+///hitbox_create(size_x, size_y, offset_x, offset_y, duration, knockback_x, knockback_y, stun_duration, hit_type)
+
 // Create a hitbox
 _hitbox = instance_create_depth(x, y, -1, obj_hitbox);
 _hitbox.owner = id;

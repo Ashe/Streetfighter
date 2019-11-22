@@ -429,77 +429,28 @@ switch (state) {
 	// Punching (l) spawns a hitbox and plays standard animation
 	case Character_State.PunchLow:
 	
-		// Do the punch animation
-		sprite_index = spr_chunli_low_punch;
-		image_speed = 1;
-		
-		// When this is a new punch, start it from the beginning
-		if (previous_state != Character_State.PunchLow) {
-			image_index = 0;
-		}
-		
-		// On second frame, create hitbox
-		if (image_index == 1 and hitbox == -1) {
-			hitbox_create(75, 30, 55, -185, 4, 10, -2, 5, Hit_Type.Face);
-		}
-		
-		// When at the end of the punch, go on cooldown
-		else if (image_index >= 2) {
-			state = Character_State.Idle;
-			cooldown_frames = 2;
-		}
-	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_low_punch, Character_State.PunchLow, 1, 
+				75, 30, 55, -185, 4, 10, -2, 5, Hit_Type.Face,
+				2, Character_State.Idle, 2);	
 		break;
-		
 			
 	// Punching (m) spawns a hitbox and plays standard animation
 	case Character_State.PunchMiddle:
 	
-		// Do the punch animation
-		sprite_index = spr_chunli_middle_punch;
-		image_speed = 1;
-		
-		// When this is a new punch, start it from the beginning
-		if (previous_state != Character_State.PunchMiddle) {
-			image_index = 0;
-		}
-		
-		// On second frame, create hitbox
-		if (image_index == 1 and hitbox == -1) {
-			hitbox_create(120, 30, 80, -165, 4, 20, -2, 10, Hit_Type.Face);
-		}
-		
-		// When at the end of the punch, go on cooldown
-		else if (image_index >= 2) {
-			state = Character_State.Idle;
-			cooldown_frames = 7;
-		}
-	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_middle_punch, Character_State.PunchMiddle, 1, 
+				120, 30, 80, -165, 4, 20, -2, 10, Hit_Type.Face,
+				2, Character_State.Idle, 7);
 		break;
 		
 	// Punching (h) spawns a hitbox and plays standard animation
 	case Character_State.PunchHigh:
 	
-		// Do the punch animation
-		sprite_index = spr_chunli_high_punch;
-		image_speed = 1;
-		
-		// When this is a new punch, start it from the beginning
-		if (previous_state != Character_State.PunchHigh) {
-			image_index = 0;
-		}
-		
-		// On second frame, create hitbox
-		if (image_index == 1 and hitbox == -1) {
-			hitbox_create(120, 45, 80, -185, 4, 20, -5, 12, Hit_Type.Face);
-		}
-		
-		// When at the end of the punch, go on cooldown
-		else if (image_index >= 2) {
-			state = Character_State.Idle;
-			cooldown_frames = 15;
-		}
-	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_high_punch, Character_State.PunchHigh, 1, 
+				120, 45, 80, -185, 4, 20, -5, 12, Hit_Type.Face,
+				2, Character_State.Idle, 15);
 		break;
 }
 

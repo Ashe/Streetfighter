@@ -1,3 +1,5 @@
+///hurtbox_create(size_x, size_y, offset_x, offset_y)
+
 // Create a new hurtbox
 _hurtbox = instance_create_depth(x,y, -1, obj_hurtbox);
 _hurtbox.owner = id;
