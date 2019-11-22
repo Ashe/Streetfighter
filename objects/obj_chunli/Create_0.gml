@@ -18,8 +18,9 @@ enum Character_State {
 	Jumping,
 	InAir,
 	Hit,
+	PunchLow,
 	PunchMiddle,
-	PunchLow
+	PunchHigh
 }
 
 // Which gamepad to use
@@ -67,3 +68,6 @@ hitbox = -1;
 // Knockback directions
 knockback_x = 0;
 knockback_y = 0;
+
+// What kind of attack was used to hit this character
+hit_by_type = -1;

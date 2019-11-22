@@ -55,6 +55,22 @@
             }
         },
         {
+            "Key": "13d995ca-e607-4937-8654-81f95db024e3",
+            "Value": {
+                "id": "b04f61bf-6cc2-4807-8196-584447646d32",
+                "resourcePath": "sprites\\spr_chunli_hit_face\\spr_chunli_hit_face.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "1493050c-df0d-4a11-a443-be12560b5f24",
+            "Value": {
+                "id": "92bf6eac-1030-4044-a549-fa8471e6e72e",
+                "resourcePath": "sprites\\spr_chunli_high_punch\\spr_chunli_high_punch.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "1775620e-5c2a-4144-9910-bf2b116e0ad3",
             "Value": {
                 "id": "8f35c081-0cae-41ed-bebb-4b7092b00782",

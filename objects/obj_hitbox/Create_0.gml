@@ -1,5 +1,11 @@
 /// @description Initialise variables
 
+// What kind of hit this represents
+enum Hit_Type {
+	Body,
+	Face
+}
+
 // Make it transparent
 image_alpha = debug_mode ? 0.7 : 0;
 
@@ -19,6 +25,9 @@ knockback_y_hit = 0;
 
 // How long we stun the character per hit
 hit_stun = 0;
+
+// Whether the attack was aimed at the face or body
+hit_type = Hit_Type.Body;
 
 // Prevent a character getting multiple times
 is_disabled = false;

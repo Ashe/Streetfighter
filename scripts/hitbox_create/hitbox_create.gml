@@ -9,6 +9,7 @@ _hitbox.duration = argument4;
 _hitbox.knockback_x_hit = argument5 * face_dir;
 _hitbox.knockback_y_hit = argument6;
 _hitbox.hit_stun = argument7;
+_hitbox.hit_type = argument8;
 
 // Delete the previous hitbox
 if (hitbox != -1) {

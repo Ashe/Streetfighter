@@ -12,8 +12,9 @@ var try_jump = false;
 var try_crouch = false
 
 // Whether the character is punching this frame
-var try_punch_middle = false;
 var try_punch_low = false;
+var try_punch_middle = false;
+var try_punch_high = false;
 
 // Whether the character is on the ground
 var is_grounded = false;
@@ -73,6 +74,11 @@ if (gamepad_button_check_pressed(gamepad_device, gp_face3)) {
 // Middle punch on "Y" or "Triangle"
 if (gamepad_button_check_pressed(gamepad_device, gp_face4)) {
 	try_punch_middle = true;
+}
+
+// High punch on left-shoulder
+if (gamepad_button_check_pressed(gamepad_device, gp_shoulderl)) {
+	try_punch_high = true;
 }
 
 //////////////////////////////////////////////////////
@@ -175,18 +181,24 @@ if (not is_state_locked and cooldown_frames <= 0) {
 			state = Character_State.Jumping;
 		}
 		
-		// Is the character trying to punch (middle)?
-		else if(try_punch_middle) {
-			state = Character_State.PunchMiddle;
-			trigger_lock = true;
-		}
-		
 		// Is the character trying to punch (low)?
 		else if (try_punch_low) {
 			state = Character_State.PunchLow;
 			trigger_lock = true;
 		}
 		
+		// Is the character trying to punch (middle)?
+		else if(try_punch_middle) {
+			state = Character_State.PunchMiddle;
+			trigger_lock = true;
+		}
+		
+		// Is the character trying to punch (high)?
+		else if (try_punch_high) {
+			state = Character_State.PunchHigh;
+			trigger_lock = true;
+		}
+
 		// Is the player trying to move in a direction
 		else if (move_dir != 0) {
 			state = Character_State.Walking;
@@ -394,8 +406,13 @@ switch (state) {
 			image_index = 0;
 		}
 	
-		// Play the hitstun animation normally
-		sprite_index = spr_chunli_hit;
+		// Play a different animation depending on the type of hit
+		switch (hit_by_type) {
+			case Hit_Type.Body: sprite_index = spr_chunli_hit; break;
+			case Hit_Type.Face: sprite_index = spr_chunli_hit_face; break;
+		}
+		
+		// Play at regular speed
 		image_speed = 1;
 	
 		// Ensure that the state can change after cooldown is lifted
@@ -405,31 +422,6 @@ switch (state) {
 		if (image_index >= 1) {
 			image_index = 1;
 			image_speed = 0;
-		}
-	
-		break;
-		
-	// Punching (m) spawns a hitbox and plays standard animation
-	case Character_State.PunchMiddle:
-	
-		// Do the punch animation
-		sprite_index = spr_chunli_middle_punch;
-		image_speed = 1;
-		
-		// When this is a new punch, start it from the beginning
-		if (previous_state != Character_State.PunchMiddle) {
-			image_index = 0;
-		}
-		
-		// On second frame, create hitbox
-		if (image_index == 1 and hitbox == -1) {
-			hitbox_create(120, 30, 80, -165, 4, 20, -2, 10);
-		}
-		
-		// When at the end of the punch, go on cooldown
-		else if (image_index >= 2) {
-			state = Character_State.Idle;
-			cooldown_frames = 7;
 		}
 	
 		break;
@@ -448,13 +440,64 @@ switch (state) {
 		
 		// On second frame, create hitbox
 		if (image_index == 1 and hitbox == -1) {
-			hitbox_create(75, 30, 55, -185, 4, 10, -2, 5);
+			hitbox_create(75, 30, 55, -185, 4, 10, -2, 5, Hit_Type.Face);
 		}
 		
 		// When at the end of the punch, go on cooldown
 		else if (image_index >= 2) {
 			state = Character_State.Idle;
 			cooldown_frames = 2;
+		}
+	
+		break;
+		
+			
+	// Punching (m) spawns a hitbox and plays standard animation
+	case Character_State.PunchMiddle:
+	
+		// Do the punch animation
+		sprite_index = spr_chunli_middle_punch;
+		image_speed = 1;
+		
+		// When this is a new punch, start it from the beginning
+		if (previous_state != Character_State.PunchMiddle) {
+			image_index = 0;
+		}
+		
+		// On second frame, create hitbox
+		if (image_index == 1 and hitbox == -1) {
+			hitbox_create(120, 30, 80, -165, 4, 20, -2, 10, Hit_Type.Face);
+		}
+		
+		// When at the end of the punch, go on cooldown
+		else if (image_index >= 2) {
+			state = Character_State.Idle;
+			cooldown_frames = 7;
+		}
+	
+		break;
+		
+	// Punching (h) spawns a hitbox and plays standard animation
+	case Character_State.PunchHigh:
+	
+		// Do the punch animation
+		sprite_index = spr_chunli_high_punch;
+		image_speed = 1;
+		
+		// When this is a new punch, start it from the beginning
+		if (previous_state != Character_State.PunchHigh) {
+			image_index = 0;
+		}
+		
+		// On second frame, create hitbox
+		if (image_index == 1 and hitbox == -1) {
+			hitbox_create(120, 45, 80, -185, 4, 20, -5, 12, Hit_Type.Face);
+		}
+		
+		// When at the end of the punch, go on cooldown
+		else if (image_index >= 2) {
+			state = Character_State.Idle;
+			cooldown_frames = 15;
 		}
 	
 		break;
@@ -524,6 +567,7 @@ if (hitbox != -1 and not hitbox.is_disabled) {
 			opponent.cooldown_frames = hitbox.hit_stun;
 			opponent.knockback_x = hitbox.knockback_x_hit;
 			opponent.knockback_y = hitbox.knockback_y_hit;
+			opponent.hit_by_type = hitbox.hit_type;
 			
 			// Disable the hitbox to stop it from hitting twice
 			hitbox.is_disabled = true;
