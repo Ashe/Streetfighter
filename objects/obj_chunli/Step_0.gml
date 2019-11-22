@@ -13,6 +13,7 @@ var try_crouch = false
 
 // Whether the character is punching this frame
 var try_punch_middle = false;
+var try_punch_low = false;
 
 // Whether the character is on the ground
 var is_grounded = false;
@@ -62,6 +63,11 @@ if ((is_using_keyboard and (keyboard_check(ord("S"))
 		or vert_input > 0.5
 		or gamepad_button_check(gamepad_device, gp_padd)) {
 	try_crouch = true;
+}
+
+// Middle punch on "X" or "Square"
+if (gamepad_button_check_pressed(gamepad_device, gp_face3)) {
+	try_punch_low = true;
 }
 
 // Middle punch on "Y" or "Triangle"
@@ -172,6 +178,12 @@ if (not is_state_locked and cooldown_frames <= 0) {
 		// Is the character trying to punch (middle)?
 		else if(try_punch_middle) {
 			state = Character_State.PunchMiddle;
+			trigger_lock = true;
+		}
+		
+		// Is the character trying to punch (low)?
+		else if (try_punch_low) {
+			state = Character_State.PunchLow;
 			trigger_lock = true;
 		}
 		
@@ -411,13 +423,38 @@ switch (state) {
 		
 		// On second frame, create hitbox
 		if (image_index == 1 and hitbox == -1) {
-			hitbox_create(140, 30, 100, -165, 4, 10, 0, 10);
+			hitbox_create(120, 30, 80, -165, 4, 20, -2, 10);
 		}
 		
 		// When at the end of the punch, go on cooldown
 		else if (image_index >= 2) {
 			state = Character_State.Idle;
 			cooldown_frames = 7;
+		}
+	
+		break;
+		
+	// Punching (l) spawns a hitbox and plays standard animation
+	case Character_State.PunchLow:
+	
+		// Do the punch animation
+		sprite_index = spr_chunli_low_punch;
+		image_speed = 1;
+		
+		// When this is a new punch, start it from the beginning
+		if (previous_state != Character_State.PunchLow) {
+			image_index = 0;
+		}
+		
+		// On second frame, create hitbox
+		if (image_index == 1 and hitbox == -1) {
+			hitbox_create(75, 30, 55, -185, 4, 10, -2, 5);
+		}
+		
+		// When at the end of the punch, go on cooldown
+		else if (image_index >= 2) {
+			state = Character_State.Idle;
+			cooldown_frames = 2;
 		}
 	
 		break;
@@ -485,8 +522,8 @@ if (hitbox != -1 and not hitbox.is_disabled) {
 			// Hit the character and force a cooldown
 			opponent.state = Character_State.Hit;
 			opponent.cooldown_frames = hitbox.hit_stun;
-			opponent.hspeed = hitbox.knockback_x_hit;
-			opponent.vspeed = hitbox.knockback_y_hit;
+			opponent.knockback_x = hitbox.knockback_x_hit;
+			opponent.knockback_y = hitbox.knockback_y_hit;
 			
 			// Disable the hitbox to stop it from hitting twice
 			hitbox.is_disabled = true;
@@ -498,3 +535,15 @@ if (hitbox != -1 and not hitbox.is_disabled) {
 		}
 	}
 }
+
+//////////////////////////////////////////////////////
+// Handle knockback
+// - Happens after being hit during step
+// - Modifies velocity with knockback in mind
+// - Removes knockback
+//////////////////////////////////////////////////////
+
+hspeed += knockback_x;
+vspeed += knockback_y;
+knockback_x = 0;
+knockback_y = 0;

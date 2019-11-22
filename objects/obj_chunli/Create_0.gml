@@ -18,8 +18,18 @@ enum Character_State {
 	Jumping,
 	InAir,
 	Hit,
-	PunchMiddle
+	PunchMiddle,
+	PunchLow
 }
+
+// Which gamepad to use
+gamepad_device = -1;
+
+// Whether this character should receive keyboard inputs
+is_using_keyboard = false;
+
+// Reference to controller
+controller = -1;
 
 // What line is the 'ground' - use starting position
 ground_level = y;
@@ -54,11 +64,6 @@ cooldown_frames = 0;
 hurtbox = -1;
 hitbox = -1;
 
-// Which gamepad to use
-gamepad_device = -1;
-
-// Whether this character should receive keyboard inputs
-is_using_keyboard = false;
-
-// Reference to controller
-controller = -1;
+// Knockback directions
+knockback_x = 0;
+knockback_y = 0;

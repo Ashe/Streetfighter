@@ -341,6 +341,14 @@
                 "resourcePath": "options\\mac\\options_mac.yy",
                 "resourceType": "GMMacOptions"
             }
+        },
+        {
+            "Key": "f42bbd3f-f621-4f5b-b6f2-3a2582d38705",
+            "Value": {
+                "id": "f864cd1d-3571-40bc-8ce3-afad523ee2da",
+                "resourcePath": "sprites\\spr_chunli_low_punch\\spr_chunli_low_punch.yy",
+                "resourceType": "GMSprite"
+            }
         }
     ],
     "script_order": [
