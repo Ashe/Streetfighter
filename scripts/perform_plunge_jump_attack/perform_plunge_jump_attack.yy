@@ -1,8 +1,8 @@
 {
-    "id": "8420ec65-afd9-4856-97db-4d4a93235723",
+    "id": "b02879b0-d0ac-49bc-b1a7-37ae1bb1ef3e",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "perform_jump_attack",
+    "name": "perform_plunge_jump_attack",
     "IsCompatibility": false,
     "IsDnD": false
 }

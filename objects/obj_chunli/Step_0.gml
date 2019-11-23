@@ -329,6 +329,12 @@ if (not is_state_locked and cooldown_frames <= 0) {
 				trigger_lock = true;
 			}
 			
+			// Is the character trying to do the jump-low-middle kick
+			else if (try_kick_low or try_kick_middle) {
+				state = Character_State.JumpLowMiddleKick;
+				trigger_lock = true;
+			}
+			
 			// Otherwise just use the standard falling state
 			else {
 				state = Character_State.InAir;
@@ -699,17 +705,26 @@ switch (state) {
 	// Jump punch attack ends when grounded
 	case Character_State.JumpPunch:
 	
-		// Use jump attack script for jump attacks
-		perform_jump_attack(spr_chunli_jump_punch, Character_State.JumpPunch, 2,
+		// Use plunging jump attack script to end move on grounding
+		perform_plunge_jump_attack(spr_chunli_jump_punch, Character_State.JumpPunch, 2,
 				70, 70, 60, -180, -1, 10, -2, 15, Hit_Type.Face,
 				is_grounded, 4, Character_State.Idle, 5);
+		break;
+		
+	// Jump kick (lm) attack ends when grounded
+	case Character_State.JumpLowMiddleKick:
+	
+		// Use the standard jump attack
+		perform_jump_attack(spr_chunli_jump_lm_kick, Character_State.JumpLowMiddleKick, 2,
+				70, 70, 60, -180, 10, 10, -2, 15, Hit_Type.Face,
+				is_grounded, 4, Character_State.Idle, 10);
 		break;
 		
 	// Forward jump punch attack ends when grounded
 	case Character_State.ForwardJumpPunch:
 	
-		// Use jump attack script for jump attacks
-		perform_jump_attack(spr_chunli_forward_jump_punch, Character_State.ForwardJumpPunch, 1,
+		// Use plunging jump attack script to end move on grounding
+		perform_plunge_jump_attack(spr_chunli_forward_jump_punch, Character_State.ForwardJumpPunch, 1,
 				70, 70, 60, -180, -1, 10, -2, 15, Hit_Type.Face,
 				is_grounded, 2, Character_State.Idle, 5);
 		break;
@@ -746,6 +761,7 @@ if (state != previous_state or hurtbox == -1) {
 		case Character_State.InAir:
 		case Character_State.ForwardHighKick:
 		case Character_State.JumpPunch:
+		case Character_State.JumpLowMiddleKick:
 		case Character_State.ForwardJumpPunch:
 			hurtbox_create(50, 150, 0, -250);
 			break;

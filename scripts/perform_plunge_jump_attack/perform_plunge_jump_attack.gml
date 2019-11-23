@@ -1,4 +1,4 @@
-///perform_jump_attack(atk_spr, state, index_hit, size_x, size_y, offset_x, offset_y, duration, knockback_x, knockback_y, stun_duration, hit_type, grounded, index_end, state_new, cooldown)
+///perform_plunge_jump_attack(atk_spr, state, index_hit, size_x, size_y, offset_x, offset_y, duration, knockback_x, knockback_y, stun_duration, hit_type, grounded, index_end, state_new, cooldown)
 
 // Set animation to the given attack
 sprite_index = argument0;
@@ -25,6 +25,12 @@ if (argument12) {
 	if (hitbox) {
 		hitbox.is_disabled = true;
 	}
+}
+		
+// Freeze the animation on the attack if not yet landed
+else if (attack_counter == 1 and hitbox != -1) {
+	image_index = argument2;
+	image_speed = 0;
 }
 		
 // Freeze animation on the last frame until landing

@@ -255,11 +255,27 @@
             }
         },
         {
+            "Key": "8056ef2a-de98-4fc2-a383-62bb9e797f15",
+            "Value": {
+                "id": "d9a43ae4-987d-47c5-adee-2743cc4920ae",
+                "resourcePath": "sprites\\spr_chunli_jump_lm_kick\\spr_chunli_jump_lm_kick.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "80d1e931-b723-4a8c-82ae-3a657df7fdc6",
             "Value": {
                 "id": "987629b4-4733-497c-9675-9dd8b1a2ad93",
                 "resourcePath": "sprites\\spr_chunli_middle_punch\\spr_chunli_middle_punch.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "8420ec65-afd9-4856-97db-4d4a93235723",
+            "Value": {
+                "id": "b3fd260c-d019-42a9-8d66-3594bd50ba76",
+                "resourcePath": "scripts\\perform_jump_attack\\perform_jump_attack.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -330,7 +346,7 @@
             "Key": "b02879b0-d0ac-49bc-b1a7-37ae1bb1ef3e",
             "Value": {
                 "id": "5012ee4c-da01-47ed-af85-9863b7dd13d3",
-                "resourcePath": "scripts\\perform_jump_attack\\perform_jump_attack.yy",
+                "resourcePath": "scripts\\perform_plunge_jump_attack\\perform_plunge_jump_attack.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -500,6 +516,7 @@
         "097ae287-b19c-4d1f-86a2-ca4f3c659d32",
         "2e9d3a54-40b9-4418-baf5-720775866e58",
         "7b5ed4a8-221b-4a73-991d-ed86d89afb4f",
+        "8420ec65-afd9-4856-97db-4d4a93235723",
         "b02879b0-d0ac-49bc-b1a7-37ae1bb1ef3e"
     ],
     "tutorial": ""
