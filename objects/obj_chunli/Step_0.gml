@@ -472,7 +472,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_high_punch, Character_State.PunchHigh, 1, 
 				120, 45, 80, -185, 4, 15, -2, 12, Hit_Type.Face,
-				2, Character_State.Idle, 15);
+				2, Character_State.Idle, 10);
 		break;
 		
 	// Kicking (l) spawns a hitbox and plays standard animation
@@ -489,7 +489,7 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_middle_kick, Character_State.KickMiddle, 2, 
-				80, 40, 95, -200, 4, 18, -1, 12, Hit_Type.Body,
+				80, 40, 95, -200, 4, 18, -1, 12, Hit_Type.Face,
 				4, Character_State.Idle, 5);
 		break;
 		
@@ -499,7 +499,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_high_kick, Character_State.KickHigh, 1, 
 				100, 35, 100, -240, 4, 18, -2, 12, Hit_Type.Face,
-				3, Character_State.Idle, 15);
+				3, Character_State.Idle, 10);
 		break;
 		
 	// Kicking (FM) spawns two hitboxes and animates standardly
@@ -509,7 +509,7 @@ switch (state) {
 		sprite_index = spr_chunli_forward_middle_kick;
 		image_speed = 1;
 		
-		// When this is a new punch, start it from the beginning
+		// When this is a new kick, start it from the beginning
 		if (previous_state != Character_State.ForwardMiddleKick) {
 			image_index = 0;
 			attack_counter = 0;
@@ -517,21 +517,21 @@ switch (state) {
 		
 		// On second frame, create hitbox
 		if (image_index >= 1 and hitbox == -1 and attack_counter == 0) {
-			hitbox_create(80, 40, 95, -200, 4, 10, -1, 12, Hit_Type.Body);
+			hitbox_create(80, 40, 95, -150, 4, 10, -1, 12, Hit_Type.Body);
 			attack_counter = 1;
 		}
 		
 		// On third frame, create another hitbox
 		else if (image_index == 2 and hitbox == -1 and attack_counter == 1) {
-			hitbox_create(100, 40, 95, -200, 4, 18, -2, 12, Hit_Type.Body);
+			hitbox_create(100, 40, 95, -200, 4, 18, -2, 12, Hit_Type.Face);
 			attack_counter = 2;
 		}
 		
-		// When at the end of the punch, go on cooldown
-		else if (image_index >= 5) {
+		// When at the end of the kick, go on cooldown
+		else if (image_index < 1 and attack_counter == 2) {
 			state = Character_State.Idle;
 			attack_counter = 0;
-			cooldown_frames = 15;
+			cooldown_frames = 10;
 		}
 		break;
 }
