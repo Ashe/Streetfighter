@@ -173,8 +173,10 @@ previous_state = state;
 // Only change state if we aren't locked
 if (not is_state_locked and cooldown_frames <= 0) {
 	
-	// Remember direction at state change
-	state_move_dir = move_dir;
+	// Remember direction at state change (when grounded)
+	if (is_grounded) {
+		state_move_dir = move_dir;
+	}
 
 	// Should the state lock upon changing?
 	var trigger_lock = false;
@@ -303,19 +305,34 @@ if (not is_state_locked and cooldown_frames <= 0) {
 		// Ensure that the character can't change direction
 		is_face_dir_locked = true;
 		
-		// Is the character trying to perform a forward move?
-		if (is_same_direction(move_dir, face_dir)) {
+		// Is the character trying to perform a forward jump move?
+		if (is_same_direction(state_move_dir, face_dir)) {
 			
 			// Is the character trying to use the forward jump punch?
 			if (try_punch_low or try_punch_middle or try_punch_high) {
 				state = Character_State.ForwardJumpPunch;
 				trigger_lock = true;
 			}
+			
+			// Otherwise just use the standard falling state
+			else {
+				state = Character_State.InAir;
+			}
 		}
 		
-		// Otherwise just use the standard falling state
+		// Is the character trying to perform a standard jump move?
 		else {
-			state = Character_State.InAir;
+			
+			// Is the character trying to use the jump punch?
+			if (try_punch_low or try_punch_middle or try_punch_high) {
+				state = Character_State.JumpPunch;
+				trigger_lock = true;
+			}
+			
+			// Otherwise just use the standard falling state
+			else {
+				state = Character_State.InAir;
+			}
 		}
 	}
 	
@@ -679,13 +696,22 @@ switch (state) {
 				2, Character_State.Crouching, 4);	
 		break;
 		
+	// Jump punch attack ends when grounded
+	case Character_State.JumpPunch:
+	
+		// Use jump attack script for jump attacks
+		perform_jump_attack(spr_chunli_jump_punch, Character_State.JumpPunch, 2,
+				70, 70, 60, -180, -1, 10, -2, 15, Hit_Type.Face,
+				is_grounded, 4, Character_State.Idle, 5);
+		break;
+		
 	// Forward jump punch attack ends when grounded
 	case Character_State.ForwardJumpPunch:
 	
 		// Use jump attack script for jump attacks
-		perform_jump_attack(spr_chunli_forward_jump_punch, Character_State.ForwardJumpPunch, 2,
+		perform_jump_attack(spr_chunli_forward_jump_punch, Character_State.ForwardJumpPunch, 1,
 				70, 70, 60, -180, -1, 10, -2, 15, Hit_Type.Face,
-				is_grounded, 4, Character_State.Idle, 10);
+				is_grounded, 2, Character_State.Idle, 5);
 		break;
 }
 
@@ -719,6 +745,7 @@ if (state != previous_state or hurtbox == -1) {
 		// States in mid-air share the same hurtbox
 		case Character_State.InAir:
 		case Character_State.ForwardHighKick:
+		case Character_State.JumpPunch:
 		case Character_State.ForwardJumpPunch:
 			hurtbox_create(50, 150, 0, -250);
 			break;

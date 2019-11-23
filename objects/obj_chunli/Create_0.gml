@@ -32,6 +32,7 @@ enum Character_State {
 	CrouchLowKick,
 	CrouchMiddleKick,
 	CrouchHighKick,
+	JumpPunch,
 	ForwardJumpPunch
 }
 
