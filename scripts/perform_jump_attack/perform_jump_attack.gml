@@ -22,9 +22,6 @@ if (argument12) {
 	state = argument14;
 	attack_counter = 0;
 	cooldown_frames = argument15;
-	if (hitbox) {
-		hitbox.is_disabled = true;
-	}
 }
 		
 // Freeze animation on the last frame until landing

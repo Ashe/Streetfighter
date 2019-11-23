@@ -329,9 +329,15 @@ if (not is_state_locked and cooldown_frames <= 0) {
 				trigger_lock = true;
 			}
 			
-			// Is the character trying to do the jump-low-middle kick
+			// Is the character trying to do the jump-low-middle kick?
 			else if (try_kick_low or try_kick_middle) {
 				state = Character_State.JumpLowMiddleKick;
+				trigger_lock = true;
+			}
+			
+			// Is the character trying to do the jump-high kick?
+			else if (try_kick_high) {
+				state = Character_State.JumpHighKick;
 				trigger_lock = true;
 			}
 			
@@ -711,13 +717,22 @@ switch (state) {
 				is_grounded, 4, Character_State.Idle, 5);
 		break;
 		
-	// Jump kick (lm) attack ends when grounded
+	// Jump kick (lm) attack ends after animation
 	case Character_State.JumpLowMiddleKick:
 	
 		// Use the standard jump attack
 		perform_jump_attack(spr_chunli_jump_lm_kick, Character_State.JumpLowMiddleKick, 2,
 				70, 70, 60, -180, 10, 10, -2, 15, Hit_Type.Face,
 				is_grounded, 4, Character_State.Idle, 10);
+		break;
+		
+	// Jump kick (h) attack ends after animation
+	case Character_State.JumpHighKick:
+	
+		// Use the standard jump attack
+		perform_jump_attack(spr_chunli_jump_high_kick, Character_State.JumpHighKick, 1,
+				80, 45, 95, -165, 6, 4, -1, 12, Hit_Type.Face,
+				is_grounded, 5, Character_State.Idle, 10);
 		break;
 		
 	// Forward jump punch attack ends when grounded
@@ -762,6 +777,7 @@ if (state != previous_state or hurtbox == -1) {
 		case Character_State.ForwardHighKick:
 		case Character_State.JumpPunch:
 		case Character_State.JumpLowMiddleKick:
+		case Character_State.JumpHighKick:
 		case Character_State.ForwardJumpPunch:
 			hurtbox_create(50, 150, 0, -250);
 			break;
