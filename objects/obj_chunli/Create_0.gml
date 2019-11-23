@@ -28,7 +28,8 @@ enum Character_State {
 	ForwardLowPunch,
 	ForwardHighKick,
 	ForwardMiddleKick,
-	CrouchPunch
+	CrouchPunch,
+	CrouchLowKick
 }
 
 // Which gamepad to use

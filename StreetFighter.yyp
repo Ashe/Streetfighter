@@ -311,6 +311,14 @@
             }
         },
         {
+            "Key": "c2b66058-8c23-4f3e-8a26-c7f441513a00",
+            "Value": {
+                "id": "98e1cc92-963b-4a55-b3b9-f0167fbc4fce",
+                "resourcePath": "sprites\\spr_chunli_crouch_low_kick\\spr_chunli_crouch_low_kick.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "c3d35aa2-f665-4dee-97e2-4f574f8e658a",
             "Value": {
                 "id": "6d568e4c-2a75-4079-aa82-3ed8c4c8b1a4",

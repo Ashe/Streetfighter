@@ -191,6 +191,12 @@ if (not is_state_locked and cooldown_frames <= 0) {
 				trigger_lock = true;
 			}
 			
+			// Is the character trying to perform crouch kick (low)?
+			else if (try_kick_low) {
+				state = Character_State.CrouchLowKick;
+				trigger_lock = true;
+			}
+			
 			// Either hold the crouch or undo it
 			else {
 				state = Character_State.Crouching;
@@ -535,7 +541,7 @@ switch (state) {
 				3, Character_State.Idle, 10);
 		break;
 		
-	// Kicking (FM) spawns two hitboxes and animates standardly
+	// Kicking (fm) spawns two hitboxes and animates standardly
 	case Character_State.ForwardMiddleKick:
 	
 		// Set animation to the flip kick
@@ -568,7 +574,7 @@ switch (state) {
 		}
 		break;
 		
-	// Kicking (FH) jumps into the air and spawns hitbox on the final frame
+	// Kicking (fh) jumps into the air and spawns hitbox on the final frame
 	case Character_State.ForwardHighKick:
 	
 		// Set animation to the flip kick
@@ -616,6 +622,15 @@ switch (state) {
 		perform_attack(spr_chunli_crouch_punch, Character_State.CrouchPunch, 1, 
 				110, 30, 110, -130, 4, 15, -2, 5, Hit_Type.Body,
 				2, Character_State.Crouching, 2);	
+		break;
+		
+	// Crouch kick (L) attacks standardly
+	case Character_State.CrouchLowKick:
+	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_crouch_low_kick, Character_State.CrouchLowKick, 1, 
+				110, 50, 110, -50, 4, 15, -2, 5, Hit_Type.Body,
+				2, Character_State.Crouching, 4);	
 		break;
 }
 
@@ -670,6 +685,7 @@ if (state != previous_state or hurtbox == -1) {
 			
 		// Crouching attacks move the hurtbox forwards
 		case Character_State.CrouchPunch:
+		case Character_State.CrouchLowKick:
 			hurtbox_create(35, 130, 50, -150);
 			break;
 	}
