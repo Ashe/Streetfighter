@@ -23,7 +23,8 @@
         "31d8bce5-528e-4fc4-b03e-1c5ae557a502",
         "4eafece5-32c0-4bd1-91b3-991edf41a37d",
         "c2b66058-8c23-4f3e-8a26-c7f441513a00",
-        "eaad8b4b-357f-4f75-a453-789a1fb0ec30"
+        "eaad8b4b-357f-4f75-a453-789a1fb0ec30",
+        "f0adc857-72cc-4c9c-897d-08d462ca27c3"
     ],
     "filterType": "GMSprite",
     "folderName": "chun_li",

@@ -423,6 +423,14 @@
             }
         },
         {
+            "Key": "f0adc857-72cc-4c9c-897d-08d462ca27c3",
+            "Value": {
+                "id": "1bf93697-10c0-4e21-8f22-e078063cfa8b",
+                "resourcePath": "sprites\\spr_chunli_crouch_high_kick\\spr_chunli_crouch_high_kick.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "f23f2bcf-dc48-4fd9-af21-0336703d74eb",
             "Value": {
                 "id": "b2a97d21-a8c6-4f00-89b9-21c3445ec67c",

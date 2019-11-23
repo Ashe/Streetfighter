@@ -203,6 +203,12 @@ if (not is_state_locked and cooldown_frames <= 0) {
 				trigger_lock = true;
 			}
 			
+			// Is the character trying to perform crouch kick (high)?
+			else if (try_kick_high) {
+				state = Character_State.CrouchHighKick;
+				trigger_lock = true;
+			}
+			
 			// Either hold the crouch or undo it
 			else {
 				state = Character_State.Crouching;
@@ -647,6 +653,15 @@ switch (state) {
 				110, 50, 110, -70, 4, 15, -2, 5, Hit_Type.Body,
 				2, Character_State.Crouching, 4);	
 		break;
+		
+	// Crouch kick (H) attacks standardly
+	case Character_State.CrouchHighKick:
+	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_crouch_high_kick, Character_State.CrouchHighKick, 1, 
+				110, 50, 110, -170, 4, 15, -3, 5, Hit_Type.Body,
+				2, Character_State.Crouching, 4);	
+		break;
 }
 
 //////////////////////////////////////////////////////
@@ -702,6 +717,7 @@ if (state != previous_state or hurtbox == -1) {
 		case Character_State.CrouchPunch:
 		case Character_State.CrouchLowKick:
 		case Character_State.CrouchMiddleKick:
+		case Character_State.CrouchHighKick:
 			hurtbox_create(35, 130, 50, -150);
 			break;
 	}
