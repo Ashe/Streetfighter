@@ -3,7 +3,8 @@
 // What kind of hit this represents
 enum Hit_Type {
 	Body,
-	Face
+	Face,
+	Knockdown
 }
 
 // Make it transparent

@@ -19,6 +19,7 @@ enum Character_State {
 	Jumping,
 	InAir,
 	Hit,
+	Recovery,
 	PunchLow,
 	PunchMiddle,
 	PunchHigh,

@@ -181,8 +181,15 @@ if (not is_state_locked and cooldown_frames <= 0) {
 	// Should the state lock upon changing?
 	var trigger_lock = false;
 	
+	// If was hit by a knockdown attack, go into recovery
+	if (previous_state == Character_State.Hit and
+			hit_by_type == Hit_Type.Knockdown) {
+		state = Character_State.Recovery;
+		trigger_lock = true;
+	}
+	
 	// Ground states
-	if (is_grounded) {
+	else if (is_grounded) {
 		
 		// Is the player already crouching?
 		if (previous_state == Character_State.Crouching) {
@@ -521,16 +528,24 @@ switch (state) {
 	// When the character has been hit by the opponent
 	case Character_State.Hit:
 	
-		// Play animation from the beginning if necessary
-		if (sprite_index != spr_chunli_hit 
-				or previous_state != Character_State.Hit) {
-			image_index = 0;
-		}
-	
 		// Play a different animation depending on the type of hit
+		var animation = spr_chunli_hit;
 		switch (hit_by_type) {
-			case Hit_Type.Body: sprite_index = spr_chunli_hit; break;
-			case Hit_Type.Face: sprite_index = spr_chunli_hit_face; break;
+			case Hit_Type.Body: 
+				animation = spr_chunli_hit; 
+				break;
+			case Hit_Type.Face: 
+				animation = spr_chunli_hit_face; 
+				break;
+			case Hit_Type.Knockdown: 
+				animation = spr_chunli_knockdown; 
+				break;
+		}
+		
+		// Play animation from the beginning if necessary
+		if (sprite_index != animation) {
+			sprite_index = animation;
+			image_index = 0;
 		}
 		
 		// Play at regular speed
@@ -540,9 +555,34 @@ switch (state) {
 		is_state_locked = false;
 		
 		// Don't loop animation
+		var last_frame = sprite_index == spr_chunli_knockdown ? 2 : 1;
+		if (image_index >= last_frame) {
+			image_index = last_frame;
+			image_speed = 0;
+		}
+	
+		break;
+		
+	// Recover from a knockdown attack
+	case Character_State.Recovery:
+	
+		// Play recovery animation
+		sprite_index = spr_chunli_recovery;
+		image_speed = 1;
+	
+		// Lock the state until recovered
+		is_state_locked = true;
+		
+		// Restart animation if needed
+		if (previous_state != Character_State.Recovery) {
+			image_index = 0;	
+		}
+		
+		// When the animation finishes, recover
 		if (image_index >= 1) {
 			image_index = 1;
 			image_speed = 0;
+			is_state_locked = false;
 		}
 	
 		break;
@@ -665,7 +705,7 @@ switch (state) {
 			
 			// When at the end of the flip, spawn hitbox that lasts until grounded
 			if (attack_counter == 0) {
-				hitbox_create(60, 40, -45, -180, -1, -20, -2, 15, Hit_Type.Face);
+				hitbox_create(60, 40, -45, -180, -1, -7, -18, 50, Hit_Type.Knockdown);
 				attack_counter = 1;
 			}
 			
@@ -716,7 +756,7 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_crouch_high_kick, Character_State.CrouchHighKick, 1, 
-				110, 50, 110, -170, 4, 15, -3, 5, Hit_Type.Body,
+				110, 50, 110, -170, 4, 8, -13, 45, Hit_Type.Knockdown,
 				2, Character_State.Crouching, 4);	
 		break;
 		
@@ -802,6 +842,23 @@ if (state != previous_state or hurtbox == -1) {
 			hurtbox_create(50, 130, 0, -150);
 			break;
 			
+		// When hit or recovering from knockdown, delete hurtbox
+		case Character_State.Hit:
+		case Character_State.Recovery:
+		
+			// Standard hurtbox for 'idle' if not knocked down
+			if (hit_by_type != Hit_Type.Knockdown) {
+				hurtbox_create(50, 180, 0, -220);
+			}
+			
+			// Otherwise, delete the hurtbox
+			else if (hurtbox != -1) {
+				instance_destroy(hurtbox);
+				hurtbox = -1;
+			}
+			
+			break;
+			
 		// States in mid-air share the same hurtbox
 		case Character_State.InAir:
 		case Character_State.ForwardHighKick:
@@ -866,6 +923,12 @@ if (hitbox != -1 and not hitbox.is_disabled) {
 			opponent.knockback_x = hitbox.knockback_x_hit;
 			opponent.knockback_y = hitbox.knockback_y_hit;
 			opponent.hit_by_type = hitbox.hit_type;
+			
+			// Delete the opponent's hurtbox so that it can reset
+			if (opponent.hurtbox != -1) {
+				instance_destroy(opponent.hurtbox);
+				opponent.hurtbox = -1;
+			}
 			
 			// Disable the hitbox to stop it from hitting twice
 			hitbox.is_disabled = true;

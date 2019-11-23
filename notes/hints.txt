@@ -21,3 +21,5 @@ I actually emulated street fighter 2 to play the game myself:
 	- The actual animation is actually the same as 'Jump High Kick'
 	- The new forward_middle_kick is a combination of the two to keep the shadow on the floor for the ground portion
 - The jumping and forward-jumping punch attacks end when the character lands, but the kicks end after the animation (but prevents you from attacking again)
+- You cannot be attacked while knocked down or recovering
+	- The attacks that do knock down the opponent (when not blocked) are the crouched-high-kick and the forward-high-kick (neck breaker) moves
