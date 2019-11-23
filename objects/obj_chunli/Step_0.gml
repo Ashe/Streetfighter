@@ -286,7 +286,7 @@ if (not is_state_locked and cooldown_frames <= 0) {
 			trigger_lock = true;
 		}
 
-		// Is the player trying to move in a direction
+		// Is the character trying to move in a direction
 		else if (move_dir != 0) {
 			state = Character_State.Walking;
 		}
@@ -299,8 +299,24 @@ if (not is_state_locked and cooldown_frames <= 0) {
 
 	// Arial states 
 	else {
-		state = Character_State.InAir;
+		
+		// Ensure that the character can't change direction
 		is_face_dir_locked = true;
+		
+		// Is the character trying to perform a forward move?
+		if (is_same_direction(move_dir, face_dir)) {
+			
+			// Is the character trying to use the forward jump punch?
+			if (try_punch_low or try_punch_middle or try_punch_high) {
+				state = Character_State.ForwardJumpPunch;
+				trigger_lock = true;
+			}
+		}
+		
+		// Otherwise just use the standard falling state
+		else {
+			state = Character_State.InAir;
+		}
 	}
 	
 				
@@ -662,6 +678,15 @@ switch (state) {
 				110, 50, 110, -170, 4, 15, -3, 5, Hit_Type.Body,
 				2, Character_State.Crouching, 4);	
 		break;
+		
+	// Forward jump punch attack ends when grounded
+	case Character_State.ForwardJumpPunch:
+	
+		// Use jump attack script for jump attacks
+		perform_jump_attack(spr_chunli_forward_jump_punch, Character_State.ForwardJumpPunch, 2,
+				70, 70, 60, -180, -1, 10, -2, 15, Hit_Type.Face,
+				is_grounded, 4, Character_State.Idle, 10);
+		break;
 }
 
 //////////////////////////////////////////////////////
@@ -694,6 +719,7 @@ if (state != previous_state or hurtbox == -1) {
 		// States in mid-air share the same hurtbox
 		case Character_State.InAir:
 		case Character_State.ForwardHighKick:
+		case Character_State.ForwardJumpPunch:
 			hurtbox_create(50, 150, 0, -250);
 			break;
 			
