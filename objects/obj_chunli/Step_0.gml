@@ -320,6 +320,12 @@ if (not is_state_locked and cooldown_frames <= 0) {
 				trigger_lock = true;
 			}
 			
+			// Is the character trying to do the forward-jump-high kick?
+			else if (try_kick_high) {
+				state = Character_State.ForwardJumpHighKick;
+				trigger_lock = true;
+			}
+			
 			// Otherwise just use the standard falling state
 			else {
 				state = Character_State.InAir;
@@ -726,7 +732,7 @@ switch (state) {
 	// Jump kick (lm) attack ends after animation
 	case Character_State.JumpLowMiddleKick:
 	
-		// Use the standard jump attack
+		// Use the standard jump attack script
 		perform_jump_attack(spr_chunli_jump_lm_kick, Character_State.JumpLowMiddleKick, 2,
 				70, 70, 60, -180, 10, 10, -2, 15, Hit_Type.Face,
 				is_grounded, 4, Character_State.Idle, 10);
@@ -735,7 +741,7 @@ switch (state) {
 	// Jump kick (h) attack ends after animation
 	case Character_State.JumpHighKick:
 	
-		// Use the standard jump attack
+		// Use the standard jump attack script
 		perform_jump_attack(spr_chunli_jump_high_kick, Character_State.JumpHighKick, 1,
 				80, 45, 95, -165, 6, 4, -1, 12, Hit_Type.Face,
 				is_grounded, 5, Character_State.Idle, 10);
@@ -753,10 +759,19 @@ switch (state) {
 	// Forward jump kick (lm) attack ends after animation
 	case Character_State.ForwardJumpLMKick:
 	
-		// Use the standard jump attack
+		// Use the standard jump attack script
 		perform_jump_attack(spr_chunli_forward_jump_lm_kick, Character_State.ForwardJumpLMKick, 1,
 				70, 70, 60, -180, 30, 10, -2, 15, Hit_Type.Face,
 				is_grounded, 4, Character_State.Idle, 10);
+		break;
+		
+	// Forward jump kick (h) attack ends after animation
+	case Character_State.ForwardJumpHighKick:
+	
+		// Use the standard jump attack script
+		perform_jump_attack(spr_chunli_forward_jump_high_kick, Character_State.ForwardJumpHighKick, 2,
+				70, 70, 60, -180, 16, 10, -2, 15, Hit_Type.Face,
+				is_grounded, 5, Character_State.Idle, 10);
 		break;
 }
 
@@ -795,6 +810,7 @@ if (state != previous_state or hurtbox == -1) {
 		case Character_State.JumpHighKick:
 		case Character_State.ForwardJumpPunch:
 		case Character_State.ForwardJumpLMKick:
+		case Character_State.ForwardJumpHighKick:
 			hurtbox_create(50, 150, 0, -250);
 			break;
 			
