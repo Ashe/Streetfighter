@@ -27,7 +27,8 @@ enum Character_State {
 	KickHigh,
 	ForwardLowPunch,
 	ForwardHighKick,
-	ForwardMiddleKick
+	ForwardMiddleKick,
+	CrouchPunch
 }
 
 // Which gamepad to use
@@ -81,3 +82,6 @@ hit_by_type = -1;
 
 // Attack counter for multi-hit moves
 attack_counter = 0;
+
+// Used to store velocities during collisions
+momentum = 0;

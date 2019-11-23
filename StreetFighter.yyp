@@ -175,6 +175,14 @@
             }
         },
         {
+            "Key": "4eafece5-32c0-4bd1-91b3-991edf41a37d",
+            "Value": {
+                "id": "759d204e-f3ad-4807-9b6f-5434f0584c85",
+                "resourcePath": "sprites\\spr_chunli_crouch_punch\\spr_chunli_crouch_punch.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "573e4058-87d1-4680-914c-5fc34a9ce13b",
             "Value": {
                 "id": "81c9c4ef-8c12-4091-b648-d769d7a02066",

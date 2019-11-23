@@ -1,31 +1,14 @@
 /// @description Post-movement logic
 
 //////////////////////////////////////////////////////
-// Collide with other player
-// - Stop characters walking through each other
-// - You cannot land on top of the opponent
+// Handle momentum
+// - Restores hspeed after collision during movement
 //////////////////////////////////////////////////////
 
-// Only do these checks if there is an opponent
-if (hurtbox != -1 and opponent != -1 and opponent.hurtbox != -1) {
-	if (hurtbox.x + hspeed < opponent.hurtbox.x + opponent.hurtbox.image_xscale 
-			and hurtbox.x + hspeed + hurtbox.image_xscale > opponent.hurtbox.x
-			and hurtbox.y + vspeed < opponent.hurtbox.y + opponent.hurtbox.image_yscale
-			and hurtbox.y + vspeed + hurtbox.image_yscale > opponent.hurtbox.y) {
-		
-		// Move the character out of the opponent's hurtbox
-		if (hspeed != 0 or vspeed != 0) {
-			
-			// Stops one character from dominating another
-			if (opponent.hspeed != 0) {
-				hspeed = 0;	
-			}
-			
-			// Positions the character right next to opponent's box
-			x = opponent.x - opponent.hspeed + opponent.hurtbox.image_xscale
-					* (opponent.x > x ? Direction.Left : Direction.Right);
-		}
-	}
+// If there is momentum, restore hspeed
+if (momentum != 0) {
+	hspeed = momentum;
+	momentum = 0;
 }
 
 //////////////////////////////////////////////////////

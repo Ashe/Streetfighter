@@ -182,17 +182,27 @@ if (not is_state_locked and cooldown_frames <= 0) {
 	// Ground states
 	if (is_grounded) {
 		
-		// Is the player trying to crouch
-		if (try_crouch) {
-			state = Character_State.Crouching;
-			image_speed = 1;
-			trigger_lock = true;
+		// Is the player already crouching?
+		if (previous_state == Character_State.Crouching) {
+			
+			// Any punch button triggers 'crouch_punch"
+			if (try_punch_low or try_punch_middle or try_punch_high) {
+				state = Character_State.CrouchPunch;
+				trigger_lock = true;
+			}
+			
+			// Either hold the crouch or undo it
+			else {
+				state = Character_State.Crouching;
+				image_speed = try_crouch ? 1 : -1;
+				trigger_lock = true;
+			}
 		}
 		
-		// Is the player trying stand back up
-		else if (previous_state == Character_State.Crouching) {
+		// Is the player trying to crouch from standing position
+		else if (try_crouch) {
 			state = Character_State.Crouching;
-			image_speed = -1;
+			image_speed = 1;
 			trigger_lock = true;
 		}
 		
@@ -569,7 +579,7 @@ switch (state) {
 		if (previous_state != Character_State.ForwardHighKick) {
 			image_index = 0;
 			vspeed = JUMP_SPEED * 0.9;
-			hspeed = MOVE_SPEED * face_dir * 0.4;
+			hspeed = MOVE_SPEED * face_dir * 0.45;
 			attack_counter = 0;
 		}
 		
@@ -597,6 +607,15 @@ switch (state) {
 			}
 		}
 	
+		break;
+		
+	// Crouch punch attacks standardly
+	case Character_State.CrouchPunch:
+	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_crouch_punch, Character_State.CrouchPunch, 1, 
+				110, 30, 110, -130, 4, 15, -2, 5, Hit_Type.Body,
+				2, Character_State.Crouching, 2);	
 		break;
 }
 
@@ -648,6 +667,11 @@ if (state != previous_state or hurtbox == -1) {
 		case Character_State.ForwardMiddleKick:
 			hurtbox_create(65, 180, 20, -220);
 			break;
+			
+		// Crouching attacks move the hurtbox forwards
+		case Character_State.CrouchPunch:
+			hurtbox_create(35, 130, 50, -150);
+			break;
 	}
 }
 
@@ -685,6 +709,33 @@ if (hitbox != -1 and not hitbox.is_disabled) {
 			if (controller != -1) {
 				controller.register_hit = true;
 			}
+		}
+	}
+}
+
+//////////////////////////////////////////////////////
+// Collide with other player
+// - Stop characters walking through each other
+// - You cannot land on top of the opponent
+//////////////////////////////////////////////////////
+
+// Only do these checks if there is an opponent
+if (hurtbox != -1 and opponent != -1 and opponent.hurtbox != -1) {
+	if (hurtbox.x + hspeed < opponent.hurtbox.x + opponent.hurtbox.image_xscale 
+			and hurtbox.x + hspeed + hurtbox.image_xscale > opponent.hurtbox.x
+			and hurtbox.y + vspeed < opponent.hurtbox.y + opponent.hurtbox.image_yscale
+			and hurtbox.y + vspeed + hurtbox.image_yscale > opponent.hurtbox.y) {
+		
+		// Move the character out of the opponent's hurtbox
+		if (hspeed != 0 or vspeed != 0) {
+			
+			// Store the speed and stop the player from moving
+			momentum = hspeed;
+			hspeed = 0;
+			
+			// Positions the character right next to opponent's box
+			x = opponent.x + opponent.hurtbox.image_xscale
+					* (opponent.x > x ? Direction.Left : Direction.Right);
 		}
 	}
 }
