@@ -671,7 +671,7 @@ switch (state) {
 		
 		// On third frame, create another hitbox
 		else if (image_index == 2 and hitbox == -1 and attack_counter == 1) {
-			hitbox_create(100, 40, 95, -200, 4, 18, -2, 12, Hit_Type.Face);
+			hitbox_create(100, 40, 95, -200, 4, 6, -18, 50, Hit_Type.Knockdown);
 			attack_counter = 2;
 		}
 		
