@@ -35,7 +35,8 @@ enum Character_State {
 	JumpPunch,
 	JumpLowMiddleKick,
 	JumpHighKick,
-	ForwardJumpPunch
+	ForwardJumpPunch,
+	ForwardJumpLMKick
 }
 
 // Which gamepad to use

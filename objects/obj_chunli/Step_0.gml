@@ -314,6 +314,12 @@ if (not is_state_locked and cooldown_frames <= 0) {
 				trigger_lock = true;
 			}
 			
+			// Is the character trying to do the forward-jump-low-middle kick?
+			else if (try_kick_low or try_kick_middle) {
+				state = Character_State.ForwardJumpLMKick;
+				trigger_lock = true;
+			}
+			
 			// Otherwise just use the standard falling state
 			else {
 				state = Character_State.InAir;
@@ -743,6 +749,15 @@ switch (state) {
 				70, 70, 60, -180, -1, 10, -2, 15, Hit_Type.Face,
 				is_grounded, 2, Character_State.Idle, 5);
 		break;
+		
+	// Forward jump kick (lm) attack ends after animation
+	case Character_State.ForwardJumpLMKick:
+	
+		// Use the standard jump attack
+		perform_jump_attack(spr_chunli_forward_jump_lm_kick, Character_State.ForwardJumpLMKick, 1,
+				70, 70, 60, -180, 30, 10, -2, 15, Hit_Type.Face,
+				is_grounded, 4, Character_State.Idle, 10);
+		break;
 }
 
 //////////////////////////////////////////////////////
@@ -779,6 +794,7 @@ if (state != previous_state or hurtbox == -1) {
 		case Character_State.JumpLowMiddleKick:
 		case Character_State.JumpHighKick:
 		case Character_State.ForwardJumpPunch:
+		case Character_State.ForwardJumpLMKick:
 			hurtbox_create(50, 150, 0, -250);
 			break;
 			
