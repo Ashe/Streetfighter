@@ -25,6 +25,7 @@ enum Character_State {
 	KickLow,	
 	KickMiddle,
 	KickHigh,
+	ForwardLowPunch,
 	ForwardMiddleKick
 }
 

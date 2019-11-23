@@ -203,7 +203,14 @@ if (not is_state_locked and cooldown_frames <= 0) {
 		
 		// Is the character trying to punch (low)?
 		else if (try_punch_low) {
-			state = Character_State.PunchLow;
+			if (is_same_direction(move_dir, face_dir)
+					and opponent != -1
+					and abs(opponent.x - x) < CLOSE_RANGE) {
+				state = Character_State.ForwardLowPunch;
+			}
+			else {
+				state = Character_State.PunchLow;
+			}
 			trigger_lock = true;
 		}
 		
@@ -453,7 +460,7 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_low_punch, Character_State.PunchLow, 1, 
-				75, 30, 55, -185, 4, 5, -2, 5, Hit_Type.Face,
+				85, 30, 65, -185, 4, 5, -2, 5, Hit_Type.Face,
 				2, Character_State.Idle, 2);	
 		break;
 			
@@ -473,6 +480,15 @@ switch (state) {
 		perform_attack(spr_chunli_high_punch, Character_State.PunchHigh, 1, 
 				120, 45, 80, -185, 4, 15, -2, 12, Hit_Type.Face,
 				2, Character_State.Idle, 10);
+		break;
+		
+	// Punching (fl) spawns a hitbox and plays standard animation
+	case Character_State.ForwardLowPunch:
+	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_forward_low_punch, Character_State.ForwardLowPunch, 1, 
+				85, 30, 65, -185, 4, 10, -2, 5, Hit_Type.Face,
+				2, Character_State.Idle, 2);	
 		break;
 		
 	// Kicking (l) spawns a hitbox and plays standard animation

@@ -31,6 +31,14 @@
     },
     "resources": [
         {
+            "Key": "047a35d6-6079-442c-a22a-cfb6b358064a",
+            "Value": {
+                "id": "8561b14d-4f3c-465a-8ef4-241d385aa676",
+                "resourcePath": "sprites\\spr_chunli_forward_low_punch\\spr_chunli_forward_low_punch.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "05f3220c-1b07-42d1-80fa-3b32ef2700dd",
             "Value": {
                 "id": "9d82b85c-3e62-4a79-befa-3e6586fc67d0",
