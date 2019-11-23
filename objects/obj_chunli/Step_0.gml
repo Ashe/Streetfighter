@@ -503,7 +503,7 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_low_kick, Character_State.KickLow, 2, 
-				80, 40, 95, -170, 4, 15, -1, 12, Hit_Type.Body,
+				80, 40, 95, -170, 4, 15, -1, 10, Hit_Type.Body,
 				4, Character_State.Idle, 4);
 		break;
 		
@@ -521,7 +521,7 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_high_kick, Character_State.KickHigh, 1, 
-				100, 35, 100, -240, 4, 18, -2, 12, Hit_Type.Face,
+				100, 35, 100, -240, 4, 18, -2, 15, Hit_Type.Face,
 				3, Character_State.Idle, 10);
 		break;
 		
@@ -580,7 +580,7 @@ switch (state) {
 			
 			// When at the end of the flip, spawn hitbox that lasts until grounded
 			if (attack_counter == 0) {
-				hitbox_create(60, 40, -45, -180, -1, -20, -2, 12, Hit_Type.Face);
+				hitbox_create(60, 40, -45, -180, -1, -20, -2, 15, Hit_Type.Face);
 				attack_counter = 1;
 			}
 			
