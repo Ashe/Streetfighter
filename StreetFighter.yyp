@@ -407,6 +407,14 @@
             }
         },
         {
+            "Key": "eaad8b4b-357f-4f75-a453-789a1fb0ec30",
+            "Value": {
+                "id": "8a7a954d-73a1-4cee-8cb1-cef36c45a26e",
+                "resourcePath": "sprites\\spr_chunli_crouch_middle_kick\\spr_chunli_crouch_middle_kick.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "ec786a52-f5c0-42bc-b25b-59f7340bb947",
             "Value": {
                 "id": "8686ff2d-8759-4927-962d-3a17c5dbf0b6",

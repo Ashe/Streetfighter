@@ -197,6 +197,12 @@ if (not is_state_locked and cooldown_frames <= 0) {
 				trigger_lock = true;
 			}
 			
+			// Is the character trying to perform crouch kick (middle)?
+			else if (try_kick_middle) {
+				state = Character_State.CrouchMiddleKick;
+				trigger_lock = true;
+			}
+			
 			// Either hold the crouch or undo it
 			else {
 				state = Character_State.Crouching;
@@ -359,7 +365,7 @@ switch (state) {
 		
 		// Stop looping the animation when crouched
 		if (image_speed >= 1) {
-			if (image_index >= 2) {
+			if (image_index > 1.2) {
 				is_state_locked = false;
 				image_index = 2;
 				image_speed = 0;
@@ -632,6 +638,15 @@ switch (state) {
 				110, 50, 110, -50, 4, 15, -2, 5, Hit_Type.Body,
 				2, Character_State.Crouching, 4);	
 		break;
+		
+	// Crouch kick (M) attacks standardly
+	case Character_State.CrouchMiddleKick:
+	
+		// Use the standard script for attacks
+		perform_attack(spr_chunli_crouch_middle_kick, Character_State.CrouchMiddleKick, 1, 
+				110, 50, 110, -70, 4, 15, -2, 5, Hit_Type.Body,
+				2, Character_State.Crouching, 4);	
+		break;
 }
 
 //////////////////////////////////////////////////////
@@ -686,6 +701,7 @@ if (state != previous_state or hurtbox == -1) {
 		// Crouching attacks move the hurtbox forwards
 		case Character_State.CrouchPunch:
 		case Character_State.CrouchLowKick:
+		case Character_State.CrouchMiddleKick:
 			hurtbox_create(35, 130, 50, -150);
 			break;
 	}
