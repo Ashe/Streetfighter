@@ -247,7 +247,14 @@ if (not is_state_locked and cooldown_frames <= 0) {
 		
 		// Is the character trying to kick (high)?
 		else if (try_kick_high) {
-			state = Character_State.KickHigh;
+			if (is_same_direction(move_dir, face_dir)
+					and opponent != -1
+					and abs(opponent.x - x) < CLOSE_RANGE) {
+				state = Character_State.ForwardHighKick;
+			}
+			else {
+				state = Character_State.KickHigh;
+			}
 			trigger_lock = true;
 		}
 
@@ -550,6 +557,47 @@ switch (state) {
 			cooldown_frames = 10;
 		}
 		break;
+		
+	// Kicking (FH) jumps into the air and spawns hitbox on the final frame
+	case Character_State.ForwardHighKick:
+	
+		// Set animation to the flip kick
+		sprite_index = spr_chunli_forward_high_kick;
+		image_speed = 1;
+		
+		// When this is a new kick, start it from the beginning
+		if (previous_state != Character_State.ForwardHighKick) {
+			image_index = 0;
+			vspeed = JUMP_SPEED * 0.9;
+			hspeed = MOVE_SPEED * face_dir * 0.4;
+			attack_counter = 0;
+		}
+		
+		// Freeze animation on final move
+		else if (image_index >= 5) {
+			image_index = 5;
+			image_speed = 0;
+			
+			// When at the end of the flip, spawn hitbox that lasts until grounded
+			if (attack_counter == 0) {
+				hitbox_create(60, 40, -45, -180, -1, -20, -2, 12, Hit_Type.Face);
+				attack_counter = 1;
+			}
+			
+			// When grounded and have made an attack, end the move
+			else if (attack_counter >= 1) {
+				if (is_grounded) {
+					if (hitbox != -1) {
+						hitbox.is_disabled = true;
+					}
+					state = Character_State.Idle;
+					attack_counter = 0;
+					cooldown_frames = 10;
+				}
+			}
+		}
+	
+		break;
 }
 
 //////////////////////////////////////////////////////
@@ -573,25 +621,27 @@ if (state != previous_state or hurtbox == -1) {
 			hurtbox_create(50, 180, 0, -220);
 			break;
 			
-		// 'Crouching' states have a smaller hitbox
+		// 'Crouching' states have a smaller hurtbox
 		case Character_State.Crouching:
 		case Character_State.Jumping:
 			hurtbox_create(50, 130, 0, -150);
 			break;
 			
-		// Jumping state
+		// States in mid-air share the same hurtbox
 		case Character_State.InAir:
+		case Character_State.ForwardHighKick:
 			hurtbox_create(50, 150, 0, -250);
 			break;
 			
-		// Punching moves hitbox forwards a bit
+		// Punching moves hurtbox forwards a bit
 		case Character_State.PunchLow:
 		case Character_State.PunchMiddle:
 		case Character_State.PunchHigh:
+		case Character_State.ForwardLowPunch:
 			hurtbox_create(30, 180, 15, -220);
 			break;
 			
-		// Kicking brings it forward a lot
+		// Kicking moves brings it forward a lot
 		case Character_State.KickLow:
 		case Character_State.KickMiddle:
 		case Character_State.KickHigh:

@@ -143,6 +143,14 @@
             }
         },
         {
+            "Key": "31d8bce5-528e-4fc4-b03e-1c5ae557a502",
+            "Value": {
+                "id": "712ed087-83a0-4d52-a667-d32ce84c109b",
+                "resourcePath": "sprites\\spr_chunli_forward_high_kick\\spr_chunli_forward_high_kick.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "33115df7-36d2-4e0a-a16c-28a61e24211e",
             "Value": {
                 "id": "8202f27e-8034-4af2-90a0-1903cdcc6308",

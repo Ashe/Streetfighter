@@ -16,7 +16,7 @@ owner = -1;
 x_offset = 0;
 y_offset = 0;
 
-// How long this hitbox is live for
+// How long this hitbox is live for (-1 = indefinite)
 duration = 0
 
 // Knockback values
