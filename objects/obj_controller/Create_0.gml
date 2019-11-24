@@ -4,6 +4,7 @@
 #macro HIT_PAUSE_DURATION 12
 #macro HEALTHBAR_PADDING 30
 #macro HEALTHBAR_HEIGHT 20
+#macro DELAY_BEFORE_RESTART 180
 
 // Get references to players
 player_one = instance_find(obj_chunli, 0);
@@ -19,6 +20,12 @@ register_hit = false;
 
 // How long to wait until disabling the hit
 pause_duration = 0;
+
+// How long to wait before restarting the room
+room_restart_duration = -1;
+
+// Whether the game is ending
+end_game = false;
 
 // Surface for rendering frozen frames
 pause_surface = -1;

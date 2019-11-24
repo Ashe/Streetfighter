@@ -120,11 +120,11 @@ if (y >= ground_level) {
 // Face opponent
 // - Ensures that the sprite is facing the opponent
 // - Only functional when is_facing_opponent is true
-// - Must be on the ground to change direction
+// - Typically only allowed when on ground
 //////////////////////////////////////////////////////
 
-// Only change the direction when grounded
-if (is_grounded) {
+// Only change the direction when allowed
+if (not is_face_dir_locked) {
 	
 	// Face the direction of the opponent
 	if (is_facing_opponent) {
@@ -190,6 +190,9 @@ if (not is_state_locked and cooldown_frames <= 0) {
 	
 	// Ground states
 	else if (is_grounded) {
+		
+		// Allow the character to face the opponent now grounded
+		is_face_dir_locked = false;
 		
 		// Is the player already crouching?
 		if (previous_state == Character_State.Crouching) {
@@ -528,37 +531,77 @@ switch (state) {
 	// When the character has been hit by the opponent
 	case Character_State.Hit:
 	
-		// Play a different animation depending on the type of hit
-		var animation = spr_chunli_hit;
-		switch (hit_by_type) {
-			case Hit_Type.Body: 
-				animation = spr_chunli_hit; 
-				break;
-			case Hit_Type.Face: 
-				animation = spr_chunli_hit_face; 
-				break;
-			case Hit_Type.Knockdown: 
-				animation = spr_chunli_knockdown; 
-				break;
+		// If there's no health left, play the knockdown animation
+		if (current_health <= 0) {
+			
+			// Restart knockdown animation and perform knockback
+			if (sprite_index != spr_chunli_knockdown) {
+				
+				// Start animation from the beginning
+				sprite_index = spr_chunli_knockdown;
+				image_index = 0;
+				
+				// Knockback away from opponent
+				var dir = opponent.x > x ? Direction.Left : Direction.Right;
+				knockback_x = 6 * dir;
+				knockback_y = -10;
+			}
+			
+			// Ensure that the character is locked into this state
+			is_face_dir_locked = true;
+			is_state_locked = true;
+			
+			// Ensure the knockdown is indeed selected
+			sprite_index = spr_chunli_knockdown;
+			
+			// Play the animation slowly
+			image_speed = 0.25;
+			
+			// Fall slower too
+			gravity = 0.3;
+			
+			// Freeze the animation on last frame
+			if (image_index >= 2) {
+				image_index = 2;
+				image_speed = 0;	
+			}
 		}
 		
-		// Play animation from the beginning if necessary
-		if (sprite_index != animation) {
-			sprite_index = animation;
-			image_index = 0;
-		}
-		
-		// Play at regular speed
-		image_speed = 1;
+		// Otherwise, change animation depending on hit type
+		else {
 	
-		// Ensure that the state can change after cooldown is lifted
-		is_state_locked = false;
+			// Play a different animation depending on the type of hit
+			var animation = spr_chunli_hit;
+			switch (hit_by_type) {
+				case Hit_Type.Body: 
+					animation = spr_chunli_hit; 
+					break;
+				case Hit_Type.Face: 
+					animation = spr_chunli_hit_face; 
+					break;
+				case Hit_Type.Knockdown: 
+					animation = spr_chunli_knockdown; 
+					break;
+			}
 		
-		// Don't loop animation
-		var last_frame = sprite_index == spr_chunli_knockdown ? 2 : 1;
-		if (image_index >= last_frame) {
-			image_index = last_frame;
-			image_speed = 0;
+			// Play animation from the beginning if necessary
+			if (sprite_index != animation) {
+				sprite_index = animation;
+				image_index = 0;
+			}
+		
+			// Play at regular speed
+			image_speed = 1;
+	
+			// Ensure that the state can change after cooldown is lifted
+			is_state_locked = false;
+		
+			// Don't loop animation
+			var last_frame = sprite_index == spr_chunli_knockdown ? 2 : 1;
+			if (image_index >= last_frame) {
+				image_index = last_frame;
+				image_speed = 0;
+			}
 		}
 	
 		break;
@@ -866,15 +909,19 @@ if (state != previous_state or hurtbox == -1) {
 		case Character_State.Hit:
 		case Character_State.Recovery:
 		
-			// Standard hurtbox for 'idle' if not knocked down
-			if (hit_by_type != Hit_Type.Knockdown) {
-				hurtbox_create(50, 180, 0, -220);
+			// If killed or knocked down, delete hurtbox
+			if (current_health <= 0 or hit_by_type == Hit_Type.Knockdown) {
+				
+				// Delete the hurtbox if it exists
+				if (hurtbox != -1) {
+					instance_destroy(hurtbox);
+					hurtbox = -1;
+				}
 			}
-			
-			// Otherwise, delete the hurtbox
-			else if (hurtbox != -1) {
-				instance_destroy(hurtbox);
-				hurtbox = -1;
+		
+			// Standard hurtbox for 'idle' if not knocked down
+			else {
+				hurtbox_create(50, 180, 0, -220);
 			}
 			
 			break;

@@ -13,6 +13,8 @@ if (pause_duration > 0) {
 
 // Deactivate all objects on a hit
 if (register_hit) {
+	
+	// Start the countdown until play is resumed
 	pause_duration = HIT_PAUSE_DURATION;
 	register_hit = false;
 	
@@ -36,9 +38,38 @@ if (pause_duration == 0) {
 	
 	// Reactivate all instances
 	instance_activate_all();
+	
+	// Check to see if anyone has died
+	end_game = false;
+	if (player_one != -1 and player_one.current_health <= 0) {
+		end_game = true;	
+	}
+	if (player_two != -1 and player_two.current_health <= 0) {
+		end_game = true;	
+	}
+	
+	// If the game is to end, start the ending countdown
+	if (end_game and room_restart_duration < 0) {
+		room_restart_duration = DELAY_BEFORE_RESTART;	
+	}
 }
 
 // Deactivate otherwise
 else {
 	instance_deactivate_all(self);
+}
+
+//////////////////////////////////////////////////////
+// Handle match delay
+// - Wait when a match ends until the next 
+//////////////////////////////////////////////////////
+
+// Count down until next match
+if (room_restart_duration > 0) {
+	room_restart_duration -= 1;	
+}
+
+// Restart the room when 0 is reached
+else if (room_restart_duration == 0) {
+	room_restart();
 }
