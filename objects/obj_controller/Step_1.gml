@@ -13,7 +13,7 @@ if (pause_duration > 0) {
 
 // Deactivate all objects on a hit
 if (register_hit) {
-	pause_duration = 12;
+	pause_duration = HIT_PAUSE_DURATION;
 	register_hit = false;
 	
 	// Create a surface to render while objects are inactive

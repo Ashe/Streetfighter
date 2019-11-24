@@ -24,6 +24,9 @@ duration = 0
 knockback_x_hit = 0;
 knockback_y_hit = 0;
 
+// Damage values
+hit_damage = 0;
+
 // How long we stun the character per hit
 hit_stun = 0;
 

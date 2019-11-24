@@ -1,4 +1,4 @@
-///hitbox_create(size_x, size_y, offset_x, offset_y, duration, knockback_x, knockback_y, stun_duration, hit_type)
+///hitbox_create(size_x, size_y, offset_x, offset_y, duration, knockback_x, knockback_y, damage, stun_duration, hit_type)
 
 // Create a hitbox
 _hitbox = instance_create_depth(x, y, -1, obj_hitbox);
@@ -10,8 +10,9 @@ _hitbox.y_offset = argument3;
 _hitbox.duration = argument4;
 _hitbox.knockback_x_hit = argument5 * face_dir;
 _hitbox.knockback_y_hit = argument6;
-_hitbox.hit_stun = argument7;
-_hitbox.hit_type = argument8;
+_hitbox.hit_damage = argument7
+_hitbox.hit_stun = argument8;
+_hitbox.hit_type = argument9;
 
 // Delete the previous hitbox
 if (hitbox != -1) {

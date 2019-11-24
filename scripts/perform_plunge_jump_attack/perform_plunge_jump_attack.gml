@@ -1,4 +1,4 @@
-///perform_plunge_jump_attack(atk_spr, state, index_hit, size_x, size_y, offset_x, offset_y, duration, knockback_x, knockback_y, stun_duration, hit_type, grounded, index_end, state_new, cooldown)
+///perform_plunge_jump_attack(atk_spr, state, index_hit, [size_x, size_y, offset_x, offset_y, duration, knockback_x, knockback_y, damage, stun_duration, hit_type], grounded, index_end, state_new, cooldown)
 
 // Set animation to the given attack
 sprite_index = argument0;
@@ -12,16 +12,16 @@ if (previous_state != argument1) {
 		
 // Perform attack on the given frame
 else if (image_index >= argument2 and attack_counter == 0) {
-	hitbox_create(argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11);
+	hitbox_create(argument3[0], argument3[1], argument3[2], argument3[3], argument3[4], argument3[5], argument3[6], argument3[7], argument3[8], argument3[9]);
 	attack_counter = 1;
 	image_index = argument2;
 }
 		
 // If the character is grounded, end the move
-if (argument12) {
-	state = argument14;
+if (argument4) {
+	state = argument6;
 	attack_counter = 0;
-	cooldown_frames = argument15;
+	cooldown_frames = argument7;
 	if (hitbox) {
 		hitbox.is_disabled = true;
 	}
@@ -29,12 +29,12 @@ if (argument12) {
 		
 // Freeze the animation on the attack if not yet landed
 else if (attack_counter == 1 and hitbox != -1) {
-	image_index = argument2;
+	image_index = argument5;
 	image_speed = 0;
 }
 		
 // Freeze animation on the last frame until landing
-else if (image_index >= argument13) {
-	image_index = argument13;
+else if (image_index >= argument5) {
+	image_index = argument5;
 	image_speed = 0;
 }

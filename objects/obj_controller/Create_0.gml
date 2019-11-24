@@ -1,5 +1,10 @@
 /// @description Get references to both characters and initialise
 
+// Constants
+#macro HIT_PAUSE_DURATION 12
+#macro HEALTHBAR_PADDING 30
+#macro HEALTHBAR_HEIGHT 20
+
 // Get references to players
 player_one = instance_find(obj_chunli, 0);
 player_two = instance_find(obj_chunli, 1);

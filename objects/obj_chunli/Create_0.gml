@@ -76,6 +76,9 @@ previous_state = -1;
 // Prevent switching states when enabled
 is_state_locked = false
 
+// How much health does this character have?
+current_health = 100;
+
 // Cooldown frames until state auto-unlocks
 cooldown_frames = 0;
 

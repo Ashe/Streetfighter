@@ -7,15 +7,18 @@ image_speed = 1;
 // When this is a new state, start it from the beginning
 if (previous_state != argument1) {
 	image_index = 0;
+	attack_counter = 0;
 }
 		
 // On given frame, create hitbox
-if (image_index == argument2 and hitbox == -1) {
-	hitbox_create(argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11);
+if (image_index >= argument2 and attack_counter == 0) {
+	hitbox_create(argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12);
+	image_index = argument2;
+	attack_counter = 1;
 }
 		
 // When at the end of the attack, go on given cooldown
-else if (image_index >= argument12) {
-	state = argument13;
-	cooldown_frames = argument14;
+else if (image_index >= argument13) {
+	state = argument14;
+	cooldown_frames = argument15;
 }
