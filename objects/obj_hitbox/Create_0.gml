@@ -30,6 +30,9 @@ hit_damage = 0;
 // How long we stun the character per hit
 hit_stun = 0;
 
+// What sound should be played if this connects?
+hit_sound = -1;
+
 // Whether the attack was aimed at the face or body
 hit_type = Hit_Type.Body;
 

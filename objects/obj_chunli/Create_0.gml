@@ -101,3 +101,6 @@ attack_counter = 0;
 
 // Used to store velocities during collisions
 momentum = 0;
+
+// Used to play the 'knocked down' sound when grounded
+has_been_knocked_to_floor = false;

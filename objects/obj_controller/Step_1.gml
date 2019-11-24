@@ -50,7 +50,12 @@ if (pause_duration == 0) {
 	
 	// If the game is to end, start the ending countdown
 	if (end_game and room_restart_duration < 0) {
-		room_restart_duration = DELAY_BEFORE_RESTART;	
+		
+		// Start the countdown
+		room_restart_duration = DELAY_BEFORE_RESTART;
+		
+		// Play the 'end round' sound
+		audio_play_sound(snd_round_end, 100, false);
 	}
 }
 

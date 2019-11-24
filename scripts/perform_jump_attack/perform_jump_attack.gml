@@ -12,7 +12,7 @@ if (previous_state != argument1) {
 		
 // Perform attack on the given frame
 else if (image_index >= argument2 and attack_counter == 0) {
-	hitbox_create(argument3[0], argument3[1], argument3[2], argument3[3], argument3[4], argument3[5], argument3[6], argument3[7], argument3[8], argument3[9]);
+	hitbox_create(argument3[0], argument3[1], argument3[2], argument3[3], argument3[4], argument3[5], argument3[6], argument3[7], argument3[8], argument3[9], argument3[10]);
 	attack_counter = 1;
 	image_index = argument2;
 }

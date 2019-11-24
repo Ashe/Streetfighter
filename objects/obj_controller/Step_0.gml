@@ -21,7 +21,12 @@ if (player_to_assign != -1) {
 			// Check that this gamepad is unique
 			if (player_to_assign.opponent != -1
 					and player_to_assign.opponent.gamepad_device != i) {
+						
+				// Give the player a gamepad
 				player_to_assign.gamepad_device = i;
+				
+				// Play the 'controller connected' sound
+				audio_play_sound(snd_controller_connected, 100, false);
 			}
 		}
 	}

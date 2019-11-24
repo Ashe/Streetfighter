@@ -54,3 +54,6 @@ if (player_one and player_two) {
 	player_one.is_facing_opponent = true;
 	player_two.is_facing_opponent = true;
 }
+
+// Play the 'start round' sound
+audio_play_sound(snd_round_start, 100, false);

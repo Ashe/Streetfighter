@@ -12,13 +12,18 @@ if (previous_state != argument1) {
 		
 // On given frame, create hitbox
 if (image_index >= argument2 and attack_counter == 0) {
-	hitbox_create(argument3, argument4, argument5, argument6, argument7, argument8, argument9, argument10, argument11, argument12);
+	
+	// Perform the attack
+	hitbox_create(argument3[0], argument3[1], argument3[2], argument3[3], argument3[4], argument3[5], argument3[6], argument3[7], argument3[8], argument3[9], argument3[10]);
 	image_index = argument2;
 	attack_counter = 1;
+	
+	// Make the 'swoosh' noise
+	audio_play_sound(snd_hit_swing, 0, false);
 }
 		
 // When at the end of the attack, go on given cooldown
-else if (image_index >= argument13) {
-	state = argument14;
-	cooldown_frames = argument15;
+else if (image_index >= argument4) {
+	state = argument5;
+	cooldown_frames = argument6;
 }
