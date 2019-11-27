@@ -104,3 +104,7 @@ momentum = 0;
 
 // Used to play the 'knocked down' sound when grounded
 has_been_knocked_to_floor = false;
+
+// Create the sign saying 'press start' to tell players to reconnect
+var start_sign = instance_create_depth(-100, -100, -1, obj_press_start);
+start_sign.paired_player = self;
