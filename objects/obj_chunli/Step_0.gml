@@ -696,9 +696,6 @@ switch (state) {
 		sprite_index = spr_chunli_blocking_crouching;
 		image_index = 0;
 		image_speed = 0;
-		
-		show_debug_message("BLOCKING CROUCHING2131321")
-	
 		break;
 		
 	// Recover from a knockdown attack
