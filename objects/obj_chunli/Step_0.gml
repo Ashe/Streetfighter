@@ -203,6 +203,9 @@ previous_state = state;
 // Only change state if we aren't locked
 if (not is_state_locked and cooldown_frames <= 0) {
 	
+	// Reset 'is_attacking' each state change
+	is_attacking = false;
+	
 	// Remember direction at state change (when grounded)
 	if (is_grounded) {
 		state_move_dir = move_dir;
@@ -226,30 +229,43 @@ if (not is_state_locked and cooldown_frames <= 0) {
 		is_face_dir_locked = false;
 		
 		// Is the player already crouching?
-		if (previous_state == Character_State.Crouching) {
+		if (previous_state == Character_State.Crouching or
+				previous_state == Character_State.BlockingCrouching) {
 			
 			// Any punch button triggers 'crouch_punch"
 			if (try_punch_low or try_punch_middle or try_punch_high) {
 				state = Character_State.CrouchPunch;
+				is_attacking = true;
 				trigger_lock = true;
 			}
 			
 			// Is the character trying to perform crouch kick (low)?
 			else if (try_kick_low) {
 				state = Character_State.CrouchLowKick;
+				is_attacking = true;
 				trigger_lock = true;
 			}
 			
 			// Is the character trying to perform crouch kick (middle)?
 			else if (try_kick_middle) {
 				state = Character_State.CrouchMiddleKick;
+				is_attacking = true;
 				trigger_lock = true;
 			}
 			
 			// Is the character trying to perform crouch kick (high)?
 			else if (try_kick_high) {
 				state = Character_State.CrouchHighKick;
+				is_attacking = true;
 				trigger_lock = true;
+			}
+			
+			// Is the character trying to block while crouched?
+			else if (is_same_direction(move_dir, face_dir * -1)
+					and opponent != -1
+					and abs(opponent.x - x) < CLOSE_RANGE * 2
+					and opponent.is_attacking) {
+				state = Character_State.BlockingCrouching;
 			}
 			
 			// Either hold the crouch or undo it
@@ -278,9 +294,11 @@ if (not is_state_locked and cooldown_frames <= 0) {
 					and opponent != -1
 					and abs(opponent.x - x) < CLOSE_RANGE) {
 				state = Character_State.ForwardLowPunch;
+				is_attacking = true;
 			}
 			else {
 				state = Character_State.PunchLow;
+				is_attacking = true;
 			}
 			trigger_lock = true;
 		}
@@ -288,18 +306,21 @@ if (not is_state_locked and cooldown_frames <= 0) {
 		// Is the character trying to punch (middle)?
 		else if(try_punch_middle) {
 			state = Character_State.PunchMiddle;
+			is_attacking = true;
 			trigger_lock = true;
 		}
 		
 		// Is the character trying to punch (high)?
 		else if (try_punch_high) {
 			state = Character_State.PunchHigh;
+			is_attacking = true;
 			trigger_lock = true;
 		}
 		
 		// Is the character trying to kick (low)?
 		else if (try_kick_low) {
 			state = Character_State.KickLow;
+			is_attacking = true;
 			trigger_lock = true;
 		}
 				
@@ -309,9 +330,11 @@ if (not is_state_locked and cooldown_frames <= 0) {
 					and opponent != -1
 					and abs(opponent.x - x) < CLOSE_RANGE) {
 				state = Character_State.ForwardMiddleKick;
+				is_attacking = true;
 			}
 			else {
 				state = Character_State.KickMiddle;
+				is_attacking = true;
 			}
 			trigger_lock = true;
 		}
@@ -322,11 +345,21 @@ if (not is_state_locked and cooldown_frames <= 0) {
 					and opponent != -1
 					and abs(opponent.x - x) < CLOSE_RANGE) {
 				state = Character_State.ForwardHighKick;
+				is_attacking = true;
 			}
 			else {
 				state = Character_State.KickHigh;
+				is_attacking = true;
 			}
 			trigger_lock = true;
+		}
+		
+		// Is the character trying to block an enemy attack?
+		else if (is_same_direction(move_dir, face_dir * -1)
+				and opponent != -1
+				and abs(opponent.x - x) < CLOSE_RANGE * 2
+				and opponent.is_attacking) {
+			state = Character_State.BlockingStanding;
 		}
 
 		// Is the character trying to move in a direction
@@ -352,18 +385,21 @@ if (not is_state_locked and cooldown_frames <= 0) {
 			// Is the character trying to use the forward jump punch?
 			if (try_punch_low or try_punch_middle or try_punch_high) {
 				state = Character_State.ForwardJumpPunch;
+				is_attacking = true;
 				trigger_lock = true;
 			}
 			
 			// Is the character trying to do the forward-jump-low-middle kick?
 			else if (try_kick_low or try_kick_middle) {
 				state = Character_State.ForwardJumpLMKick;
+				is_attacking = true;
 				trigger_lock = true;
 			}
 			
 			// Is the character trying to do the forward-jump-high kick?
 			else if (try_kick_high) {
 				state = Character_State.ForwardJumpHighKick;
+				is_attacking = true;
 				trigger_lock = true;
 			}
 			
@@ -379,18 +415,21 @@ if (not is_state_locked and cooldown_frames <= 0) {
 			// Is the character trying to use the jump punch?
 			if (try_punch_low or try_punch_middle or try_punch_high) {
 				state = Character_State.JumpPunch;
+				is_attacking = true;
 				trigger_lock = true;
 			}
 			
 			// Is the character trying to do the jump-low-middle kick?
 			else if (try_kick_low or try_kick_middle) {
 				state = Character_State.JumpLowMiddleKick;
+				is_attacking = true;
 				trigger_lock = true;
 			}
 			
 			// Is the character trying to do the jump-high kick?
 			else if (try_kick_high) {
 				state = Character_State.JumpHighKick;
+				is_attacking = true;
 				trigger_lock = true;
 			}
 			
@@ -637,6 +676,28 @@ switch (state) {
 				image_speed = 0;
 			}
 		}
+	
+		break;
+		
+	// Block an incoming attack
+	case Character_State.BlockingStanding:
+	
+		// Play blocking animation
+		sprite_index = spr_chunli_blocking;
+		image_index = 0;
+		image_speed = 0;
+	
+		break;
+		
+	// Block an incoming attack while crouched
+	case Character_State.BlockingCrouching:
+	
+		// Play blocking animation
+		sprite_index = spr_chunli_blocking_crouching;
+		image_index = 0;
+		image_speed = 0;
+		
+		show_debug_message("BLOCKING CROUCHING2131321")
 	
 		break;
 		
@@ -944,11 +1005,13 @@ if (state != previous_state or hurtbox == -1) {
 		// 'Stood up' states have same hurtbox
 		case Character_State.Idle:		
 		case Character_State.Walking:
+		case Character_State.BlockingStanding:
 			hurtbox_create(50, 180, 0, -220);
 			break;
 			
 		// 'Crouching' states have a smaller hurtbox
 		case Character_State.Crouching:
+		case Character_State.BlockingCrouching:
 		case Character_State.Jumping:
 			hurtbox_create(50, 130, 0, -150);
 			break;

@@ -20,6 +20,8 @@ enum Character_State {
 	InAir,
 	Hit,
 	Recovery,
+	BlockingStanding,
+	BlockingCrouching,
 	PunchLow,
 	PunchMiddle,
 	PunchHigh,
@@ -81,6 +83,9 @@ is_face_dir_locked = false;
 
 // How much health does this character have?
 current_health = 100;
+
+// Is the character currently attacking? (Used to allow for blocking)
+is_attacking = false;
 
 // Cooldown frames until state auto-unlocks
 cooldown_frames = 0;
