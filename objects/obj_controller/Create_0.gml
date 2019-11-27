@@ -2,8 +2,11 @@
 
 // Constants
 #macro HIT_PAUSE_DURATION 12
-#macro HEALTHBAR_PADDING 30
+#macro HEALTHBAR_PADDING_X 75
+#macro HEALTHBAR_SEPARATION 10
+#macro HEALTHBAR_PADDING_Y 65
 #macro HEALTHBAR_HEIGHT 20
+#macro SHADOW_OFFSET 5
 #macro DELAY_BEFORE_RESTART 180
 
 // Get references to players
@@ -29,6 +32,10 @@ end_game = false;
 
 // Surface for rendering frozen frames
 pause_surface = -1;
+
+// Healthbar shadow colour
+shadow_colour = make_color_rgb(0, 100, 0);
+shadow_bg_colour = make_color_rgb(100, 0, 0);
 
 // Give player_one reference to this controller
 if (player_one) {

@@ -82,7 +82,8 @@ if (gamepad_button_check_pressed(gamepad_device, gp_face4)) {
 }
 
 // High punch on left-shoulder
-if (gamepad_button_check_pressed(gamepad_device, gp_shoulderl)) {
+if (gamepad_button_check_pressed(gamepad_device, gp_shoulderl)
+		or gamepad_button_check_pressed(gamepad_device, gp_shoulderlb)){
 	try_punch_high = true;
 }
 
@@ -97,7 +98,8 @@ if (gamepad_button_check_pressed(gamepad_device, gp_face2)) {
 }
 
 // High kick on right-shoulder
-if (gamepad_button_check_pressed(gamepad_device, gp_shoulderr)) {
+if (gamepad_button_check_pressed(gamepad_device, gp_shoulderr)
+		or gamepad_button_check_pressed(gamepad_device, gp_shoulderrb)){
 	try_kick_high = true;
 }
 

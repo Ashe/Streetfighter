@@ -29,6 +29,6 @@ if (controller != -1 and controller.camera != -1) {
 }
 
 // After switching animations etc, ensure position is valid
-var half_width = hurtbox.sprite_width * 0.5;
+var half_width = hurtbox != -1 ? hurtbox.sprite_width * 0.5 : 30;
 x = clamp(x, boundry_left + half_width, boundry_right - half_width);
 y = clamp(y, 0, ground_level);

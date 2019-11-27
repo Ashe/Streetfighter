@@ -463,6 +463,14 @@
             }
         },
         {
+            "Key": "c751e78a-f999-4a8a-aa2c-cde199287ebc",
+            "Value": {
+                "id": "c1ed12dc-328c-4d37-9ec7-aa40fe7e3aa3",
+                "resourcePath": "sprites\\spr_chunli_face\\spr_chunli_face.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "c9c1fb9a-9390-467a-bd05-4d9b1b63e18e",
             "Value": {
                 "id": "5eef8a3c-34d3-4570-a076-35f0918433ec",
