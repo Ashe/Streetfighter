@@ -808,7 +808,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_low_punch, Character_State.PunchLow, 1, 
 				[85, 30, 65, -185, 4, 
-						5, -2, 10, 5, Hit_Type.Face, Blocked_By.AnyBlock, snd_punch_light],
+						5, -2, 3, 5, Hit_Type.Face, Blocked_By.AnyBlock, snd_punch_light],
 				2, Character_State.Idle, 2);	
 		break;
 			
@@ -818,7 +818,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_middle_punch, Character_State.PunchMiddle, 1, 
 				[120, 30, 80, -165, 4, 
-						10, -2, 10, 10, Hit_Type.Face, Blocked_By.AnyBlock, snd_punch],
+						10, -2, 11, 10, Hit_Type.Face, Blocked_By.AnyBlock, snd_punch],
 				2, Character_State.Idle, 7);
 		break;
 		
@@ -828,7 +828,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_high_punch, Character_State.PunchHigh, 1, 
 				[120, 45, 80, -185, 4, 
-						15, -2, 10, 12, Hit_Type.Face, Blocked_By.AnyBlock, snd_face_hit],
+						15, -2, 12, 12, Hit_Type.Face, Blocked_By.AnyBlock, snd_face_hit],
 				2, Character_State.Idle, 10);
 		break;
 		
@@ -838,7 +838,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_forward_low_punch, Character_State.ForwardLowPunch, 1, 
 				[85, 30, 65, -185, 4, 
-						10, -2, 10, 5, Hit_Type.Face, Blocked_By.AnyBlock, snd_punch_light],
+						10, -2, 9, 5, Hit_Type.Face, Blocked_By.AnyBlock, snd_punch_light],
 				2, Character_State.Idle, 2);
 		break;
 		
@@ -858,7 +858,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_middle_kick, Character_State.KickMiddle, 2, 
 				[80, 40, 95, -200, 4, 
-						18, -1, 10, 12, Hit_Type.Face, Blocked_By.AnyBlock, snd_body_hit],
+						18, -1, 13, 12, Hit_Type.Face, Blocked_By.AnyBlock, snd_body_hit],
 				4, Character_State.Idle, 5);
 		break;
 		
@@ -868,7 +868,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_high_kick, Character_State.KickHigh, 1, 
 				[100, 35, 100, -240, 4, 
-						18, -2, 10, 15, Hit_Type.Face, Blocked_By.AnyBlock, snd_big_hit],
+						18, -2, 15, 15, Hit_Type.Face, Blocked_By.AnyBlock, snd_big_hit],
 				3, Character_State.Idle, 10);
 		break;
 		
@@ -898,7 +898,7 @@ switch (state) {
 		// On third frame, create another hitbox
 		else if (image_index == 2 and hitbox == -1 and attack_counter == 1) {
 			hitbox_create(100, 40, 95, -200, 4, 
-					6, -18, 10, 75, Hit_Type.Knockdown, Blocked_By.AnyBlock, snd_face_hit);
+					6, -18, 15, 75, Hit_Type.Knockdown, Blocked_By.AnyBlock, snd_face_hit);
 			attack_counter = 2;
 		}
 		
@@ -939,7 +939,7 @@ switch (state) {
 			// When at the end of the flip, spawn hitbox that lasts until grounded
 			if (attack_counter == 0) {
 				hitbox_create(60, 40, -45, -180, -1, 
-						-7, -18, 10, 80, Hit_Type.Knockdown, Blocked_By.StandingBlock, snd_face_hit);
+						-7, -18, 11, 80, Hit_Type.Knockdown, Blocked_By.StandingBlock, snd_face_hit);
 				attack_counter = 1;
 			}
 			
@@ -969,7 +969,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_crouch_punch, Character_State.CrouchPunch, 1, 
 				[110, 30, 110, -130, 4, 
-						15, -2, 10, 5, Hit_Type.Body, Blocked_By.CrouchedBlock, snd_punch],
+						15, -2, 2, 5, Hit_Type.Body, Blocked_By.CrouchedBlock, snd_punch],
 				2, Character_State.Crouching, 2);	
 		break;
 		
@@ -979,7 +979,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_crouch_low_kick, Character_State.CrouchLowKick, 1, 
 				[110, 50, 110, -50, 4, 
-						15, -2, 10, 5, Hit_Type.Body, Blocked_By.CrouchedBlock, snd_punch],
+						15, -2, 7, 5, Hit_Type.Body, Blocked_By.CrouchedBlock, snd_punch],
 				2, Character_State.Crouching, 4);	
 		break;
 		
@@ -989,7 +989,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_crouch_middle_kick, Character_State.CrouchMiddleKick, 1, 
 				[110, 50, 110, -70, 4, 
-						15, -2, 10, 5, Hit_Type.Body, Blocked_By.CrouchedBlock, snd_body_hit],
+						15, -2, 9, 5, Hit_Type.Body, Blocked_By.CrouchedBlock, snd_body_hit],
 				2, Character_State.Crouching, 4);	
 		break;
 		
@@ -999,7 +999,7 @@ switch (state) {
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_crouch_high_kick, Character_State.CrouchHighKick, 1, 
 				[120, 50, 125, -170, 4, 
-						8, -13, 10, 75, Hit_Type.Knockdown, Blocked_By.CrouchedBlock, snd_big_hit],
+						8, -13, 12, 75, Hit_Type.Knockdown, Blocked_By.CrouchedBlock, snd_big_hit],
 				2, Character_State.Crouching, 4);	
 		break;
 		
@@ -1019,7 +1019,7 @@ switch (state) {
 		// Use the standard jump attack script
 		perform_jump_attack(spr_chunli_jump_lm_kick, Character_State.JumpLowMiddleKick, 2,
 				[70, 70, 60, -180, 10, 
-						10, -2, 10, 15, Hit_Type.Face, Blocked_By.StandingBlock, snd_face_hit],
+						10, -2, 12, 15, Hit_Type.Face, Blocked_By.StandingBlock, snd_face_hit],
 				is_grounded, 4, Character_State.Idle, 10);
 		break;
 		
@@ -1029,7 +1029,7 @@ switch (state) {
 		// Use the standard jump attack script
 		perform_jump_attack(spr_chunli_jump_high_kick, Character_State.JumpHighKick, 1,
 				[80, 45, 95, -165, 6, 
-						4, -1, 10, 12, Hit_Type.Face, Blocked_By.StandingBlock, snd_face_hit],
+						6, -18, 14, 70, Hit_Type.Knockdown, Blocked_By.StandingBlock, snd_face_hit],
 				is_grounded, 5, Character_State.Idle, 10);
 		break;
 		
@@ -1039,7 +1039,7 @@ switch (state) {
 		// Use plunging jump attack script to end move on grounding
 		perform_plunge_jump_attack(spr_chunli_forward_jump_punch, Character_State.ForwardJumpPunch, 1,
 				[70, 70, 60, -180, -1, 
-						10, -2, 10, 15, Hit_Type.Face, Blocked_By.StandingBlock, snd_punch_light],
+						10, -2, 8, 15, Hit_Type.Face, Blocked_By.StandingBlock, snd_punch_light],
 				is_grounded, 2, Character_State.Idle, 5);
 		break;
 		
@@ -1049,7 +1049,7 @@ switch (state) {
 		// Use the standard jump attack script
 		perform_jump_attack(spr_chunli_forward_jump_lm_kick, Character_State.ForwardJumpLMKick, 1,
 				[70, 70, 60, -180, 30, 
-						10, -2, 10, 15, Hit_Type.Face, Blocked_By.StandingBlock, snd_face_hit],
+						10, -2, 11, 15, Hit_Type.Face, Blocked_By.StandingBlock, snd_face_hit],
 				is_grounded, 4, Character_State.Idle, 10);
 		break;
 		
@@ -1059,7 +1059,7 @@ switch (state) {
 		// Use the standard jump attack script
 		perform_jump_attack(spr_chunli_forward_jump_high_kick, Character_State.ForwardJumpHighKick, 2,
 				[70, 70, 60, -180, 16, 
-						10, -2, 10, 15, Hit_Type.Face, Blocked_By.StandingBlock, snd_face_hit],
+						10, -2, 12, 15, Hit_Type.Face, Blocked_By.StandingBlock, snd_face_hit],
 				is_grounded, 5, Character_State.Idle, 10);
 		break;
 		
@@ -1079,7 +1079,7 @@ switch (state) {
 		// Spawn hitbox on second frame
 		if (image_index >= 1 and attack_counter == 0) {
 			hitbox_create(30, 100, 20, -70, 6,
-					5, -1, 10, 6, Hit_Type.Face, Blocked_By.StandingBlock,
+					5, -1, 11, 6, Hit_Type.Face, Blocked_By.StandingBlock,
 							snd_body_hit);
 			attack_counter = 1;
 			image_index = 1;

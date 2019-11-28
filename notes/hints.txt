@@ -48,7 +48,10 @@ I actually emulated street fighter 2 to play the game myself:
 	- The new forward_middle_kick is a combination of the two to keep the shadow on the floor for the ground portion
 - The jumping and forward-jumping punch attacks end when the character lands, but the kicks end after the animation (but prevents you from attacking again)
 - You cannot be attacked while knocked down or recovering
-	- The attacks that do knock down the opponent (when not blocked) are the crouched-high-kick, the flip kick and the forward-high-kick (neck breaker) moves
+	- The attacks that do knock down the opponent (when not blocked) are the crouched-high-kick, jump-high-kick, the flip kick and the forward-high-kick (neck breaker) moves
+- I worked out the damage numbers by using only that attack and counting how many moves it takes to kill the opponent
+	- This reinforces the evidence of the light-medium-heavy approach to punches and kicks found by other sources
+	- I couldn't find any other resources for damage numbers online (I imagine as its a lot of work)
 	
 From "Street Fighter 2 Oral History" (https://www.polygon.com/a/street-fighter-2-oral-history/chapter-2) I learned:
 - They opened up the timing of combos to make it easier. They used an input-buffer system that stored inputs
@@ -67,13 +70,18 @@ From Chun-Li's move list (https://uk.ign.com/faqs/2006/playtv-legends-sega-genes
 	- This is most likely due to the variety of moves available when she's in the air, in comparison to other characters
 		- I've noticed that most characters have only a few moves, whereas Chun li has lots of kicks and forward-kicks in mid air
 	- I need to make sure these moves are useful, ensuring they're easy to hit and good to combo with
-	- I previously considered not implementing the wall jump, but now I'm thinking I should
+	- I previously considered not implementing the wall jump, but now it has been implemented as it's important to her playstyle
 	
 From another Chun-Li move list (https://gamefaqs.gamespot.com/snes/588700-street-fighter-ii/faqs/64276) I learned:
 	- She has a stomp attack that I couldn't perform in the emulator - wrong version of street fighter maybe?
+		- I could actually perform it, it was stomp + medium kick, must have not tried it
+		- This reinforces that chun-li has both a kicking playstyle and an arial one
+		- Stomp kicks are hard to block as the direction to block depends on when the enemy uses it, this is a crossover
+			- As states in 'fighting game primer', this attack requires the opponent to change their blocking direction as the player goes over them
 - Damage appears to be universal, where it goes L-M-H punch and L-M-H kicks
 	- While its definite that a heavy kick does more damage than a light one, how much more damage does a light kick do vs a punch?
 		- In the emulator, the light punch (close range) does the same as a light puch from afar. Each attack will be hand tweaked
+- Confirms that air kick
 
 From "Fighting Game Primer" I learned:
 - The attacks are light-medium-heavy, not low-middle-high. I was confused because chun-li's animations do correspond with low, middle and high, where the high attacks were the good ones.

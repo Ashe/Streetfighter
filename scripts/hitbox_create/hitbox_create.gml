@@ -8,6 +8,7 @@ _hitbox.image_yscale = argument1;
 _hitbox.x_offset = argument0 * -0.5 + argument2 * face_dir;
 _hitbox.y_offset = argument3;
 _hitbox.duration = argument4;
+
 _hitbox.knockback_x_hit = argument5 * face_dir;
 _hitbox.knockback_y_hit = argument6;
 _hitbox.hit_damage = argument7
