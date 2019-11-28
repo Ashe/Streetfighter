@@ -17,6 +17,7 @@ enum Character_State {
 	Walking,
 	Crouching,
 	Jumping,
+	WallJump,
 	InAir,
 	Hit,
 	Recovery,

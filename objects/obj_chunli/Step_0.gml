@@ -379,8 +379,31 @@ if (not is_state_locked and cooldown_frames <= 0) {
 		// Ensure that the character can't change direction
 		is_face_dir_locked = true;
 		
+		// Prepare to do checks for wall jump
+		var check_wall_point = x + (move_dir * - 0.5 * (hurtbox.image_xscale + 2));
+		var boundry_left = 0;
+		var boundry_right = room_width;
+		if (controller != -1 and controller.camera != -1) {
+			boundry_left = camera_get_view_x(controller.camera);
+			boundry_right = boundry_left + camera_get_view_width(controller.camera);
+		}
+		
+		// Check to see if the character wants to wall jump
+		if (try_jump and move_dir != 0 and (check_wall_point <= boundry_left
+				or check_wall_point >= boundry_right)) {
+					
+			// Force-face the direction of the jump
+			state_move_dir = move_dir;
+			face_dir = state_move_dir;
+			image_xscale = face_dir;
+			
+			// Switch to walljump state
+			state = Character_State.WallJump;
+			trigger_lock = true;
+		}
+		
 		// Is the character trying to perform a forward jump move?
-		if (is_same_direction(state_move_dir, face_dir)) {
+		else if (is_same_direction(state_move_dir, face_dir)) {
 			
 			// Is the character trying to use the forward jump punch?
 			if (try_punch_low or try_punch_middle or try_punch_high) {
@@ -578,15 +601,61 @@ switch (state) {
 		}
 		
 		break;
+		
+	// Latch onto the wall and then do a forward jump
+	case Character_State.WallJump:
+	
+		// Change to wall jump animation
+		sprite_index = spr_chunli_wall_jump;
+		image_speed = 0;
+		image_index = 0;
+		gravity = 0;
+		
+		if (previous_state != Character_State.WallJump) {
+			attack_counter = 0;
+		}
+		else {
+			attack_counter += 1;	
+		}
+
+		// If this is the second frame of the walljump, jump
+		if (attack_counter >= 8) {
+			
+			// Switch to the flip animation and state
+			state = Character_State.InAir;
+			sprite_index = spr_chunli_forward_jump;
+			image_index = 1;
+			
+			// Apply impulse to jump
+			vspeed = JUMP_SPEED * 0.8;
+			hspeed = MOVE_SPEED * state_move_dir;
+			gravity = 1;
+			
+			// Play the jump sound
+			audio_play_sound(snd_hit_swing, 0, false);
+		}
+		
+		break;
 	
 	// Jumping / falling animation depending on vspeed
 	case Character_State.InAir:
 	
 		// Ensure state is unlocked so that attacks can occur
 		is_state_locked = false;
+		
+		// Ensure animation is played normally
+		image_speed = 1;
+		
+		// If its the flip, ensure we're flipping the right way
+		if (sprite_index == spr_chunli_forward_jump) {
+			image_speed = is_same_direction(state_move_dir, face_dir) ? 1 : -1;
+		}
 	
 		// Only the 'upward jump' changes based on vspeed
-		if (sprite_index == spr_chunli_jump) {
+		else {
+			
+			// If its anything other than the forward jump, it must change to jump animation
+			sprite_index = spr_chunli_jump;
 	
 			// If we're moving upwards, its the jump
 			if (vspeed <= - 8) {
@@ -609,6 +678,7 @@ switch (state) {
 				}
 			}
 		}
+		
 		break;
 		
 	// When the character has been hit by the opponent
@@ -1100,6 +1170,7 @@ if (state != previous_state or hurtbox == -1) {
 			
 		// States in mid-air share the same hurtbox
 		case Character_State.InAir:
+		case Character_State.WallJump:
 		case Character_State.ForwardHighKick:
 		case Character_State.JumpPunch:
 		case Character_State.JumpLowMiddleKick:

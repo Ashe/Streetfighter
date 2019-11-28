@@ -551,6 +551,14 @@
             }
         },
         {
+            "Key": "d35ecae6-aa54-418c-83e7-856a375c66bc",
+            "Value": {
+                "id": "8b75d58c-3a57-4d5d-b2e1-e2094200f36b",
+                "resourcePath": "sprites\\spr_chunli_wall_jump\\spr_chunli_wall_jump.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "d5d060ab-c7cf-4247-9404-bb2b62d04376",
             "Value": {
                 "id": "edf5be53-d367-43ce-9977-b31e23f3f19d",

@@ -3,6 +3,7 @@ TO PLAY:
 - Walk: L-Stick / DPad left or right
 - Crouch: L-Stick / DPad down
 - Jump: L-Stick / DPad up
+- Wall jump: Midair next to wall, L-Stick diagonally up + away from wall
 - Block: L-Stick / DPad backwards from opponent when they attack
 
 - Light punch: Square (PS) / X (Xbox)

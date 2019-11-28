@@ -8,6 +8,7 @@
         "05f3220c-1b07-42d1-80fa-3b32ef2700dd",
         "643fb2e0-f94f-45e9-a31d-e91d30cb27a6",
         "c9c1fb9a-9390-467a-bd05-4d9b1b63e18e",
+        "d35ecae6-aa54-418c-83e7-856a375c66bc",
         "1edf7554-2596-4196-8f39-a7cf061d8fbb",
         "f2a29377-b84c-4e97-b151-ff79bf2959ca",
         "13d995ca-e607-4937-8654-81f95db024e3",
@@ -33,9 +34,9 @@
         "6ca0dee6-6ab6-4c15-b182-dd9efc612064",
         "65ea8387-471a-4b01-8b41-f81448c583c0",
         "4995e7f9-3776-4612-a88c-e1a836fc6881",
+        "722f0513-a421-4e1e-b9c5-8898aa86026c",
         "1ad769d6-e6b4-4450-aad7-2d9feb8d011f",
-        "c751e78a-f999-4a8a-aa2c-cde199287ebc",
-        "722f0513-a421-4e1e-b9c5-8898aa86026c"
+        "c751e78a-f999-4a8a-aa2c-cde199287ebc"
     ],
     "filterType": "GMSprite",
     "folderName": "chun_li",
