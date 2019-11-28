@@ -1,3 +1,24 @@
+TO PLAY: 
+- Press the start button to gain control of a character each round
+- Walk: L-Stick / DPad left or right
+- Crouch: L-Stick / DPad down
+- Jump: L-Stick / DPad up
+- Block: L-Stick / DPad backwards from opponent when they attack
+
+- Light punch: Square (PS) / X (Xbox)
+- Medium punch: Triangle (PS) / Y (Xbox)
+- Heavy punch: Left shoulder / Left trigger
+
+- Light kick: X (PS) / A (Xbox)
+- Medium kick: Circle (PS) / B (Xbox)
+- Heavy kick: Right shoulder / Right trigger
+
+- Sweep: Crouch + Heavy kick
+- Flip kick: Move towards opponent, close range, medium kick
+- Neck breaker kick: Move towards opponent, close range, heavy kick
+- Stomp kick: Midair with a forwards jump (flip), L-Stick down + medium kick
+
+
 I learned from this video: https://www.youtube.com/watch?v=qKZ7ML4_2lM 
 - To see how animations were supposed to look and what frame rate they should be at (6 appears to be perfect)
 - That crouching animations always played (1-frame delay before reset back to idle)
@@ -36,6 +57,22 @@ From "Street Fighter 2 Oral History" (https://www.polygon.com/a/street-fighter-2
 	- This moves the responsibility of checking the timing of an input from the move-check to the state-check
 		- as long as the states transitioned correctly then a combo would execute, spammed input or late input can be ignored easily making it easier for the player
 - They emphisised Chun-Li's kicking abilities. I tried to make sure that the kicks really felt good by using my frame-pausing (discovered from emulator) to show off her strong kicks at point of contact
+
+From Chun-Li's move list (https://uk.ign.com/faqs/2006/playtv-legends-sega-genesis-street-fighter-ii-special-champion-edition-move-list-522302) I learned:
+- Chun Li has 4 special moves: The Lightning kick, whirlwind kick, kikoken and spinning bird kick
+	- I won't be implementing any of these as it will take a significant amount of work and knowledge to balance these moves with the rest of the moveset, not to mention to perform
+	- Typically, these would be added after everything else is balanced perfectly 
+- Chun Li is a fast character and performs well in the air
+	- This is most likely due to the variety of moves available when she's in the air, in comparison to other characters
+		- I've noticed that most characters have only a few moves, whereas Chun li has lots of kicks and forward-kicks in mid air
+	- I need to make sure these moves are useful, ensuring they're easy to hit and good to combo with
+	- I previously considered not implementing the wall jump, but now I'm thinking I should
+	
+From another Chun-Li move list (https://gamefaqs.gamespot.com/snes/588700-street-fighter-ii/faqs/64276) I learned:
+	- She has a stomp attack that I couldn't perform in the emulator - wrong version of street fighter maybe?
+- Damage appears to be universal, where it goes L-M-H punch and L-M-H kicks
+	- While its definite that a heavy kick does more damage than a light one, how much more damage does a light kick do vs a punch?
+		- In the emulator, the light punch (close range) does the same as a light puch from afar. Each attack will be hand tweaked
 
 From "Fighting Game Primer" I learned:
 - The attacks are light-medium-heavy, not low-middle-high. I was confused because chun-li's animations do correspond with low, middle and high, where the high attacks were the good ones.

@@ -389,6 +389,13 @@ if (not is_state_locked and cooldown_frames <= 0) {
 				trigger_lock = true;
 			}
 			
+			// Is the character trying to do a stomp kick?
+			if (try_crouch and try_kick_middle) {
+				state = Character_State.ForwardJumpStompKick;
+				is_attacking = true;
+				trigger_lock = true;
+			}
+			
 			// Is the character trying to do the forward-jump-low-middle kick?
 			else if (try_kick_low or try_kick_middle) {
 				state = Character_State.ForwardJumpLMKick;
@@ -574,6 +581,9 @@ switch (state) {
 	
 	// Jumping / falling animation depending on vspeed
 	case Character_State.InAir:
+	
+		// Ensure state is unlocked so that attacks can occur
+		is_state_locked = false;
 	
 		// Only the 'upward jump' changes based on vspeed
 		if (sprite_index == spr_chunli_jump) {
@@ -982,6 +992,57 @@ switch (state) {
 						10, -2, 10, 15, Hit_Type.Face, Blocked_By.StandingBlock, snd_face_hit],
 				is_grounded, 5, Character_State.Idle, 10);
 		break;
+		
+	// Stomp kicking allows Chun Li to jump off of the opponent
+	case Character_State.ForwardJumpStompKick:
+	
+		// Set animation
+		sprite_index = spr_chunli_stomp_kick;
+		image_speed = 1;
+		
+		// Start animation from beginning if this is a new stomp kick
+		if (previous_state != Character_State.ForwardJumpStompKick) {
+			image_index = 0;
+			attack_counter = 0;
+		}
+		
+		// Spawn hitbox on second frame
+		if (image_index >= 1 and attack_counter == 0) {
+			hitbox_create(30, 100, 20, -70, 6,
+					5, -1, 10, 6, Hit_Type.Face, Blocked_By.StandingBlock,
+							snd_body_hit);
+			attack_counter = 1;
+			image_index = 1;
+		}
+		
+		// Slow down the 'kick' part of the animation
+		if (image_index >= 1 and image_index < 2) {
+			image_speed = 0.5;	
+		}
+		
+		// If the attack has landed, perform another jump
+		if (attack_counter == 1 and has_hitbox_connected) {
+			hspeed = MOVE_SPEED * face_dir;
+			vspeed = JUMP_SPEED * 0.8;
+			attack_counter = 2;
+		}
+		
+		// End the move when grounded
+		if (is_grounded) {
+			state = Character_State.Idle;
+			cooldown_frames = 4;
+			attack_counter = 0;
+		}
+		
+		// Otherwise, transition to the jump animation
+		else if (image_index >= 2) {
+			state = Character_State.InAir;
+			sprite_index = spr_chunli_jump;
+			cooldown_frames = 4;
+			attack_counter = 0;
+		}
+	
+		break;
 }
 
 //////////////////////////////////////////////////////
@@ -992,6 +1053,9 @@ switch (state) {
 // - Deal damage / apply effects of hitbox
 // - Keeps boxes positioned correctly
 //////////////////////////////////////////////////////
+
+// Reset flag for whether the hitbox has struck the enemy
+has_hitbox_connected = false;
 
 // (Re)Create hurtbox if necessary
 if (state != previous_state or hurtbox == -1) {
@@ -1043,6 +1107,7 @@ if (state != previous_state or hurtbox == -1) {
 		case Character_State.ForwardJumpPunch:
 		case Character_State.ForwardJumpLMKick:
 		case Character_State.ForwardJumpHighKick:
+		case Character_State.ForwardJumpStompKick:
 			hurtbox_create(50, 150, 0, -250);
 			break;
 			
@@ -1091,6 +1156,9 @@ if (hitbox != -1 and not hitbox.is_disabled) {
 				and hitbox.x + hitbox.image_xscale > opponent.hurtbox.x
 				and hitbox.y < opponent.hurtbox.y + opponent.hurtbox.image_yscale
 				and hitbox.y + hitbox.image_yscale > opponent.hurtbox.y) {
+					
+			// The hitbox has connected
+			has_hitbox_connected = true;
 				
 			// Only hit the opponent if they don't block it
 			if (not is_blocked(hitbox, opponent)) {

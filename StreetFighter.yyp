@@ -327,6 +327,14 @@
             }
         },
         {
+            "Key": "722f0513-a421-4e1e-b9c5-8898aa86026c",
+            "Value": {
+                "id": "d2f97608-6ec6-498f-92a1-03b154294335",
+                "resourcePath": "sprites\\spr_chunli_stomp_kick\\spr_chunli_stomp_kick.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "73fc3bdb-f9d7-4df9-aeae-79f08d0210cf",
             "Value": {
                 "id": "72490223-d100-4598-8fb1-f9071a8a17f3",

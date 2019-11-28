@@ -40,7 +40,8 @@ enum Character_State {
 	JumpHighKick,
 	ForwardJumpPunch,
 	ForwardJumpLMKick,
-	ForwardJumpHighKick
+	ForwardJumpHighKick,
+	ForwardJumpStompKick
 }
 
 // Which gamepad to use
@@ -109,6 +110,9 @@ momentum = 0;
 
 // Used to play the 'knocked down' sound when grounded
 has_been_knocked_to_floor = false;
+
+// Has the hitbox hit something?
+has_hitbox_connected = false;
 
 // Create the sign saying 'press start' to tell players to reconnect
 var start_sign = instance_create_depth(-100, -100, -1, obj_press_start);
