@@ -29,6 +29,7 @@ I learned from this video: https://www.youtube.com/watch?v=qKZ7ML4_2lM
 
 I used the blog 'Hitboxes and Hurtboxes' (https://www.developer.amazon.com/blogs/appstore/post/cc08d63b-2b7c-4dee-abb4-272b834d7c3a/gamemaker-basics-hitboxes-and-hurtboxes_
 - For inspiration about how to set up collision boxes
+- That the size and position of a hitbox can be more effective than high damage numbers
 
 I actually emulated street fighter 2 to play the game myself:
 - I learned that you can jump straight away without an animation delay (in the gameplay the player crouched a lot)
@@ -61,6 +62,34 @@ From "Street Fighter 2 Oral History" (https://www.polygon.com/a/street-fighter-2
 	- This moves the responsibility of checking the timing of an input from the move-check to the state-check
 		- as long as the states transitioned correctly then a combo would execute, spammed input or late input can be ignored easily making it easier for the player
 - They emphisised Chun-Li's kicking abilities. I tried to make sure that the kicks really felt good by using my frame-pausing (discovered from emulator) to show off her strong kicks at point of contact
+
+Reaction Speeds in Gaming (https://kayin.moe/?p=2047):
+- I learned just about not only the different actions one can take in street-fighter but also the typical thoughts of players
+	- The stomping points of good vs bad players appears to be the execution of special moves like fireballs and throws
+		- I will not include these into the game as for new players its difficult to recognise how to counter these moves
+			- It will also simplify the options the player has and make the game less intimidating to play
+			- It will also inspire creativity as players will need to go back-to-basics and rely on core SF mechanics like crossovers
+- The basic counter for a jump is a crouching high-punch, I should ensure the hitboxes mean that a jump attack is easier to dodge when crouched, while also being vulnerable
+	- Just because you're crouched doesn't mean you can't hit an opponent that is higher than you
+	
+Playing to win: http://www.sirlin.net/ptw
+- Deception: http://www.sirlin.net/ptw-book/1-deception
+	- There's an effective range for each player
+		- Anything that comes into the effective range can be dealt with with 'safe moves'
+		- In order to break neutral games, non-safe moves must be made (footsies, taken from Fighting game Primer)
+		- Effective ranges can differ by character or by player
+	- Trap moves exist that allow the opponent to make moves specifically for you to counter
+		- This puts the opponent in a worse position than not attacking, as they lift their block
+		- This depends on the attack cooldowns and block-stun duration, and so I will test these scenarios when I have another player to test with
+- The Attackers: http://www.sirlin.net/ptw-book/the-attackers
+	- I double checked that it is possible to get close to the enemy and crouch, jump and block to stay in their personal space ('dancing') and stay aggressive
+- The turtles: http://www.sirlin.net/ptw-book/the-turtles
+	- It is important to get the hitboxes for each attack just right so that people can sit outside of opponents ranges
+		- While chun-li vs chun-li means there's no attacks that are unique to one character, it still applies to people's mindsets
+			- If one player likes to sweep and another likes to jump, their effective ranges will be different (from Deception)
+	- I won't be implementing a timer into this game to lessen the turtling strategy
+		- Chun-Li is a fast attacking offense character, and so she shouldn't turtle anyway
+		- Turtling can be annoying to some players
 
 From Chun-Li's move list (https://uk.ign.com/faqs/2006/playtv-legends-sega-genesis-street-fighter-ii-special-champion-edition-move-list-522302) I learned:
 - Chun Li has 4 special moves: The Lightning kick, whirlwind kick, kikoken and spinning bird kick
@@ -99,8 +128,34 @@ From "Fighting Game Primer" I learned:
 - Sweeping (crouch-heavy-kick) causes knockdowns (as noted from when I emulated Street fighter, although now I know its HEAVY not high), and is very important in neutral game
 	- With the widest reach, you can hit someone before they sweep and hit you, and they can't attack with a faster move thanks to the reach
 	- When the game starts / is neutral, sweeping at the opponent is the 'correct' way to start an exchange
+		- Footsies is the term given to trying to get into the enemy range to sweep without them sweeping you first
 		- I need to ensure that the sweeps hitbox reflects this accurately with an appropriate knockdown duration
 - I'm not implementing combos or throws
 	- Throws can be interrupted by attacking or throwing yourself, but because chun-li is mainly a kicker, she isn't much of a thrower
 		- She would typically throw when the enemy gets close to her to create distance, but Chun-Li vs Chun-Li wouldn't get much from this
 	- Combos are difficult to time and execute and require fighting-game players to practice over and over again
+	
+From 'Street Fighter Footsies handbook' (https://sonichurricane.com/?page_id=1702): 
+- Chapter 1:
+	- Footsies comes from shuffling forwards and backwards into the enemy's attack range and not necessarily attacking
+		- I made sure the move speed set in this game allows for quick forwards-backwards movement
+	- After poking at them through footsies, the opponent's natural reactions change
+		- This makes basic moves a lot more common than special attacks, which is why I haven't put in any special abilties
+		- Also means that these moves need to be perfectly balanced
+- Chapter 2:
+	- Attacking just outside the opponent's effective range is just as important as actually hitting them
+		- This makes the opponent try to sweep, only to be locked into the animation as your fast moves (chun-li's light-kicks) finish
+		- This method of creating opportunities appears to be a gigantic portion of how to actually fight, as it determines who's on the attack and defense
+			- After this point, only blocking and counter-attacking can change the momentum and so it's crucial that blocking is implemented
+			- Chun Li is also a fast character, so wall-jumping is important to give the player multiple options of avoiding getting cornered and attacked
+				- Her wall jump also makes her more unpredictable and is a useful tool
+- Chapter 6:
+	- Simply stepping forward can be used to mindgame your opponent into what kind of attack you're going to do
+		- I won't be putting throws into the game, and so these tactics are less significant
+		- However, Chun Li attacks from the air, and so maybe there is potential to try and bait which direction you're going to jump?
+- Chapter 8:
+	- This guide indicates that some characters have a height-requirement for jump attacks, but Chun-Li doesn't from experience with the emulator
+	- This reinforces Chun Li as an arial character. you don't necessarily need to attack your opponent from above as you can hit with the jump attack from up close
+- Chapter 9:
+	- The effects of knockdowns also contain an anti-air element. The enemy can't block from above if they're knocked down, and it'll be too late 
+		- I made sure that it was possible to sweep the enemy down and then jump attack as they're getting up for a free hit and as a combo start
