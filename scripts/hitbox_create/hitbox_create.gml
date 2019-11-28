@@ -13,7 +13,8 @@ _hitbox.knockback_y_hit = argument6;
 _hitbox.hit_damage = argument7
 _hitbox.hit_stun = argument8;
 _hitbox.hit_type = argument9;
-_hitbox.hit_sound = argument10;
+_hitbox.blocked_by = argument10;
+_hitbox.hit_sound = argument11;
 
 // Delete the previous hitbox
 if (hitbox != -1) {

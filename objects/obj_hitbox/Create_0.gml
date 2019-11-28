@@ -7,6 +7,14 @@ enum Hit_Type {
 	Knockdown
 }
 
+// What is this attack blocked by?
+enum Blocked_By {
+	Unblockable,
+	AnyBlock,
+	CrouchedBlock,
+	StandingBlock
+}
+
 // Make it transparent
 image_alpha = debug_mode ? 0.7 : 0;
 
@@ -35,6 +43,9 @@ hit_sound = -1;
 
 // Whether the attack was aimed at the face or body
 hit_type = Hit_Type.Body;
+
+// What type of block stops this
+blocked_by = Blocked_By.AnyBlock;
 
 // Prevent a character getting multiple times
 is_disabled = false;

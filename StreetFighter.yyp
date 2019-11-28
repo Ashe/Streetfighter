@@ -95,6 +95,14 @@
             }
         },
         {
+            "Key": "1278eeb4-3ac9-42e2-ad95-f3cc424b3c88",
+            "Value": {
+                "id": "d7f83d2a-22bb-45a8-93ca-a21908d0da9e",
+                "resourcePath": "scripts\\is_blocked\\is_blocked.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "13d995ca-e607-4937-8654-81f95db024e3",
             "Value": {
                 "id": "b04f61bf-6cc2-4807-8196-584447646d32",
@@ -324,6 +332,14 @@
                 "id": "72490223-d100-4598-8fb1-f9071a8a17f3",
                 "resourcePath": "scripts\\hurtbox_create\\hurtbox_create.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "750d7ca8-67cc-4c4f-99be-92444abbea5d",
+            "Value": {
+                "id": "3cef04cb-0d17-4b13-a42c-0306fd3823a6",
+                "resourcePath": "sounds\\snd_hit_blocked\\snd_hit_blocked.yy",
+                "resourceType": "GMSound"
             }
         },
         {
@@ -669,7 +685,8 @@
         "7b5ed4a8-221b-4a73-991d-ed86d89afb4f",
         "2e9d3a54-40b9-4418-baf5-720775866e58",
         "8420ec65-afd9-4856-97db-4d4a93235723",
-        "b02879b0-d0ac-49bc-b1a7-37ae1bb1ef3e"
+        "b02879b0-d0ac-49bc-b1a7-37ae1bb1ef3e",
+        "1278eeb4-3ac9-42e2-ad95-f3cc424b3c88"
     ],
     "tutorial": ""
 }
