@@ -2,6 +2,7 @@ I learned from this video: https://www.youtube.com/watch?v=qKZ7ML4_2lM
 - To see how animations were supposed to look and what frame rate they should be at (6 appears to be perfect)
 - That crouching animations always played (1-frame delay before reset back to idle)
 - (CORRECTED LATER) You had to do the 'crouching' part of the jump animation before you launched (1-frame delay before jump)
+	- The jump animation has a wind up that crouches, and so it appears that you need to stay grounded for that frame otherwise the shadow will float in mid air
 - That you cannot change the direction you're facing in mid air, even when you get behind your opponent
 
 I used the blog 'Hitboxes and Hurtboxes' (https://www.developer.amazon.com/blogs/appstore/post/cc08d63b-2b7c-4dee-abb4-272b834d7c3a/gamemaker-basics-hitboxes-and-hurtboxes_
@@ -9,6 +10,9 @@ I used the blog 'Hitboxes and Hurtboxes' (https://www.developer.amazon.com/blogs
 
 I actually emulated street fighter 2 to play the game myself:
 - I learned that you can jump straight away without an animation delay (in the gameplay the player crouched a lot)
+	- I previously thought that the crouch happened first, but the animation plays smoothly that you cannot tell
+	- In the actual game, the shadow is disconnected from the player's sprite (not like the spritesheet I was working with)
+	- This would make the corrected jump make more sense, as right now the shadow doesn't float in mid air for a split-second. It is hard to notice, but it does indeed come off the ground as it is now
 - Jumping forwards or backwards perform flips, not standard jumps
 - While you can collide with the other character you cannot land on top of them
 - I found that there's a forced delay in between attacks, but with good timing you can go faster than if you spammed
@@ -23,3 +27,34 @@ I actually emulated street fighter 2 to play the game myself:
 - The jumping and forward-jumping punch attacks end when the character lands, but the kicks end after the animation (but prevents you from attacking again)
 - You cannot be attacked while knocked down or recovering
 	- The attacks that do knock down the opponent (when not blocked) are the crouched-high-kick, the flip kick and the forward-high-kick (neck breaker) moves
+	
+From "Street Fighter 2 Oral History" (https://www.polygon.com/a/street-fighter-2-oral-history/chapter-2) I learned:
+- They opened up the timing of combos to make it easier. They used an input-buffer system that stored inputs
+	- In my version, I've opted for setting flags and changing the state based on these flags as I'm not planning on doing the combo moves
+	- The combo moves require practice to pull off and for the prototype I don't think they are necessary for fun (I couldn't do them when playing emulator)
+	- BUT, in order to pull off combo moves, I can check what states the character has been in, rather than inputs
+	- This moves the responsibility of checking the timing of an input from the move-check to the state-check
+		- as long as the states transitioned correctly then a combo would execute, spammed input or late input can be ignored easily making it easier for the player
+- They emphisised Chun-Li's kicking abilities. I tried to make sure that the kicks really felt good by using my frame-pausing (discovered from emulator) to show off her strong kicks at point of contact
+
+From "Fighting Game Primer" I learned:
+- The attacks are light-medium-heavy, not low-middle-high. I was confused because chun-li's animations do correspond with low, middle and high, where the high attacks were the good ones.
+	- In code, I'll keep it as low-high as that's not visible to the players.. but is technically incorrect
+- You cannot attack, hit or block while you've been hitstunned. Luckily this is how I already interpreted it from the word 'stun'
+- If hit when blocking, they get 'blockstunned', they can't stop blocking for a moment. They take no damage unless your attack is a special move (they'll take a little bit)
+	- The blockstun shouldn't last too long, as the blocker needs to be able to attack during the attacker's wind down animation
+	- Haven't figured out whether the block stun is a fixed duration or dependent on the move, although I have a feeling it's a fixed amount of time
+	- It can't be short either: Blocking smaller hits allows the attacker to take advantage of the block stun by forcing them to block more moves that inflict chip damage
+		- This means that blocking a harmless attack might lead to being forced (stunned) into blocking attacks that actually damage you - you cannot 'turn off' the block while stunned
+- The duration of hitstuns determine whether they can start a combo - a large hitstun allows you to use a slower-wind up attack after
+	- The high-kicks of Chun-li have quite a bit of windup (especially the neck-breaker), so these moves should be set up by hitting the opponent first to stun them
+- When knocked down, the enemy has time to jump over the player and prepare an attack as they wake up
+- Typically, Crouching attacks must be blocked low and Jumping attacks need to be blocked high, others can be blocked by either
+- Sweeping (crouch-heavy-kick) causes knockdowns (as noted from when I emulated Street fighter, although now I know its HEAVY not high), and is very important in neutral game
+	- With the widest reach, you can hit someone before they sweep and hit you, and they can't attack with a faster move thanks to the reach
+	- When the game starts / is neutral, sweeping at the opponent is the 'correct' way to start an exchange
+		- I need to ensure that the sweeps hitbox reflects this accurately with an appropriate knockdown duration
+- I'm not implementing combos or throws
+	- Throws can be interrupted by attacking or throwing yourself, but because chun-li is mainly a kicker, she isn't much of a thrower
+		- She would typically throw when the enemy gets close to her to create distance, but Chun-Li vs Chun-Li wouldn't get much from this
+	- Combos are difficult to time and execute and require fighting-game players to practice over and over again
