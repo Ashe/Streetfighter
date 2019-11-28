@@ -818,7 +818,7 @@ switch (state) {
 		// On third frame, create another hitbox
 		else if (image_index == 2 and hitbox == -1 and attack_counter == 1) {
 			hitbox_create(100, 40, 95, -200, 4, 
-					6, -18, 10, 50, Hit_Type.Knockdown, Blocked_By.AnyBlock, snd_face_hit);
+					6, -18, 10, 75, Hit_Type.Knockdown, Blocked_By.AnyBlock, snd_face_hit);
 			attack_counter = 2;
 		}
 		
@@ -859,7 +859,7 @@ switch (state) {
 			// When at the end of the flip, spawn hitbox that lasts until grounded
 			if (attack_counter == 0) {
 				hitbox_create(60, 40, -45, -180, -1, 
-						-7, -18, 10, 50, Hit_Type.Knockdown, Blocked_By.StandingBlock, snd_face_hit);
+						-7, -18, 10, 80, Hit_Type.Knockdown, Blocked_By.StandingBlock, snd_face_hit);
 				attack_counter = 1;
 			}
 			
@@ -918,8 +918,8 @@ switch (state) {
 	
 		// Use the standard script for attacks
 		perform_attack(spr_chunli_crouch_high_kick, Character_State.CrouchHighKick, 1, 
-				[110, 50, 110, -170, 4, 
-						8, -13, 10, 45, Hit_Type.Knockdown, Blocked_By.CrouchedBlock, snd_big_hit],
+				[120, 50, 125, -170, 4, 
+						8, -13, 10, 75, Hit_Type.Knockdown, Blocked_By.CrouchedBlock, snd_big_hit],
 				2, Character_State.Crouching, 4);	
 		break;
 		
