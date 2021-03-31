@@ -3,14 +3,14 @@
 # Ashley Smith - Street Fighter GMS Clone
 
 ## What is this?
-This project was made as part of an assignment for Sheffield Hallam University in November, 2019. Since GMS is proprietary software, I've taken the liberty of compiling the project into a `.exe` file that you can find [here](https://github.com/Ashe/Streetfighter/releases/tag/v1.0). The point of this project was to try and mimic StreetFighter as closely as possible and understand not only *what* mechanics were programmed but also *why*. 
+This project was made as part of an assignment for Sheffield Hallam University in November, 2019. Since GMS is proprietary software, I've taken the liberty of compiling the project into a `.exe` file that you can find [here](https://github.com/Ashe/Streetfighter/releases/). The point of this project was to try and mimic StreetFighter as closely as possible and understand not only *what* mechanics were programmed but also *why*. 
 
 This assignment was set up as a competition; we all went around the room and played everyone's games (where everyone had chosen a different character to start with) to see which was the most fun and complete. Additionally, we were given the opportunity to guess whose was the best, and if we got it right, we got an extra mark. The person with the most votes also got extra credit.
 
 I was confident with my project, and because I didn't really feel like anyone could beat it, I didn't really want to outright say that someone else's assignment was better than my own (we were allowed to vote for ourselves and a lot of people did) since I wasn't really very enthusiastic about students' marks being dictated by the success of others'. I didn't put anyone's name down, and I actually managed to win the competition by a large margin. Lesson learned --- if you're confident in your work, don't be ashamed!
 
 ## How do I play?
-Simply download and extract [the latest release](https://github.com/Ashe/Streetfighter/releases/tag/v1.0) and run the executable (`StreetFighter.exe`). You will be presented with this screen:
+Simply download and extract [the latest release](https://github.com/Ashe/Streetfighter/releases/) and run the executable (`StreetFighter.exe`). You will be presented with this screen:
 
 ![Opening Screen](/img/opening_screen.png)
 
