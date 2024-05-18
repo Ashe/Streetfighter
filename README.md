@@ -1,6 +1,6 @@
 ![Preview](/img/finished_project.png)
 
-# Ashley Smith - Street Fighter GMS Clone
+# Ashley Rose - Street Fighter GMS Clone
 
 ## What is this?
 This project was made as part of an assignment for Sheffield Hallam University in November, 2019. Since GMS is proprietary software, I've taken the liberty of compiling the project into a `.exe` file that you can find [here](https://github.com/Ashe/Streetfighter/releases/). The point of this project was to try and mimic StreetFighter as closely as possible and understand not only *what* mechanics were programmed but also *why*. 
